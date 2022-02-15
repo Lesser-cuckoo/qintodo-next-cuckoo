@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { VFC } from "react";
 import { NavLink } from "src/component/Button";
 
@@ -11,7 +12,7 @@ const items = [
  */
 export const Header: VFC = () => (
   <div>
-    <h1>Title</h1>
+    <Image src="/Qin_todo.png" alt="logo" width={120} height={120} />
     <nav>
       {items.map(({ href, label }) => (
         <NavLink key={href} href={href} activeClassName="text-red-500">
