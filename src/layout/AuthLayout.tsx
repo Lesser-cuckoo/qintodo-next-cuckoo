@@ -1,6 +1,6 @@
 import { Auth, Button, IconLogOut } from "@supabase/ui";
 import type { CustomLayout } from "next";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { client } from "src/lib/SupabaseClient";
 
 import { Footer } from "./Footer";
@@ -15,11 +15,16 @@ type Props = {
  * @package
  */
 export const AuthLayout: CustomLayout = (props: Props) => {
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const { user } = Auth.useUser();
   const { children } = props;
 
   const handleLogout = useCallback(() => {
     client.auth.signOut();
+  }, []);
+
+  useEffect(() => {
+    setIsMounted(true);
   }, []);
 
   return (
@@ -29,7 +34,7 @@ export const AuthLayout: CustomLayout = (props: Props) => {
       </header>
       <main className="flex-1 px-4">
         <LayoutErrorBoundary>
-          {user ? (
+          {isMounted && user ? (
             <div>
               <div> {children}</div>
               <div className="flex justify-end my-4 mx-2">
