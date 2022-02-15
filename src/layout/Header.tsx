@@ -12,7 +12,7 @@ const items = [
  */
 export const Header: VFC = () => (
   <div>
-    <Image src="/Qin_todo.png" alt="logo" width={120} height={120} />
+    <Image src="/Qin_todo.png" alt="logo" width={120} height={80} />
     <nav>
       {items.map(({ href, label }) => (
         <NavLink key={href} href={href} activeClassName="text-red-500">
