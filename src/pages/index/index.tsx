@@ -2,7 +2,9 @@ import { Auth } from "@supabase/ui";
 import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
+import { CgTrash } from "react-icons/cg";
 import { HiPlusCircle } from "react-icons/hi";
+import { MdOutlineContentCopy } from "react-icons/md";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
@@ -14,6 +16,7 @@ export const Index: VFC = () => {
   const [todoToday, setTodoToday] = useState<TodoType[]>([]);
   const [todoTomorrow, setTodoTomorrow] = useState<TodoType[]>([]);
   const [todoOther, setTodoOther] = useState<TodoType[]>([]);
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +103,8 @@ export const Index: VFC = () => {
             >
               <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
               <div className="h-5">{item.task}</div>
+              <MdOutlineContentCopy />
+              <CgTrash />
             </div>
           ))}
           <div className="flex justify-start p-1">
@@ -108,9 +113,11 @@ export const Index: VFC = () => {
               type="text"
               value={textToday}
               onChange={handleChangeTextToday}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddToday();
+              onKeyPress={async (e) => {
+                if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
+                  await handleAddToday();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
@@ -137,9 +144,11 @@ export const Index: VFC = () => {
               type="text"
               value={textTomorrow}
               onChange={handleChangeTextTomorrow}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddTomorrow();
+              onKeyPress={async (e) => {
+                if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
+                  await handleAddTomorrow();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
@@ -166,9 +175,11 @@ export const Index: VFC = () => {
               type="text"
               value={textOther}
               onChange={handleChangeTextOther}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddOther();
+              onKeyPress={async (e) => {
+                if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
+                  await handleAddOther();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
