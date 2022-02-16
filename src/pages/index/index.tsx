@@ -14,24 +14,31 @@ export const Index: VFC = () => {
   const [todoToday, setTodoToday] = useState<TodoType[]>([]);
   const [todoTomorrow, setTodoTomorrow] = useState<TodoType[]>([]);
   const [todoOther, setTodoOther] = useState<TodoType[]>([]);
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      setIsSending(true);
       setTextToday(e.target.value);
+      setIsSending(false);
     },
     []
   );
 
   const handleChangeTextTomorrow = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      setIsSending(true);
       setTextTomorrow(e.target.value);
+      setIsSending(false);
     },
     []
   );
 
   const handleChangeTextOther = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      setIsSending(true);
       setTextOther(e.target.value);
+      setIsSending(false);
     },
     []
   );
@@ -109,7 +116,7 @@ export const Index: VFC = () => {
               value={textToday}
               onChange={handleChangeTextToday}
               onKeyPress={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !isSending) {
                   handleAddToday();
                 }
               }}
@@ -138,7 +145,7 @@ export const Index: VFC = () => {
               value={textTomorrow}
               onChange={handleChangeTextTomorrow}
               onKeyPress={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !isSending) {
                   handleAddTomorrow();
                 }
               }}
@@ -167,7 +174,7 @@ export const Index: VFC = () => {
               value={textOther}
               onChange={handleChangeTextOther}
               onKeyPress={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !isSending) {
                   handleAddOther();
                 }
               }}
