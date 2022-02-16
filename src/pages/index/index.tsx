@@ -18,27 +18,21 @@ export const Index: VFC = () => {
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsSending(true);
       setTextToday(e.target.value);
-      setIsSending(false);
     },
     []
   );
 
   const handleChangeTextTomorrow = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsSending(true);
       setTextTomorrow(e.target.value);
-      setIsSending(false);
     },
     []
   );
 
   const handleChangeTextOther = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsSending(true);
       setTextOther(e.target.value);
-      setIsSending(false);
     },
     []
   );
@@ -117,7 +111,9 @@ export const Index: VFC = () => {
               onChange={handleChangeTextToday}
               onKeyPress={(e) => {
                 if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
                   handleAddToday();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
@@ -146,7 +142,9 @@ export const Index: VFC = () => {
               onChange={handleChangeTextTomorrow}
               onKeyPress={(e) => {
                 if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
                   handleAddTomorrow();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
@@ -175,7 +173,9 @@ export const Index: VFC = () => {
               onChange={handleChangeTextOther}
               onKeyPress={(e) => {
                 if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
                   handleAddOther();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
