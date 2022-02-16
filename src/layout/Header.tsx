@@ -6,7 +6,7 @@ import type { VFC } from "react";
  */
 export const Header: VFC = () => (
   <div className="flex justify-around items-center">
-    <Image src="/Qin_todo.png" alt="logo" width={160} height={80} />
+    <Image src="/Qin_Todo.png" alt="logo" width={160} height={80} />
     <Image
       src="/avatar.png"
       alt="avatarImage"
