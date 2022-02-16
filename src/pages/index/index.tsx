@@ -109,10 +109,10 @@ export const Index: VFC = () => {
               type="text"
               value={textToday}
               onChange={handleChangeTextToday}
-              onKeyPress={(e) => {
+              onKeyPress={async (e) => {
                 if (e.key === "Enter" && !isSending) {
                   setIsSending(true);
-                  handleAddToday();
+                  await handleAddToday();
                   setIsSending(false);
                 }
               }}
@@ -140,10 +140,10 @@ export const Index: VFC = () => {
               type="text"
               value={textTomorrow}
               onChange={handleChangeTextTomorrow}
-              onKeyPress={(e) => {
+              onKeyPress={async (e) => {
                 if (e.key === "Enter" && !isSending) {
                   setIsSending(true);
-                  handleAddTomorrow();
+                  await handleAddTomorrow();
                   setIsSending(false);
                 }
               }}
@@ -171,10 +171,10 @@ export const Index: VFC = () => {
               type="text"
               value={textOther}
               onChange={handleChangeTextOther}
-              onKeyPress={(e) => {
+              onKeyPress={async (e) => {
                 if (e.key === "Enter" && !isSending) {
                   setIsSending(true);
-                  handleAddOther();
+                  await handleAddOther();
                   setIsSending(false);
                 }
               }}
