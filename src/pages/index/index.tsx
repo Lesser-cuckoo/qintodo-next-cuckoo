@@ -14,6 +14,7 @@ export const Index: VFC = () => {
   const [todoToday, setTodoToday] = useState<TodoType[]>([]);
   const [todoTomorrow, setTodoTomorrow] = useState<TodoType[]>([]);
   const [todoOther, setTodoOther] = useState<TodoType[]>([]);
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,9 +109,11 @@ export const Index: VFC = () => {
               type="text"
               value={textToday}
               onChange={handleChangeTextToday}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddToday();
+              onKeyPress={async (e) => {
+                if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
+                  await handleAddToday();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
@@ -137,9 +140,11 @@ export const Index: VFC = () => {
               type="text"
               value={textTomorrow}
               onChange={handleChangeTextTomorrow}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddTomorrow();
+              onKeyPress={async (e) => {
+                if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
+                  await handleAddTomorrow();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
@@ -166,9 +171,11 @@ export const Index: VFC = () => {
               type="text"
               value={textOther}
               onChange={handleChangeTextOther}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddOther();
+              onKeyPress={async (e) => {
+                if (e.key === "Enter" && !isSending) {
+                  setIsSending(true);
+                  await handleAddOther();
+                  setIsSending(false);
                 }
               }}
               className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
