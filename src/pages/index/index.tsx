@@ -3,6 +3,7 @@ import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { HiPlusCircle } from "react-icons/hi";
+import { RadioButton } from "src/component/RadioButton";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
@@ -103,7 +104,7 @@ export const Index: VFC = () => {
             </div>
           ))}
           <div className="flex justify-start p-1">
-            <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+            <RadioButton centerColor="bg-[#F43F5E]" />
             <input
               type="text"
               value={textToday}
