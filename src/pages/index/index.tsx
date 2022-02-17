@@ -129,18 +129,21 @@ export const Index: VFC = () => {
             {task.header}
           </div>
           <div className="mt-6">
-            {task.taskArray.map((item) => (
-              <ul key={`item-${item.id}`}>
-                <li className="flex gap-3 justify-start p-1">
+            <ul>
+              {task.taskArray.map((item) => (
+                <li
+                  className="flex gap-3 justify-start p-1"
+                  key={`item-${item.id}`}
+                >
                   <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
                   <p className="grow h-5">{item.task}</p>
-                  <div className="flex gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
+                  <div className="flex invisible hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
                     <MdOutlineContentCopy />
                     <CgTrash />
                   </div>
                 </li>
-              </ul>
-            ))}
+              ))}
+            </ul>
             <div className="flex justify-start p-1">
               <HiPlusCircle size={20} className="text-[#C2C6D2]" />
               <input
