@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { HiPlusCircle } from "react-icons/hi";
 import { MdOutlineContentCopy } from "react-icons/md";
+import { Dndkit } from "src/component/dndkit";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
@@ -164,6 +165,7 @@ export const Index: VFC = () => {
           </div>
         </div>
       ))}
+      <Dndkit />
     </div>
   );
 };
