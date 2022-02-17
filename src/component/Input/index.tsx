@@ -35,9 +35,9 @@ export const TaskInput = (props: any) => {
         value={text}
         onChange={handleChangeText}
         onKeyPress={async (e) => {
-          e.currentTarget.blur();
           //同じ文言であれば編集しないようにする
           if (e.key === "Enter" && !isSending && item.task !== text) {
+            e.currentTarget.blur();
             setIsSending(true);
             await handleEditTask();
             setIsSending(false);
