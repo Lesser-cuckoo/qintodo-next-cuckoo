@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { HiPlusCircle } from "react-icons/hi";
 import { Dndkit } from "src/component/dndkit";
+import { TaskInput } from "src/component/Input";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
@@ -102,7 +103,13 @@ export const Index: VFC = () => {
                 className="flex gap-3 justify-start p-1"
               >
                 <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                <div className="h-5">{item.task}</div>
+                <TaskInput
+                  setTextToday={setTextToday}
+                  setTextOther={setTextOther}
+                  setTextTomorrow={setTextTomorrow}
+                  updateTodo={updateTodo}
+                  item={item}
+                />
               </div>
             ))}
             <div className="flex justify-start p-1">
@@ -133,7 +140,13 @@ export const Index: VFC = () => {
                 className="flex gap-3 justify-start p-1"
               >
                 <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                <div className="h-5">{item.task}</div>
+                <TaskInput
+                  setTextToday={setTextToday}
+                  setTextOther={setTextOther}
+                  setTextTomorrow={setTextTomorrow}
+                  updateTodo={updateTodo}
+                  item={item}
+                />
               </div>
             ))}
             <div className="flex justify-start p-1">
@@ -164,7 +177,7 @@ export const Index: VFC = () => {
                 className="flex gap-3 justify-start p-1"
               >
                 <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                <div className="h-5">{item.task}</div>
+                <TaskInput updateTodo={updateTodo} item={item} />
               </div>
             ))}
             <div className="flex justify-start p-1">
