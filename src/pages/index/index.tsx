@@ -3,7 +3,7 @@ import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { HiPlusCircle } from "react-icons/hi";
-import { RadioButton } from "src/component/RadioButton";
+import { Dndkit } from "src/component/dndkit";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
@@ -15,6 +15,7 @@ export const Index: VFC = () => {
   const [todoToday, setTodoToday] = useState<TodoType[]>([]);
   const [todoTomorrow, setTodoTomorrow] = useState<TodoType[]>([]);
   const [todoOther, setTodoOther] = useState<TodoType[]>([]);
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,94 +91,103 @@ export const Index: VFC = () => {
   }, [updateTodo]);
 
   return (
-    <div className="grid grid-cols-3 gap-4 my-8 mx-12">
-      <div className="col-span-1">
-        <div className="text-xl font-bold text-[#F43F5E]">今日する</div>
-        <div className="mt-6">
-          {todoToday.map((item) => (
-            <div
-              key={`item-${item.id}`}
-              className="flex gap-3 justify-start p-1"
-            >
-              <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-              <div className="h-5">{item.task}</div>
+    <>
+      <div className="grid grid-cols-3 gap-4 my-8 mx-12">
+        <div className="col-span-1">
+          <div className="text-xl font-bold text-[#F43F5E]">今日する</div>
+          <div className="mt-6">
+            {todoToday.map((item) => (
+              <div
+                key={`item-${item.id}`}
+                className="flex gap-3 justify-start p-1"
+              >
+                <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                <div className="h-5">{item.task}</div>
+              </div>
+            ))}
+            <div className="flex justify-start p-1">
+              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+              <input
+                type="text"
+                value={textToday}
+                onChange={handleChangeTextToday}
+                onKeyPress={async (e) => {
+                  if (e.key === "Enter" && !isSending) {
+                    setIsSending(true);
+                    await handleAddToday();
+                    setIsSending(false);
+                  }
+                }}
+                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
+                placeholder="タスクを追加する"
+              />
             </div>
-          ))}
-          <div className="flex justify-start p-1">
-            <RadioButton centerColor="bg-[#F43F5E]" />
-            <input
-              type="text"
-              value={textToday}
-              onChange={handleChangeTextToday}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddToday();
-                }
-              }}
-              className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-              placeholder="タスクを追加する"
-            />
+          </div>
+        </div>
+        <div className="col-span-1">
+          <div className="text-xl font-bold text-[#FB923C]">明日する</div>
+          <div className="mt-6">
+            {todoTomorrow.map((item) => (
+              <div
+                key={`item-${item.id}`}
+                className="flex gap-3 justify-start p-1"
+              >
+                <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                <div className="h-5">{item.task}</div>
+              </div>
+            ))}
+            <div className="flex justify-start p-1">
+              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+              <input
+                type="text"
+                value={textTomorrow}
+                onChange={handleChangeTextTomorrow}
+                onKeyPress={async (e) => {
+                  if (e.key === "Enter" && !isSending) {
+                    setIsSending(true);
+                    await handleAddTomorrow();
+                    setIsSending(false);
+                  }
+                }}
+                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
+                placeholder="タスクを追加する"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-span-1">
+          <div className="text-xl font-bold text-[#FBBF24]">今度する</div>
+          <div className="mt-6">
+            {todoOther.map((item) => (
+              <div
+                key={`item-${item.id}`}
+                className="flex gap-3 justify-start p-1"
+              >
+                <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                <div className="h-5">{item.task}</div>
+              </div>
+            ))}
+            <div className="flex justify-start p-1">
+              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+              <input
+                type="text"
+                value={textOther}
+                onChange={handleChangeTextOther}
+                onKeyPress={async (e) => {
+                  if (e.key === "Enter" && !isSending) {
+                    setIsSending(true);
+                    await handleAddOther();
+                    setIsSending(false);
+                  }
+                }}
+                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
+                placeholder="タスクを追加する"
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div className="col-span-1">
-        <div className="text-xl font-bold text-[#FB923C]">明日する</div>
-        <div className="mt-6">
-          {todoTomorrow.map((item) => (
-            <div
-              key={`item-${item.id}`}
-              className="flex gap-3 justify-start p-1"
-            >
-              <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-              <div className="h-5">{item.task}</div>
-            </div>
-          ))}
-          <div className="flex justify-start p-1">
-            <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-            <input
-              type="text"
-              value={textTomorrow}
-              onChange={handleChangeTextTomorrow}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddTomorrow();
-                }
-              }}
-              className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-              placeholder="タスクを追加する"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="col-span-1">
-        <div className="text-xl font-bold text-[#FBBF24]">今度する</div>
-        <div className="mt-6">
-          {todoOther.map((item) => (
-            <div
-              key={`item-${item.id}`}
-              className="flex gap-3 justify-start p-1"
-            >
-              <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-              <div className="h-5">{item.task}</div>
-            </div>
-          ))}
-          <div className="flex justify-start p-1">
-            <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-            <input
-              type="text"
-              value={textOther}
-              onChange={handleChangeTextOther}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddOther();
-                }
-              }}
-              className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-              placeholder="タスクを追加する"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+      <Dndkit />
+    </>
   );
 };
