@@ -8,8 +8,6 @@
 
 ### リポジトリのクローン
 
-以下のコマンドを実行し、ローカル環境にクローン。
-
 ```
 git clone https://github.com/Lesser-cuckoo/qintodo-next-cuckoo
 ```
@@ -45,16 +43,16 @@ yarn start // localhost:3000で立ち上がる
 `develop`
 
 - 本番反映前に確認するためのステージング環境
-- 常駐ブランチで、feature からの変更を受け付け、main にマージ
+- 常駐ブランチで、開発用ブランチ`(GitHub UserName)/issue*`からの変更を受け付け、main にマージ
 
-`feature/*`
+`(GitHub UserName)/issue*`
 
 - 開発用ブランチ
 - 必ず develop から分岐して、develop にマージ
-- `*`は開発するものを簡易的に記入
-  - 例: feature/add-mypage
+- `*`は issue 番号
+- [GitHub Pull Requests and Issues](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github)を使うと便利
 
-`main`, `develop`には直接 push せず、`feature/*`から PR を投げて、レビュー後に`develop`にマージする。
+`main`, `develop`には直接 push せず、`(GitHub UserName)/issue*`から PR を投げて、レビュー後に`develop`にマージする。
 
 また、Commit メッセージの冒頭に[gitmoji](https://gitmoji.dev/)をつけることを推奨 (Commit の粒度が調整されるため)。
 [VSCode のプラグイン](https://marketplace.visualstudio.com/items?itemName=seatonjiang.gitmoji-vscode)を使うと便利。
