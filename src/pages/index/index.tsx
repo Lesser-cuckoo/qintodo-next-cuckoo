@@ -2,9 +2,11 @@ import { Auth } from "@supabase/ui";
 import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
+import { CgTrash } from "react-icons/cg";
 import { HiPlusCircle } from "react-icons/hi";
+import { MdOutlineContentCopy } from "react-icons/md";
 import { Dndkit } from "src/component/dndkit";
-import { TaskInput } from "src/component/Input";
+import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo, moveTodo } from "src/lib/SupabaseClient";
 
@@ -95,37 +97,77 @@ export const Index: VFC = () => {
     updateTodo();
   }, [updateTodo]);
 
+  const mapTaskElement = [
+    {
+      id: 1,
+      header: "今日する",
+      color: "#F43F5E",
+      taskArray: todoToday,
+      value: textToday,
+      handleChangeEvent: handleChangeTextToday,
+      addTodoFunction: handleAddToday,
+    },
+    {
+      id: 2,
+      header: "明日する",
+      color: "#FB923C",
+      taskArray: todoTomorrow,
+      value: textTomorrow,
+      handleChangeEvent: handleChangeTextTomorrow,
+      addTodoFunction: handleAddTomorrow,
+    },
+    {
+      id: 3,
+      header: "今度する",
+      color: "#FBBF24",
+      taskArray: todoOther,
+      value: textOther,
+      handleChangeEvent: handleChangeTextOther,
+      addTodoFunction: handleAddOther,
+    },
+  ];
+
   return (
-    <>
-      <div className="grid grid-cols-3 gap-4 my-8 mx-12">
-        <div className="col-span-1">
-          <div className="text-xl font-bold text-[#F43F5E]">今日する</div>
+    <div className="grid grid-cols-3 gap-4 my-8 mx-12">
+      {mapTaskElement.map((task) => (
+        <div className="col-span-1" key={task.id}>
+          <div className={`text-xl font-bold text-[${task.color}]`}>
+            {task.header}
+          </div>
           <div className="mt-6">
-            {todoToday.map((item) => (
-              <div
-                key={`item-${item.id}`}
-                className="flex gap-3 justify-start p-1"
-              >
-                <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                <TaskInput
-                  setTextToday={setTextToday}
-                  setTextOther={setTextOther}
-                  setTextTomorrow={setTextTomorrow}
-                  updateTodo={updateTodo}
-                  item={item}
-                />
-              </div>
-            ))}
+            <ul>
+              {task.taskArray.map((item) => (
+                <li
+                  className="group flex gap-3 justify-start p-1"
+                  key={`item-${item.id}`}
+                >
+                  <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                  <TaskInput
+                    setTextToday={setTextToday}
+                    setTextOther={setTextOther}
+                    setTextTomorrow={setTextTomorrow}
+                    updateTodo={updateTodo}
+                    item={item}
+                  />
+                  <div className="invisible group-hover:visible">
+                    <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
+                      <MdOutlineContentCopy />
+                      <CgTrash />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
             <div className="flex justify-start p-1">
               <HiPlusCircle size={20} className="text-[#C2C6D2]" />
               <input
                 type="text"
-                value={textToday}
-                onChange={handleChangeTextToday}
+                value={task.value}
+                onChange={task.handleChangeEvent}
                 onKeyPress={async (e) => {
                   if (e.key === "Enter" && !isSending) {
                     setIsSending(true);
-                    await handleAddToday();
+                    await task.addTodoFunction();
                     setIsSending(false);
                   }
                 }}
@@ -135,107 +177,41 @@ export const Index: VFC = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-1">
-          <div className="text-xl font-bold text-[#FB923C]">明日する</div>
-          <div className="mt-6">
-            {todoTomorrow.map((item) => (
-              <div
-                key={`item-${item.id}`}
-                className="flex gap-3 justify-start p-1"
-              >
-                <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                <TaskInput
-                  setTextToday={setTextToday}
-                  setTextOther={setTextOther}
-                  setTextTomorrow={setTextTomorrow}
-                  updateTodo={updateTodo}
-                  item={item}
-                />
-              </div>
-            ))}
-            <div className="flex justify-start p-1">
-              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-              <input
-                type="text"
-                value={textTomorrow}
-                onChange={handleChangeTextTomorrow}
-                onKeyPress={async (e) => {
-                  if (e.key === "Enter" && !isSending) {
-                    setIsSending(true);
-                    await handleAddTomorrow();
-                    setIsSending(false);
-                  }
-                }}
-                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-                placeholder="タスクを追加する"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="col-span-1">
-          <div className="text-xl font-bold text-[#FBBF24]">今度する</div>
-          <div className="mt-6">
-            {todoOther.map((item) => (
-              <div
-                key={`item-${item.id}`}
-                className="flex gap-3 justify-start p-1"
-              >
-                <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                <TaskInput updateTodo={updateTodo} item={item} />
-              </div>
-            ))}
-            <div className="flex justify-start p-1">
-              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-              <input
-                type="text"
-                value={textOther}
-                onChange={handleChangeTextOther}
-                onKeyPress={async (e) => {
-                  if (e.key === "Enter" && !isSending) {
-                    setIsSending(true);
-                    await handleAddOther();
-                    setIsSending(false);
-                  }
-                }}
-                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-                placeholder="タスクを追加する"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
       {/* テスト用 */}
-      <div className="flex flex-col w-36">
-        <a>並べ替え対象</a>
-        <input
-          type="number"
-          value={target}
-          onChange={(e) => setTarget(Number(e.target.value))}
-        />
-        <a>挿入位置</a>
-        <input
-          type="number"
-          value={position}
-          onChange={(e) => setPosition(Number(e.target.value))}
-        />
-        <button
-          className="my-2 bg-gray-200"
-          onClick={async () => {
-            const isOk = await moveTodo(
-              todoToday,
-              todoToday[target].id,
-              position
-            );
-            if (!isOk) {
-              alert("並び替え失敗");
-            }
-            await updateTodo();
-          }}
-        >
-          変更
-        </button>
+      <div className="col-span-3">
+        <div className="flex flex-col w-36">
+          <a>並べ替え対象</a>
+          <input
+            type="number"
+            value={target}
+            onChange={(e) => setTarget(Number(e.target.value))}
+          />
+          <a>挿入位置</a>
+          <input
+            type="number"
+            value={position}
+            onChange={(e) => setPosition(Number(e.target.value))}
+          />
+          <button
+            className="my-2 bg-gray-200"
+            onClick={async () => {
+              const isOk = await moveTodo(
+                todoToday,
+                todoToday[target].id,
+                position
+              );
+              if (!isOk) {
+                alert("並び替え失敗");
+              }
+              await updateTodo();
+            }}
+          >
+            変更
+          </button>
+        </div>
+        <Dndkit />
       </div>
-      <Dndkit />
-    </>
+    </div>
   );
 };

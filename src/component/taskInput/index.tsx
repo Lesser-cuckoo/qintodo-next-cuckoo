@@ -25,8 +25,10 @@ export const TaskInput = (props: any) => {
       } else {
         alert("タスクの変更に失敗しました");
       }
+    } else {
+      setText(item.task);
     }
-  }, [text, user, item.id, updateTodo]);
+  }, [text, user, item.id, item.task, updateTodo]);
 
   return (
     <>
@@ -52,7 +54,7 @@ export const TaskInput = (props: any) => {
           }
         }}
         className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 cursor-pointer caret-[#F43F5E]"
-        placeholder={item.task}
+        // placeholder={item.task}
       />
     </>
   );
