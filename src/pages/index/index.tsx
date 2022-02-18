@@ -6,7 +6,7 @@ import { CgTrash } from "react-icons/cg";
 import { HiPlusCircle } from "react-icons/hi";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { Dndkit } from "src/component/dndkit";
-import { TaskInput } from "src/component/Input";
+import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
