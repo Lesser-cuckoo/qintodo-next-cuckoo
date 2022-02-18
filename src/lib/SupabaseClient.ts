@@ -97,10 +97,21 @@ export const moveTodo = async (
   }
   let sortkey = 0;
   if (targetIndex == 0) {
-    sortkey = todos[0].sortkey ? todos[0].sortkey - 0.5 : todos[0].id - 0.5;
+    const first = todos[0];
+    sortkey = first.sortkey ? first.sortkey : first.id;
+    if (Number.isInteger(sortkey)) {
+      sortkey -= 0.5;
+    } else {
+      sortkey = (sortkey + Math.floor(sortkey)) / 2;
+    }
   } else if (targetIndex == todos.length) {
     const last = todos.slice(-1)[0];
-    sortkey = last.sortkey ? last.sortkey + 0.5 : last.id + 0.5;
+    sortkey = last.sortkey ? last.sortkey : last.id;
+    if (Number.isInteger(sortkey)) {
+      sortkey += 0.5;
+    } else {
+      sortkey = (sortkey + Math.ceil(sortkey)) / 2;
+    }
   } else {
     const a = todos[targetIndex - 1];
     const sortkeyA = a.sortkey ? a.sortkey : a.id;
