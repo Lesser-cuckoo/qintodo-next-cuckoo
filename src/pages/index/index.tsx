@@ -22,21 +22,33 @@ export const Index: VFC = () => {
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextToday(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextToday(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
 
   const handleChangeTextTomorrow = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextTomorrow(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextTomorrow(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
 
   const handleChangeTextOther = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextOther(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextOther(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
@@ -102,6 +114,7 @@ export const Index: VFC = () => {
       value: textToday,
       handleChangeEvent: handleChangeTextToday,
       addTodoFunction: handleAddToday,
+      setState: setTodoToday,
     },
     {
       id: 2,
@@ -111,6 +124,7 @@ export const Index: VFC = () => {
       value: textTomorrow,
       handleChangeEvent: handleChangeTextTomorrow,
       addTodoFunction: handleAddTomorrow,
+      setState: setTodoTomorrow,
     },
     {
       id: 3,
@@ -120,61 +134,62 @@ export const Index: VFC = () => {
       value: textOther,
       handleChangeEvent: handleChangeTextOther,
       addTodoFunction: handleAddOther,
+      setState: setTodoOther,
     },
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-4 my-8 mx-12">
-      {mapTaskElement.map((task) => (
-        <div className="col-span-1" key={task.id}>
-          <div className={`text-xl font-bold text-[${task.color}]`}>
-            {task.header}
-          </div>
-          <div className="mt-6">
-            <ul>
-              {task.taskArray.map((item) => (
-                <li
-                  className="group flex gap-3 justify-start p-1"
-                  key={`item-${item.id}`}
-                >
-                  <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                  <TaskInput
-                    setTextToday={setTextToday}
-                    setTextOther={setTextOther}
-                    setTextTomorrow={setTextTomorrow}
-                    updateTodo={updateTodo}
-                    item={item}
-                  />
-                  <div className="invisible group-hover:visible">
+    <>
+      <div className="grid grid-cols-3 gap-4 my-8 mx-12">
+        {mapTaskElement.map((task) => (
+          <div className="col-span-1" key={task.id}>
+            <div className={`text-xl font-bold text-[${task.color}]`}>
+              {task.header}
+            </div>
+            <div className="mt-6">
+              <ul>
+                {task.taskArray.map((item) => (
+                  <li
+                    className="group flex gap-3 justify-start p-1"
+                    key={`item-${item.id}`}
+                  >
+                    <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                    <TaskInput
+                      setText={task.setState}
+                      // eslint-disable-next-line react/jsx-handler-names
+                      handleChangeEvent={task.handleChangeEvent}
+                      updateTodo={updateTodo}
+                      item={item}
+                    />
                     <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
                       <MdOutlineContentCopy />
                       <CgTrash />
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="flex justify-start p-1">
-              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-              <input
-                type="text"
-                value={task.value}
-                onChange={task.handleChangeEvent}
-                onKeyPress={async (e) => {
-                  if (e.key === "Enter" && !isSending) {
-                    setIsSending(true);
-                    await task.addTodoFunction();
-                    setIsSending(false);
-                  }
-                }}
-                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-                placeholder="タスクを追加する"
-              />
+                  </li>
+                ))}
+              </ul>
+              <div className="flex justify-start p-1">
+                <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+                <input
+                  type="text"
+                  value={task.value}
+                  onChange={task.handleChangeEvent}
+                  onKeyPress={async (e) => {
+                    if (e.key === "Enter" && !isSending) {
+                      setIsSending(true);
+                      await task.addTodoFunction();
+                      setIsSending(false);
+                    }
+                  }}
+                  className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
+                  placeholder="タスクを追加する"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <Dndkit />
-    </div>
+    </>
   );
 };
