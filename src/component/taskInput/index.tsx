@@ -53,7 +53,7 @@ export const TaskInput = (props: any) => {
             setIsSending(false);
           }
         }}
-        className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 cursor-pointer caret-[#F43F5E]"
+        className="h-5 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 cursor-pointer caret-[#F43F5E]"
         // placeholder={item.task}
       />
     </>
