@@ -134,7 +134,7 @@ export const Index: VFC = () => {
             <ul>
               {task.taskArray.map((item) => (
                 <li
-                  className="flex gap-3 justify-start p-1"
+                  className="group flex gap-3 justify-start p-1"
                   key={`item-${item.id}`}
                 >
                   <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
