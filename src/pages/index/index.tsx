@@ -6,6 +6,7 @@ import { CgTrash } from "react-icons/cg";
 import { HiPlusCircle } from "react-icons/hi";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { Dndkit } from "src/component/dndkit";
+import { TaskInput } from "src/component/Input";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
@@ -133,14 +134,22 @@ export const Index: VFC = () => {
             <ul>
               {task.taskArray.map((item) => (
                 <li
-                  className="group flex gap-3 justify-start p-1"
+                  className="flex gap-3 justify-start p-1"
                   key={`item-${item.id}`}
                 >
                   <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                  <p className="grow h-5">{item.task}</p>
-                  <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
-                    <MdOutlineContentCopy />
-                    <CgTrash />
+                  <TaskInput
+                    setTextToday={setTextToday}
+                    setTextOther={setTextOther}
+                    setTextTomorrow={setTextTomorrow}
+                    updateTodo={updateTodo}
+                    item={item}
+                  />
+                  <div className="invisible group-hover:visible">
+                    <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
+                      <MdOutlineContentCopy />
+                      <CgTrash />
+                    </div>
                   </div>
                 </li>
               ))}

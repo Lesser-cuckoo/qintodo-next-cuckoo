@@ -65,3 +65,16 @@ export const getTodo = async (taskType: TaskType) => {
     }
   }
 };
+
+export const editTodo = async (id: string, task: string) => {
+  const { error } = await client
+    .from("todos")
+    .update({ task: task })
+    .eq("id", id);
+
+  if (error) {
+    return false;
+  } else {
+    return true;
+  }
+};
