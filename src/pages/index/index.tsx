@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { HiPlusCircle } from "react-icons/hi";
 import { Dndkit } from "src/component/dndkit";
-import { TaskInput } from "src/component/Input";
+import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, getTodo } from "src/lib/SupabaseClient";
 
