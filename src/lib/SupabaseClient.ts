@@ -21,6 +21,7 @@ export type TodoType = {
   task: string;
   deadline: Date | null;
   isComplete: boolean;
+  sortkey: number | null;
 };
 
 export const addTodo = async (
@@ -39,6 +40,13 @@ export const addTodo = async (
   }
 };
 
+const sortTodos = (todos: TodoType[]) =>
+  todos.sort((a, b) => {
+    const keyA = a.sortkey ? a.sortkey : a.id;
+    const keyB = b.sortkey ? b.sortkey : b.id;
+    return keyA < keyB ? -1 : 1;
+  });
+
 export const getTodo = async (taskType: TaskType) => {
   if (taskType != "other") {
     const start = getDate(taskType);
@@ -51,7 +59,7 @@ export const getTodo = async (taskType: TaskType) => {
     if (error || !data) {
       return [];
     } else {
-      return data;
+      return sortTodos(data);
     }
   } else {
     const { data, error } = await client
@@ -61,17 +69,49 @@ export const getTodo = async (taskType: TaskType) => {
     if (error || !data) {
       return [];
     } else {
-      return data;
+      return sortTodos(data);
     }
   }
 };
 
-export const editTodo = async (id: string, task: string) => {
+export const editTodo = async (id: number, task: string) => {
   const { error } = await client
     .from("todos")
     .update({ task: task })
     .eq("id", id);
 
+  if (error) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+export const moveTodo = async (
+  todos: TodoType[],
+  id: number,
+  targetIndex: number
+) => {
+  if (targetIndex < 0 || todos.length < targetIndex) {
+    return false;
+  }
+  let sortkey = 0;
+  if (targetIndex == 0) {
+    sortkey = todos[0].sortkey ? todos[0].sortkey - 0.5 : todos[0].id - 0.5;
+  } else if (targetIndex == todos.length) {
+    const last = todos.slice(-1)[0];
+    sortkey = last.sortkey ? last.sortkey + 0.5 : last.id + 0.5;
+  } else {
+    const a = todos[targetIndex - 1];
+    const sortkeyA = a.sortkey ? a.sortkey : a.id;
+    const b = todos[targetIndex - 1];
+    const sortkeyB = b.sortkey ? b.sortkey : b.id;
+    sortkey = (sortkeyA + sortkeyB) / 2;
+  }
+  const { error } = await client
+    .from("todos")
+    .update({ sortkey: sortkey })
+    .eq("id", id);
   if (error) {
     return false;
   } else {
