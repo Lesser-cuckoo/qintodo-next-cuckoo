@@ -8,7 +8,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { Dndkit } from "src/component/dndkit";
 import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
-import { addTodo, getTodo } from "src/lib/SupabaseClient";
+import { addTodo, getTodo, moveTodo } from "src/lib/SupabaseClient";
 
 export const Index: VFC = () => {
   const { user } = Auth.useUser();
@@ -19,6 +19,10 @@ export const Index: VFC = () => {
   const [todoTomorrow, setTodoTomorrow] = useState<TodoType[]>([]);
   const [todoOther, setTodoOther] = useState<TodoType[]>([]);
   const [isSending, setIsSending] = useState<boolean>(false);
+
+  //テスト用
+  const [target, setTarget] = useState<number>(0);
+  const [position, setPosition] = useState<number>(0);
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,7 +178,40 @@ export const Index: VFC = () => {
           </div>
         </div>
       ))}
-      <Dndkit />
+      {/* テスト用 */}
+      <div className="col-span-3">
+        <div className="flex flex-col w-36">
+          <a>並べ替え対象</a>
+          <input
+            type="number"
+            value={target}
+            onChange={(e) => setTarget(Number(e.target.value))}
+          />
+          <a>挿入位置</a>
+          <input
+            type="number"
+            value={position}
+            onChange={(e) => setPosition(Number(e.target.value))}
+          />
+          <button
+            className="my-2 bg-gray-200"
+            onClick={async () => {
+              const isOk = await moveTodo(
+                todoToday,
+                todoToday[target].id,
+                position
+              );
+              if (!isOk) {
+                alert("並び替え失敗");
+              }
+              await updateTodo();
+            }}
+          >
+            変更
+          </button>
+        </div>
+        <Dndkit />
+      </div>
     </div>
   );
 };
