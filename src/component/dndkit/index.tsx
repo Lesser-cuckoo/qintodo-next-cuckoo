@@ -1,7 +1,7 @@
 import {
   closestCorners,
   DndContext,
-  DragOverlay,
+  // DragOverlay,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -11,7 +11,7 @@ import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useState } from "react";
 
 import { Container } from "./container";
-import { Item } from "./sortable_item";
+// import { Item } from "./sortable_item";
 
 export const Dndkit = () => {
   //Todoリストをここに格納する
@@ -20,7 +20,7 @@ export const Dndkit = () => {
     tomorrow: ["4", "5", "6"],
     other: ["7", "8", "9"],
   });
-  const [activeId, setActiveId] = useState<any>();
+  // const [activeId, setActiveId] = useState<any>();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -38,12 +38,13 @@ export const Dndkit = () => {
   };
 
   //つかんだとき
-  const handleDragStart = (event: any) => {
-    const { active } = event;
-    const { id } = active;
-
-    setActiveId(id);
-  };
+  const handleDragStart = () =>
+    // event: any
+    {
+      // const { active } = event;
+      // const { id } = active;
+      // setActiveId(id);
+    };
 
   //動かして他の要素の上に移動した時
   const handleDragOver = (event: any) => {
@@ -138,11 +139,11 @@ export const Dndkit = () => {
       });
     }
 
-    setActiveId(null);
+    // setActiveId(null);
   };
 
   return (
-    <div className="flex flex-row w-full">
+    <div className="flex flex-row">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
@@ -153,7 +154,12 @@ export const Dndkit = () => {
         <Container id="today" items={items.today} />
         <Container id="tomorrow" items={items.tomorrow} />
         <Container id="other" items={items.other} />
-        <DragOverlay>{activeId ? <Item id={activeId} /> : null}</DragOverlay>
+        {/* <DragOverlay>
+          {activeId ? (
+            <Item id={activeId} />
+          ) : // <div>aaaa</div>
+          null}
+        </DragOverlay> */}
       </DndContext>
     </div>
   );
