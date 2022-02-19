@@ -115,7 +115,7 @@ export const moveTodo = async (
   } else {
     const a = todos[targetIndex - 1];
     const sortkeyA = a.sortkey ? a.sortkey : a.id;
-    const b = todos[targetIndex - 1];
+    const b = todos[targetIndex];
     const sortkeyB = b.sortkey ? b.sortkey : b.id;
     sortkey = (sortkeyA + sortkeyB) / 2;
   }
