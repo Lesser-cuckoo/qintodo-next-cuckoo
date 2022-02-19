@@ -24,6 +24,13 @@ export type TodoType = {
   sortkey: number | null;
 };
 
+export type ProfileType = {
+  id: number;
+  uid: string;
+  username: string;
+  avatar: string;
+};
+
 export const addTodo = async (
   uid: string,
   task: string,
@@ -31,7 +38,7 @@ export const addTodo = async (
 ) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
   const { error } = await client
-    .from("todos")
+    .from<TodoType>("todos")
     .insert([{ uid: uid, task: task, deadline: deadline }]);
   if (error) {
     return false;
@@ -140,5 +147,22 @@ export const moveTodo = async (
     return false;
   } else {
     return true;
+  }
+};
+
+export const getProfile = async (uid: string) => {
+  const { data, error } = await client
+    .from<ProfileType>("profiles")
+    .select("*");
+  if (error || !data) {
+    return null;
+  } else {
+    if (data.length == 0) {
+      // const { error: errorInsert } =
+      await client
+        .from<ProfileType>("todos")
+        .insert([{ uid: uid, username: "ユーザー", avatar: "" }]);
+    }
+    return data;
   }
 };
