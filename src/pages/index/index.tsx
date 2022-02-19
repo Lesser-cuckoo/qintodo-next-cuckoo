@@ -124,57 +124,59 @@ export const Index: VFC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-4 my-8 mx-12">
-      {mapTaskElement.map((task) => (
-        <div className="col-span-1" key={task.id}>
-          <div className={`text-xl font-bold text-[${task.color}]`}>
-            {task.header}
-          </div>
-          <div className="mt-6">
-            <ul>
-              {task.taskArray.map((item) => (
-                <li
-                  className="group flex gap-3 justify-start p-1"
-                  key={`item-${item.id}`}
-                >
-                  <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
-                  <TaskInput
-                    setTextToday={setTextToday}
-                    setTextOther={setTextOther}
-                    setTextTomorrow={setTextTomorrow}
-                    updateTodo={updateTodo}
-                    item={item}
-                  />
-                  <div className="invisible group-hover:visible">
-                    <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
-                      <MdOutlineContentCopy />
-                      <CgTrash />
+    <>
+      <div className="grid grid-cols-3 gap-4 my-8 mx-12">
+        {mapTaskElement.map((task) => (
+          <div className="col-span-1" key={task.id}>
+            <div className={`text-xl font-bold text-[${task.color}]`}>
+              {task.header}
+            </div>
+            <div className="mt-6">
+              <ul>
+                {task.taskArray.map((item) => (
+                  <li
+                    className="group flex gap-3 justify-start p-1"
+                    key={`item-${item.id}`}
+                  >
+                    <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                    <TaskInput
+                      setTextToday={setTextToday}
+                      setTextOther={setTextOther}
+                      setTextTomorrow={setTextTomorrow}
+                      updateTodo={updateTodo}
+                      item={item}
+                    />
+                    <div className="invisible group-hover:visible">
+                      <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
+                        <MdOutlineContentCopy />
+                        <CgTrash />
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="flex justify-start p-1">
-              <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-              <input
-                type="text"
-                value={task.value}
-                onChange={task.handleChangeEvent}
-                onKeyPress={async (e) => {
-                  if (e.key === "Enter" && !isSending) {
-                    setIsSending(true);
-                    await task.addTodoFunction();
-                    setIsSending(false);
-                  }
-                }}
-                className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-                placeholder="タスクを追加する"
-              />
+                  </li>
+                ))}
+              </ul>
+              <div className="flex justify-start p-1">
+                <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+                <input
+                  type="text"
+                  value={task.value}
+                  onChange={task.handleChangeEvent}
+                  onKeyPress={async (e) => {
+                    if (e.key === "Enter" && !isSending) {
+                      setIsSending(true);
+                      await task.addTodoFunction();
+                      setIsSending(false);
+                    }
+                  }}
+                  className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
+                  placeholder="タスクを追加する"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <Dndkit />
-    </div>
+    </>
   );
 };
