@@ -8,6 +8,9 @@ export const TaskInput = (props: any) => {
   const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
 
+  const inputstyle = "line-through text-[#C2C6D2]";
+  const lineThrough: string = item.iscomplete ? inputstyle : "";
+
   const handleChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setText(e.target.value);
@@ -53,8 +56,8 @@ export const TaskInput = (props: any) => {
             setIsSending(false);
           }
         }}
-        className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 cursor-pointer caret-[#F43F5E]"
-        // placeholder={item.task}
+        className={`h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 cursor-pointer caret-[#F43F5E] ${lineThrough}`}
+        disabled={item.iscomplete}
       />
     </>
   );

@@ -20,7 +20,7 @@ export type TodoType = {
   inserted: Date;
   task: string;
   deadline: Date | null;
-  isComplete: boolean;
+  iscomplete: boolean;
   sortkey: number | null;
 };
 
@@ -78,6 +78,19 @@ export const editTodo = async (id: number, task: string) => {
   const { error } = await client
     .from("todos")
     .update({ task: task })
+    .eq("id", id);
+
+  if (error) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+export const editIsComplete = async (id: number, isComplete: boolean) => {
+  const { error } = await client
+    .from("todos")
+    .update({ iscomplete: isComplete })
     .eq("id", id);
 
   if (error) {
