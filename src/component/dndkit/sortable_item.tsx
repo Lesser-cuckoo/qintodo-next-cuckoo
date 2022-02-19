@@ -12,14 +12,14 @@ export const Item = (props: any) => {
     <>
       <div className="inline relative top-2">
         <div
-          className="inline-block overflow-hidden p-1 px-4 h-0 whitespace-nowrap opacity-0"
+          className="inline-block overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0"
           // data-placeholder="文字を入力してください"
         >
           {text ? text : "文字を入力してください"}
         </div>
         <input
           type="text"
-          className="absolute top-0 left-0 p-1 w-full h-5 bg-white border-none"
+          className="absolute top-0 left-0 p-1 w-full h-5 bg-white border-none focus:ring-0"
           placeholder="文字を入力してください"
           onChange={handleChange}
           value={text}
