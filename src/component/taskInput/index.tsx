@@ -1,8 +1,14 @@
 import { Auth } from "@supabase/ui";
 import { useCallback, useState } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
 import { editTodo } from "src/lib/SupabaseClient";
 
-export const TaskInput = (props: any) => {
+type Props = {
+  item: TodoType;
+  updateTodo: () => void;
+};
+
+export const TaskInput = (props: Props) => {
   const { item, updateTodo } = props;
   const { user } = Auth.useUser();
   const [text, setText] = useState<string>(item.task);
