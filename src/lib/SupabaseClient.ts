@@ -78,3 +78,17 @@ export const editTodo = async (id: string, task: string) => {
     return true;
   }
 };
+
+export const deleteTodo = async (id: number) => {
+  const { data, error } = await client
+    .from<TodoType>("todos")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("削除に失敗しました");
+    return;
+  } else {
+    return data;
+  }
+};
