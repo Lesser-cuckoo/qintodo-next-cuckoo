@@ -19,6 +19,7 @@ export const Index: VFC = () => {
   const [todoTomorrow, setTodoTomorrow] = useState<TodoType[]>([]);
   const [todoOther, setTodoOther] = useState<TodoType[]>([]);
   const [isSending, setIsSending] = useState<boolean>(false);
+  const [isAddTask, setAddTask] = useState<boolean>(false);
 
   //テスト用
   const [target, setTarget] = useState<number>(0);
@@ -127,6 +128,10 @@ export const Index: VFC = () => {
     },
   ];
 
+  const handleClickButton = () => {
+    setAddTask(true);
+  };
+
   return (
     <>
       <div className="grid grid-cols-3 gap-4 my-8 mx-12">
@@ -160,21 +165,46 @@ export const Index: VFC = () => {
                 ))}
               </ul>
               <div className="flex justify-start p-1">
-                <HiPlusCircle size={20} className="text-[#C2C6D2]" />
-                <input
-                  type="text"
-                  value={task.value}
-                  onChange={task.handleChangeEvent}
-                  onKeyPress={async (e) => {
-                    if (e.key === "Enter" && !isSending) {
-                      setIsSending(true);
-                      await task.addTodoFunction();
-                      setIsSending(false);
-                    }
-                  }}
-                  className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
-                  placeholder="タスクを追加する"
-                />
+                {isAddTask ? (
+                  <>
+                    <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+
+                    <input
+                      type="text"
+                      value={task.value}
+                      onChange={task.handleChangeEvent}
+                      onKeyPress={async (e) => {
+                        if (e.key === "Enter" && !isSending) {
+                          setIsSending(true);
+                          await task.addTodoFunction();
+                          setIsSending(false);
+                        }
+                        setAddTask(false);
+                      }}
+                      onBlur={async () => {
+                        //同じ文言であれば編集しないようにする
+                        if (!isSending) {
+                          setIsSending(true);
+                          await task.addTodoFunction();
+                          setIsSending(false);
+                        }
+                        setAddTask(false);
+                      }}
+                      className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 cursor-pointer caret-[#F43F5E]"
+                      // placeholder={item.task}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <HiPlusCircle size={20} className="text-[#C2C6D2]" />
+                    <button
+                      onClick={handleClickButton}
+                      className="h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 caret-[#F43F5E]"
+                    >
+                      タスクを追加する
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
