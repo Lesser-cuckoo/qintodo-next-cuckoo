@@ -28,21 +28,33 @@ export const Index: VFC = () => {
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextToday(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextToday(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
 
   const handleChangeTextTomorrow = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextTomorrow(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextTomorrow(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
 
   const handleChangeTextOther = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextOther(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextOther(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
@@ -123,6 +135,7 @@ export const Index: VFC = () => {
       value: textToday,
       handleChangeEvent: handleChangeTextToday,
       addTodoFunction: handleAddToday,
+      setState: setTodoToday,
     },
     {
       id: 2,
@@ -132,6 +145,7 @@ export const Index: VFC = () => {
       value: textTomorrow,
       handleChangeEvent: handleChangeTextTomorrow,
       addTodoFunction: handleAddTomorrow,
+      setState: setTodoTomorrow,
     },
     {
       id: 3,
@@ -141,6 +155,7 @@ export const Index: VFC = () => {
       value: textOther,
       handleChangeEvent: handleChangeTextOther,
       addTodoFunction: handleAddOther,
+      setState: setTodoOther,
     },
   ];
 
