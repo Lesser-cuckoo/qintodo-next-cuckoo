@@ -1,11 +1,31 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useState } from "react";
 
 export const Item = (props: any) => {
   const { id } = props;
-
+  const [text, setText] = useState(id);
+  const handleChange = (e: any) => {
+    setText(e.target.value);
+  };
   return (
-    <div className="flex items-center pl-3 mt-2 w-full h-10 bg-white">{id}</div>
+    <>
+      <div className="inline relative top-2">
+        <div
+          className="inline-block overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0"
+          // data-placeholder="文字を入力してください"
+        >
+          {text ? text : "文字を入力してください"}
+        </div>
+        <input
+          type="text"
+          className="absolute top-0 left-0 p-1 w-full h-5 bg-white border-none focus:ring-0"
+          placeholder="文字を入力してください"
+          onChange={handleChange}
+          value={text}
+        />
+      </div>
+    </>
   );
 };
 
@@ -25,7 +45,13 @@ export const SortableItem = (props: Props) => {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      className="relative w-60 h-10"
+    >
+      <div className="absolute top-0 w-full h-10 bg-white" {...listeners}></div>
       <Item id={id} />
     </div>
   );
