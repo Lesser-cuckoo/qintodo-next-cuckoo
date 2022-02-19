@@ -6,8 +6,10 @@ import { CgTrash } from "react-icons/cg";
 import { HiPlusCircle } from "react-icons/hi";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { Dndkit } from "src/component/dndkit";
+import { RadioButton } from "src/component/RadioButton";
 import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
+import { editIsComplete } from "src/lib/SupabaseClient";
 import { addTodo, getTodo, moveTodo } from "src/lib/SupabaseClient";
 
 export const Index: VFC = () => {
@@ -27,21 +29,33 @@ export const Index: VFC = () => {
 
   const handleChangeTextToday = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextToday(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextToday(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
 
   const handleChangeTextTomorrow = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextTomorrow(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextTomorrow(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
 
   const handleChangeTextOther = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextOther(e.target.value);
+      if (e.target.value.length < 100) {
+        setTextOther(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
@@ -54,6 +68,21 @@ export const Index: VFC = () => {
     data = await getTodo("other");
     setTodoOther(data);
   }, []);
+
+  const handleEditIsComplete = useCallback(
+    async (itemId: number, itemiscomplete: boolean) => {
+      if (user) {
+        const isSuccess = await editIsComplete(itemId, itemiscomplete);
+        if (isSuccess) {
+          updateTodo();
+        } else {
+          alert("isComplete処理に失敗しました。");
+        }
+      } else {
+      }
+    },
+    [user, updateTodo]
+  );
 
   const handleAddToday = useCallback(async () => {
     if (textToday && user) {
@@ -107,6 +136,7 @@ export const Index: VFC = () => {
       value: textToday,
       handleChangeEvent: handleChangeTextToday,
       addTodoFunction: handleAddToday,
+      setState: setTodoToday,
     },
     {
       id: 2,
@@ -116,6 +146,7 @@ export const Index: VFC = () => {
       value: textTomorrow,
       handleChangeEvent: handleChangeTextTomorrow,
       addTodoFunction: handleAddTomorrow,
+      setState: setTodoTomorrow,
     },
     {
       id: 3,
@@ -125,6 +156,7 @@ export const Index: VFC = () => {
       value: textOther,
       handleChangeEvent: handleChangeTextOther,
       addTodoFunction: handleAddOther,
+      setState: setTodoOther,
     },
   ];
 
@@ -147,7 +179,11 @@ export const Index: VFC = () => {
                     className="group flex gap-3 justify-start p-1"
                     key={`item-${item.id}`}
                   >
-                    <div className="aspect-square h-5 rounded-full border-2 border-[#C2C6D2]"></div>
+                    <RadioButton
+                      centerColor="bg-[#F43F5E]"
+                      handleEditIsComplete={handleEditIsComplete}
+                      item={item}
+                    />
                     <TaskInput
                       setTextToday={setTextToday}
                       setTextOther={setTextOther}
