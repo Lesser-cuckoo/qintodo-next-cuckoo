@@ -8,7 +8,7 @@ export const TaskInput = (props: any) => {
   const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
 
-  const inputstyle = "line-through text-[#C2C6D2] disabled:opacity-75";
+  const inputstyle = "line-through text-[#C2C6D2]";
   const lineThrough: string = item.iscomplete ? inputstyle : "";
 
   const handleChangeText = useCallback(
@@ -57,7 +57,7 @@ export const TaskInput = (props: any) => {
           }
         }}
         className={`h-5 placeholder:text-[#C2C6D2] border-0 focus:ring-0 cursor-pointer caret-[#F43F5E] ${lineThrough}`}
-        // placeholder={item.task}
+        disabled={item.iscomplete}
       />
     </>
   );
