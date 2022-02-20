@@ -19,7 +19,11 @@ export const TaskInput = (props: Props) => {
 
   const handleChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setText(e.target.value);
+      if (e.target.value.length < 100) {
+        setText(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     []
   );
