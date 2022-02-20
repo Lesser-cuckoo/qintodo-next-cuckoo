@@ -10,7 +10,6 @@ const containerStyle = {
   background: "#dadada",
   padding: 10,
   margin: 10,
-  flex: 1,
 };
 
 export const Container = (props: any) => {
