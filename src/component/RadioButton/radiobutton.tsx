@@ -8,7 +8,7 @@ type Style = {
 
 export const RadioButton2: VFC<Style> = (props) => {
   const { centerColor, isCompleted, setIsCompleted } = props;
-  const bgColor: string = isCompleted ? centerColor : "bg-white";
+  const bgColor: string = isCompleted ? `bg-[${centerColor}]` : "bg-white";
 
   const handleJudgeCompleted = () => {
     setIsCompleted(!isCompleted);

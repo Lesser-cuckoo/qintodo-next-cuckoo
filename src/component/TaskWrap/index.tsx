@@ -8,7 +8,7 @@ import { editIsComplete } from "src/lib/SupabaseClient";
 
 export const TaskWrap = (props: any) => {
   const { user } = Auth.useUser();
-  const { item, updateTodo } = props;
+  const { item, taskColor, updateTodo } = props;
 
   const handleEditIsComplete = useCallback(
     async (itemId: number, itemiscomplete: boolean) => {
@@ -30,7 +30,7 @@ export const TaskWrap = (props: any) => {
       <li className="group flex justify-start py-2 px-1">
         <RadioButton
           handleEditIsComplete={handleEditIsComplete}
-          centerColor="bg-[#F43F5E]"
+          centerColor={taskColor}
           item={item}
         />
         <TaskInput item={item} updateTodo={updateTodo} />

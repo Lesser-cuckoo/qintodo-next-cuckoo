@@ -6,7 +6,7 @@ import { addTodo } from "src/lib/SupabaseClient";
 
 export const NewTask = (props: any) => {
   const { user } = Auth.useUser();
-  const { day, updateTodo } = props;
+  const { day, taskColor, updateTodo } = props;
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const inputstyle = "line-through text-[#C2C6D2]";
@@ -51,7 +51,7 @@ export const NewTask = (props: any) => {
         {isAddTask ? (
           <>
             <RadioButton2
-              centerColor="bg-[#F43F5E]"
+              centerColor={taskColor}
               setIsCompleted={setIsComplete}
               isCompleted={isComplete}
             />

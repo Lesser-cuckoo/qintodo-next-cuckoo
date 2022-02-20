@@ -71,10 +71,15 @@ export const Index: VFC = () => {
                     key={`item-${item.id}`}
                     updateTodo={updateTodo}
                     item={item}
+                    taskColor={task.color}
                   />
                 ))}
               </ul>
-              <NewTask day={task.day} updateTodo={updateTodo} />
+              <NewTask
+                day={task.day}
+                updateTodo={updateTodo}
+                taskColor={task.color}
+              />
             </div>
           </div>
         ))}
