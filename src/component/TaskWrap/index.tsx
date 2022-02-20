@@ -4,7 +4,7 @@ import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { RadioButton } from "src/component/RadioButton";
 import { TaskInput } from "src/component/taskInput";
-import { editIsComplete } from "src/lib/SupabaseClient";
+import { deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
 
 export const TaskWrap = (props: any) => {
   const { user } = Auth.useUser();
@@ -25,6 +25,17 @@ export const TaskWrap = (props: any) => {
     [user, updateTodo]
   );
 
+  const handleDelete = async (id: number) => {
+    if (user) {
+      const isSuccess = await deleteTodo(id);
+      if (isSuccess) {
+        updateTodo();
+      } else {
+        alert("タスクの削除に失敗しました");
+      }
+    }
+  };
+
   return (
     <>
       <li className="group flex justify-start py-2 px-1">
@@ -37,7 +48,7 @@ export const TaskWrap = (props: any) => {
         <div className="invisible group-hover:visible">
           <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
             <MdOutlineContentCopy />
-            <CgTrash />
+            <CgTrash onClick={async () => await handleDelete(item.id)} />
           </div>
         </div>
       </li>
