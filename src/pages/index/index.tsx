@@ -195,13 +195,7 @@ export const Index: VFC = () => {
                       handleEditIsComplete={handleEditIsComplete}
                       item={item}
                     />
-                    <TaskInput
-                      setTextToday={setTextToday}
-                      setTextOther={setTextOther}
-                      setTextTomorrow={setTextTomorrow}
-                      updateTodo={updateTodo}
-                      item={item}
-                    />
+                    <TaskInput updateTodo={updateTodo} item={item} />
                     <div className="invisible group-hover:visible">
                       <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
                         <MdOutlineContentCopy />
