@@ -33,7 +33,8 @@ export const Index: VFC = () => {
     {
       id: 1,
       header: "今日する",
-      color: "#F43F5E",
+      color: "text-[#F43F5E]",
+      bgColor: "bg-[#F43F5E]",
       taskArray: todoToday,
       day: "today",
       setState: setTodoToday,
@@ -41,7 +42,8 @@ export const Index: VFC = () => {
     {
       id: 2,
       header: "明日する",
-      color: "#FB923C",
+      color: "text-[#FB923C]",
+      bgColor: "bg-[#FB923C]",
       taskArray: todoTomorrow,
       day: "tomorrow",
       setState: setTodoTomorrow,
@@ -49,7 +51,8 @@ export const Index: VFC = () => {
     {
       id: 3,
       header: "今度する",
-      color: "#FBBF24",
+      color: "text-[#FBBF24]",
+      bgColor: "bg-[#FBBF24]",
       taskArray: todoOther,
       day: "other",
       setState: setTodoOther,
@@ -61,7 +64,7 @@ export const Index: VFC = () => {
       <div className="grid grid-cols-3 gap-4 my-8 mx-12">
         {mapTaskElement.map((task) => (
           <div className="col-span-1" key={task.id}>
-            <div className={`text-xl font-bold text-[${task.color}]`}>
+            <div className={`text-xl font-bold ${task.color}`}>
               {task.header}
             </div>
             <div className="mt-6">
@@ -71,14 +74,14 @@ export const Index: VFC = () => {
                     key={`item-${item.id}`}
                     updateTodo={updateTodo}
                     item={item}
-                    taskColor={task.color}
+                    taskColor={task.bgColor}
                   />
                 ))}
               </ul>
               <NewTask
                 day={task.day}
                 updateTodo={updateTodo}
-                taskColor={task.color}
+                taskColor={task.bgColor}
               />
             </div>
           </div>
