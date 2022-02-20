@@ -9,8 +9,13 @@ import { Dndkit } from "src/component/dndkit";
 import { RadioButton } from "src/component/RadioButton";
 import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
-import { editIsComplete } from "src/lib/SupabaseClient";
-import { addTodo, getTodo, moveTodo } from "src/lib/SupabaseClient";
+import {
+  addTodo,
+  deleteTodo,
+  editIsComplete,
+  getTodo,
+  moveTodo,
+} from "src/lib/SupabaseClient";
 
 export const Index: VFC = () => {
   const { user } = Auth.useUser();
@@ -122,6 +127,17 @@ export const Index: VFC = () => {
     }
   }, [textOther, user, updateTodo]);
 
+  const handleDelete = async (id: number) => {
+    if (user) {
+      const isSuccess = await deleteTodo(id);
+      if (isSuccess) {
+        updateTodo();
+      } else {
+        alert("タスクの削除に失敗しました");
+      }
+    }
+  };
+
   useEffect(() => {
     updateTodo();
   }, [updateTodo]);
@@ -179,17 +195,13 @@ export const Index: VFC = () => {
                       handleEditIsComplete={handleEditIsComplete}
                       item={item}
                     />
-                    <TaskInput
-                      setTextToday={setTextToday}
-                      setTextOther={setTextOther}
-                      setTextTomorrow={setTextTomorrow}
-                      updateTodo={updateTodo}
-                      item={item}
-                    />
+                    <TaskInput updateTodo={updateTodo} item={item} />
                     <div className="invisible group-hover:visible">
                       <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
                         <MdOutlineContentCopy />
-                        <CgTrash />
+                        <CgTrash
+                          onClick={async () => await handleDelete(item.id)}
+                        />
                       </div>
                     </div>
                   </li>
