@@ -18,11 +18,11 @@ export const RadioButton: VFC<Style> = (props) => {
   return (
     <>
       <div
-        className={`flex justify-center p-[0.15rem] w-5 h-5 rounded-full ring-2 ring-gray-200 mr-1`}
+        className={`flex justify-center p-[0.15rem] w-5 h-5 rounded-full ring-2 ring-gray-200`}
         onClick={handleJudgeCompleted}
       >
         <button
-          className={`outline-none w-full h-full rounded-full ${bgColor}`}
+          className={`outline-none w-full h-full rounded-full  ${bgColor}`}
         />
       </div>
     </>
