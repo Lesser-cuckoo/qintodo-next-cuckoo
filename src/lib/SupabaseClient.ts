@@ -27,12 +27,18 @@ export type TodoType = {
 export const addTodo = async (
   uid: string,
   task: string,
-  taskType: TaskType
+  taskType: TaskType,
+  isComplete: boolean
 ) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
-  const { error } = await client
-    .from("todos")
-    .insert([{ uid: uid, task: task, deadline: deadline }]);
+  const { error } = await client.from("todos").insert([
+    {
+      uid: uid,
+      task: task,
+      deadline: deadline,
+      iscomplete: isComplete,
+    },
+  ]);
   if (error) {
     return false;
   } else {
