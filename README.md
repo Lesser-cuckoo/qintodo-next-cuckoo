@@ -82,17 +82,21 @@ create table todos (
 
 alter table todos enable row level security;
 
-create policy "Individuals can create todos." on todos for
-    insert with check (auth.uid() = uid);
+create policy "Individuals can create todos."
+  on todos for insert
+  with check (auth.uid() = uid);
 
-create policy "Individuals can view their own todos. " on todos for
-    select using (auth.uid() = uid);
+create policy "Individuals can view their own todos. "
+  on todos for select
+  using (auth.uid() = uid);
 
-create policy "Individuals can update their own todos." on todos for
-    update using (auth.uid() = uid);
+create policy "Individuals can update their own todos."
+  on todos for update
+  using (auth.uid() = uid);
 
-create policy "Individuals can delete their own todos." on todos for
-    delete using (auth.uid() = uid);
+create policy "Individuals can delete their own todos."
+  on todos for
+  delete using (auth.uid() = uid);
 
 -- Create a table for Profiles
 create table profiles (
@@ -104,19 +108,19 @@ create table profiles (
 
 alter table profiles enable row level security;
 
-create policy "Public profiles are viewable by everyone."
-  on profiles for select
-  using ( true );
-
-create policy "Individuals can insert their own profile."
+create policy "Individuals can insert their own profiles."
   on profiles for insert
   with check ( auth.uid() = uid );
 
-create policy "Individuals can update own profile."
+create policy "Individuals can view their own profiles."
+  on profiles for select
+  using (auth.uid() = uid);
+
+create policy "Individuals can update own profiles."
   on profiles for update
   using ( auth.uid() = uid );
 
-create policy "Individuals can delete their own profile."
+create policy "Individuals can delete their own profiles."
   on profiles for delete
   using (auth.uid() = uid);
 ```

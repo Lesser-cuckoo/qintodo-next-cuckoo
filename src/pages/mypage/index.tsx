@@ -2,7 +2,6 @@ import { Auth } from "@supabase/ui";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Avatar } from "src/component/Avatar";
 import {
-  addNewProfile,
   getProfile,
   updateProfile,
   uploadAvatar,
@@ -19,18 +18,13 @@ export const Mypage = () => {
 
   const iconInputRef = useRef<HTMLInputElement | null>(null);
 
-  const fetchProfile = useCallback(async (uid: string) => {
+  const fetchProfile = useCallback(async () => {
     const profile = await getProfile();
     if (profile) {
       setUsername(profile.username);
       setEditName(profile.username);
       setAvatar(profile.avatar);
       setPreviewIcon(profile.avatar);
-    } else {
-      const isOk = await addNewProfile(uid);
-      if (!isOk) {
-        alert("プロフィールの新規登録に失敗しました。");
-      }
     }
   }, []);
 
@@ -77,14 +71,14 @@ export const Mypage = () => {
       if (!isOkUpdate) {
         alert("プロフィールの更新に失敗しました。");
       } else {
-        fetchProfile(user.id);
+        fetchProfile();
       }
     }
   }, [user, editName, previewIconFile, avatar, fetchProfile]);
 
   useEffect(() => {
     if (user) {
-      fetchProfile(user.id);
+      fetchProfile();
     }
   }, [user, fetchProfile]);
 
