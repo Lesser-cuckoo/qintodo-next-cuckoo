@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 import { editTodo } from "src/lib/SupabaseClient";
 
 export const TaskInput = (props: any) => {
-  const { item, updateTodo } = props;
+  const { item, outlineColor, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
-  const [text, setText] = useState<string>(item.task);
+  // const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
 
   const inputstyle = "line-through text-[#C2C6D2]";
@@ -15,7 +15,7 @@ export const TaskInput = (props: any) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setText(e.target.value);
     },
-    []
+    [setText]
   );
 
   //編集処理を書く
@@ -31,7 +31,7 @@ export const TaskInput = (props: any) => {
     } else {
       setText(item.task);
     }
-  }, [text, user, item.id, item.task, updateTodo]);
+  }, [text, user, item.id, item.task, updateTodo, setText]);
 
   return (
     <>
@@ -56,7 +56,7 @@ export const TaskInput = (props: any) => {
             setIsSending(false);
           }
         }}
-        className={`h-5 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 cursor-pointer caret-[#F43F5E] ${lineThrough}`}
+        className={`h-[1.5rem] flex-1 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 pl-2 caret-[#F43F5E] ${lineThrough} ${outlineColor} rounded-2xl`}
         disabled={item.iscomplete}
       />
     </>

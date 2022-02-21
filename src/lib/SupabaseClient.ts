@@ -34,12 +34,18 @@ export type ProfileType = {
 export const addTodo = async (
   uid: string,
   task: string,
-  taskType: TaskType
+  taskType: TaskType,
+  isComplete: boolean
 ) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
-  const { error } = await client
-    .from<TodoType>("todos")
-    .insert([{ uid: uid, task: task, deadline: deadline }]);
+  const { error } = await client.from<TodoType>("todos").insert([
+    {
+      uid: uid,
+      task: task,
+      deadline: deadline,
+      iscomplete: isComplete,
+    },
+  ]);
   if (error) {
     return false;
   } else {
@@ -94,6 +100,19 @@ export const editTodo = async (id: number, task: string) => {
   }
 };
 
+export const deleteTodo = async (id: number) => {
+  const { data, error } = await client
+    .from<TodoType>("todos")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("削除に失敗しました");
+    return;
+  } else {
+    return data;
+  }
+};
 export const editIsComplete = async (id: number, isComplete: boolean) => {
   const { error } = await client
     .from("todos")
