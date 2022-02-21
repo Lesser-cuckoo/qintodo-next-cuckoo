@@ -6,7 +6,7 @@ import { addTodo } from "src/lib/SupabaseClient";
 
 export const NewTask = (props: any) => {
   const { user } = Auth.useUser();
-  const { day, taskColor, updateTodo } = props;
+  const { day, outlineColor, taskColor, updateTodo } = props;
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const inputstyle = "line-through text-[#C2C6D2]";
@@ -47,7 +47,7 @@ export const NewTask = (props: any) => {
 
   return (
     <>
-      <div className="flex justify-start items-center py-2 px-1">
+      <div className="flex justify-start items-center py-2 px-[0.14rem] mr-16">
         {isAddTask ? (
           <>
             <RadioButton2
@@ -75,7 +75,7 @@ export const NewTask = (props: any) => {
                 }
                 setAddTask(false);
               }}
-              className={`h-5 flex-1 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 caret-[#F43F5E] ${lineThrough}`}
+              className={`h-[24px] flex-1 pl-2 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 caret-[#F43F5E] ${outlineColor} ${lineThrough} rounded-2xl`}
               autoFocus
               disabled={isComplete}
             />
@@ -83,9 +83,9 @@ export const NewTask = (props: any) => {
         ) : (
           <>
             <div
-              className={`flex justify-center  w-5 h-5 rounded-full ring-2 ring-gray-300 bg-gray-300`}
+              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 ring-gray-300 bg-gray-300 mr-1`}
             >
-              <HiPlusSm size={20} className="text-[#ffffff]" />
+              <HiPlusSm size={18} className="text-[#ffffff]" />
             </div>
             <button
               onClick={handleClickButton}
