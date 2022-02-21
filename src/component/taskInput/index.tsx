@@ -15,7 +15,7 @@ export const TaskInput = (props: any) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setText(e.target.value);
     },
-    []
+    [setText]
   );
 
   //編集処理を書く
@@ -31,7 +31,7 @@ export const TaskInput = (props: any) => {
     } else {
       setText(item.task);
     }
-  }, [text, user, item.id, item.task, updateTodo]);
+  }, [text, user, item.id, item.task, updateTodo, setText]);
 
   return (
     <>
