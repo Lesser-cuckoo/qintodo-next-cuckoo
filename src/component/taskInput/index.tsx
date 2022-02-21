@@ -1,8 +1,19 @@
 import { Auth } from "@supabase/ui";
+import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
 import { editTodo } from "src/lib/SupabaseClient";
+import type { OutLineProps } from "src/type/type";
 
-export const TaskInput = (props: any) => {
+type Props = {
+  item: TodoType;
+  updateTodo: () => void;
+  outlineColor: OutLineProps;
+  setText: Dispatch<SetStateAction<string>>;
+  text: string;
+};
+
+export const TaskInput = (props: Props) => {
   const { item, outlineColor, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
   // const [text, setText] = useState<string>(item.task);
@@ -13,7 +24,11 @@ export const TaskInput = (props: any) => {
 
   const handleChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setText(e.target.value);
+      if (e.target.value.length < 100) {
+        setText(e.target.value);
+      } else {
+        alert("100文字以内で入力してください");
+      }
     },
     [setText]
   );

@@ -1,14 +1,25 @@
 import { Auth } from "@supabase/ui";
+import type { VFC } from "react";
 import { useCallback, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { RadioButton } from "src/component/RadioButton";
 import { TaskInput } from "src/component/taskInput";
+import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
+import type { DayProps, OutLineProps } from "src/type/type";
 
-export const TaskWrap = (props: any) => {
-  const { user } = Auth.useUser();
+type Props = {
+  day: DayProps;
+  outlineColor: OutLineProps;
+  item: TodoType;
+  taskColor: string;
+  updateTodo: () => Promise<void>;
+};
+
+export const TaskWrap: VFC<Props> = (props) => {
   const { day, item, outlineColor, taskColor, updateTodo } = props;
+  const { user } = Auth.useUser();
   const [text, setText] = useState<string>(item.task);
 
   const handleEditIsComplete = useCallback(
@@ -38,7 +49,7 @@ export const TaskWrap = (props: any) => {
   };
 
   const handleCopyTask = useCallback(
-    async (day: "today" | "tomorrow" | "other") => {
+    async (day) => {
       if (text && user) {
         const uid = user.id;
         const isSuccess = await addTodo(uid, text, day, false);

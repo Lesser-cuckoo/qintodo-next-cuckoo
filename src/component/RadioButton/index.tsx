@@ -1,10 +1,14 @@
 import type { VFC } from "react";
 import { useCallback } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
 
 type Style = {
   centerColor: string;
-  handleEditIsComplete: any;
-  item: any;
+  handleEditIsComplete: (
+    itemId: number,
+    itemiscomplete: boolean
+  ) => Promise<void>;
+  item: TodoType;
 };
 
 export const RadioButton: VFC<Style> = (props) => {

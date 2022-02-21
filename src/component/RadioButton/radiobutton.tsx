@@ -1,9 +1,9 @@
-import type { VFC } from "react";
+import type { Dispatch, SetStateAction, VFC } from "react";
 
 type Style = {
   centerColor: string;
   isCompleted: boolean;
-  setIsCompleted: any;
+  setIsCompleted: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RadioButton2: VFC<Style> = (props) => {

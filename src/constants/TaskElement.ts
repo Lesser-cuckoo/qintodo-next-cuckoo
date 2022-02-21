@@ -1,4 +1,6 @@
-export const taskElement = [
+import type { TaskElement } from "src/type/type";
+
+export const taskElement: TaskElement[] = [
   {
     id: 1,
     header: "今日する",
