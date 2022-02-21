@@ -63,9 +63,13 @@ yarn start // localhost:3000で立ち上がる
 
 ### todos
 
+#### Table
+
 ```sql
 drop table if exists todos;
+drop table if exists profiles;
 
+-- Create a table for Todos
 create table todos (
   id bigint generated always as identity primary key,
   uid uuid references auth.users not null,
@@ -78,15 +82,65 @@ create table todos (
 
 alter table todos enable row level security;
 
-create policy "Individuals can create todos." on todos for
-    insert with check (auth.uid() = uid);
+create policy "Individuals can create todos."
+  on todos for insert
+  with check (auth.uid() = uid);
 
-create policy "Individuals can view their own todos. " on todos for
-    select using (auth.uid() = uid);
+create policy "Individuals can view their own todos. "
+  on todos for select
+  using (auth.uid() = uid);
 
-create policy "Individuals can update their own todos." on todos for
-    update using (auth.uid() = uid);
+create policy "Individuals can update their own todos."
+  on todos for update
+  using (auth.uid() = uid);
 
-create policy "Individuals can delete their own todos." on todos for
-    delete using (auth.uid() = uid);
+create policy "Individuals can delete their own todos."
+  on todos for
+  delete using (auth.uid() = uid);
+
+-- Create a table for Profiles
+create table profiles (
+  id bigint generated always as identity primary key,
+  uid uuid references auth.users not null,
+  username text,
+  avatar text
+);
+
+alter table profiles enable row level security;
+
+create policy "Individuals can insert their own profiles."
+  on profiles for insert
+  with check ( auth.uid() = uid );
+
+create policy "Individuals can view their own profiles."
+  on profiles for select
+  using (auth.uid() = uid);
+
+create policy "Individuals can update own profiles."
+  on profiles for update
+  using ( auth.uid() = uid );
+
+create policy "Individuals can delete their own profiles."
+  on profiles for delete
+  using (auth.uid() = uid);
+```
+
+#### Storage
+
+```sql
+-- Set up Storage
+insert into storage.buckets (id, name)
+values ('avatars', 'avatars');
+
+create policy "Avatar images are publicly accessible."
+  on storage.objects for select
+  using ( bucket_id = 'avatars' );
+
+create policy "Anyone can upload an avatar."
+  on storage.objects for insert
+  with check ( bucket_id = 'avatars' );
+
+create policy "Anyone can update an avatar."
+  on storage.objects for update
+  using ( bucket_id = 'avatars' );
 ```

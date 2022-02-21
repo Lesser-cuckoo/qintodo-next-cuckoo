@@ -24,6 +24,13 @@ export type TodoType = {
   sortkey: number | null;
 };
 
+export type ProfileType = {
+  id: number;
+  uid: string;
+  username: string;
+  avatar: string;
+};
+
 export const addTodo = async (
   uid: string,
   task: string,
@@ -31,7 +38,7 @@ export const addTodo = async (
   isComplete: boolean
 ) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
-  const { error } = await client.from("todos").insert([
+  const { error } = await client.from<TodoType>("todos").insert([
     {
       uid: uid,
       task: task,
@@ -159,5 +166,62 @@ export const moveTodo = async (
     return false;
   } else {
     return true;
+  }
+};
+
+export const addNewProfile = async (uid: string) => {
+  const { error } = await client
+    .from<ProfileType>("profiles")
+    .insert([{ uid: uid, username: "ユーザー", avatar: "" }]);
+  if (error) {
+    return false;
+  }
+  return true;
+};
+
+export const getProfile = async () => {
+  const { data, error } = await client
+    .from<ProfileType>("profiles")
+    .select("*")
+    .limit(1)
+    .single();
+  if (error || !data) {
+    return null;
+  }
+  return data;
+};
+
+export const updateProfile = async (
+  uid: string,
+  username: string,
+  avatar: string,
+  isIconUpdate: boolean
+) => {
+  const avatarUrl = isIconUpdate ? await getAvatarUrl(uid) : "";
+  const { error } = await client
+    .from("profiles")
+    .update({
+      username: username,
+      avatar: avatarUrl != "" ? avatarUrl : avatar,
+    })
+    .eq("uid", uid);
+  return error ? false : true;
+};
+
+export const uploadAvatar = async (uid: string, file: File) => {
+  const { error } = await client.storage
+    .from("avatars")
+    .upload(`avatar_${uid}.jpg`, file, { upsert: true });
+  return error ? false : true;
+};
+
+const getAvatarUrl = async (uid: string) => {
+  const { error, signedURL } = await client.storage
+    .from("avatars")
+    .createSignedUrl(`avatar_${uid}.jpg`, 600);
+  if (!error) {
+    return signedURL;
+  } else {
+    return "";
   }
 };

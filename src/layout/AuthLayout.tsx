@@ -8,15 +8,17 @@ import { Header } from "./Header";
 import { LayoutErrorBoundary } from "./LayoutErrorBoundary";
 
 type Props = {
-  children: React.ReactNode;
+  children: React.ReactElement;
 };
 
 /**
  * @package
  */
 export const AuthLayout: CustomLayout = (props: Props) => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
   const { user } = Auth.useUser();
+
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
   const { children } = props;
 
   const handleLogout = useCallback(() => {
@@ -36,7 +38,7 @@ export const AuthLayout: CustomLayout = (props: Props) => {
         <LayoutErrorBoundary>
           {isMounted && user ? (
             <div>
-              <div> {children}</div>
+              <div>{children}</div>
               <div className="flex justify-end my-4 mx-2">
                 <Button
                   size="medium"
