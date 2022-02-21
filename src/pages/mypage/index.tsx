@@ -1,22 +1,38 @@
-import { useCallback, useRef, useState } from "react";
+import { Auth } from "@supabase/ui";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Avatar } from "src/component/Avatar";
-import { updateProfile, uploadAvatar } from "src/lib/SupabaseClient";
+import {
+  addNewProfile,
+  getProfile,
+  updateProfile,
+  uploadAvatar,
+} from "src/lib/SupabaseClient";
 
-type Props = {
-  uid: string;
-  username: string;
-  avatar: string;
-  fetchProfile: (uid: string) => Promise<void>;
-};
+export const Mypage = () => {
+  const { user } = Auth.useUser();
 
-export const Mypage = (props: Props) => {
-  const { avatar, fetchProfile, uid, username } = props;
-
+  const [username, setUsername] = useState<string>("");
+  const [avatar, setAvatar] = useState<string>("");
   const [editName, setEditName] = useState<string>(username);
   const [previewIcon, setPreviewIcon] = useState<string>(avatar);
   const [previewIconFile, setPreviewIconFile] = useState<File | null>(null);
 
   const iconInputRef = useRef<HTMLInputElement | null>(null);
+
+  const fetchProfile = useCallback(async (uid: string) => {
+    const profile = await getProfile();
+    if (profile) {
+      setUsername(profile.username);
+      setEditName(profile.username);
+      setAvatar(profile.avatar);
+      setPreviewIcon(profile.avatar);
+    } else {
+      const isOk = await addNewProfile(uid);
+      if (!isOk) {
+        alert("プロフィールの新規登録に失敗しました。");
+      }
+    }
+  }, []);
 
   const handleChangePreviewIcon = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,31 +54,39 @@ export const Mypage = (props: Props) => {
   }, []);
 
   const handleSave = useCallback(async () => {
-    if (editName == "") {
-      alert("名前を入力してください。");
-      return;
-    }
-    let isIconChanged = false;
-    if (previewIconFile) {
-      const isOk = await uploadAvatar(uid, previewIconFile);
-      if (!isOk) {
-        alert("アイコンのアップロードに失敗しました。");
+    if (user) {
+      if (editName == "") {
+        alert("名前を入力してください。");
         return;
       }
-      isIconChanged = true;
+      let isIconChanged = false;
+      if (previewIconFile) {
+        const isOk = await uploadAvatar(user.id, previewIconFile);
+        if (!isOk) {
+          alert("アイコンのアップロードに失敗しました。");
+          return;
+        }
+        isIconChanged = true;
+      }
+      const isOkUpdate = await updateProfile(
+        user.id,
+        editName,
+        avatar,
+        isIconChanged
+      );
+      if (!isOkUpdate) {
+        alert("プロフィールの更新に失敗しました。");
+      } else {
+        fetchProfile(user.id);
+      }
     }
-    const isOkUpdate = await updateProfile(
-      uid,
-      editName,
-      avatar,
-      isIconChanged
-    );
-    if (!isOkUpdate) {
-      alert("プロフィールの更新に失敗しました。");
-    } else {
-      fetchProfile(uid);
+  }, [user, editName, previewIconFile, avatar, fetchProfile]);
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile(user.id);
     }
-  }, [uid, avatar, previewIconFile, editName, fetchProfile]);
+  }, [user, fetchProfile]);
 
   return (
     <div className="text-center">
@@ -87,6 +111,8 @@ export const Mypage = (props: Props) => {
       <div>
         <input
           type="text"
+          className="border border-black"
+          placeholder="ユーザー名"
           value={editName}
           onChange={(e) => setEditName(e.target.value)}
         />

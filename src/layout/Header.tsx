@@ -1,16 +1,35 @@
+import { Auth } from "@supabase/ui";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 import { Avatar } from "src/component/Avatar";
-
-type Props = {
-  avatar: string;
-};
+import { addNewProfile, getProfile } from "src/lib/SupabaseClient";
 
 /**
  * @package
  */
-export const Header = (props: Props) => {
-  const { avatar } = props;
+export const Header = () => {
+  const { user } = Auth.useUser();
+
+  const [avatar, setAvatar] = useState<string>("");
+
+  const fetchProfile = useCallback(async (uid: string) => {
+    const profile = await getProfile();
+    if (profile) {
+      setAvatar(profile.avatar);
+    } else {
+      const isOk = await addNewProfile(uid);
+      if (!isOk) {
+        alert("プロフィールの新規登録に失敗しました。");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile(user.id);
+    }
+  }, [user, fetchProfile]);
 
   return (
     <div className="flex justify-around items-center p-5">

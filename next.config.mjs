@@ -17,8 +17,8 @@ const nextConfig = {
   swcMinify: true,
   // experimental: { concurrentFeatures: true, serverComponents: true },
   images: {
-    domains: [DOMAIN]
-  }
+    domains: [DOMAIN],
+  },
 };
 
 export default nextConfig;
