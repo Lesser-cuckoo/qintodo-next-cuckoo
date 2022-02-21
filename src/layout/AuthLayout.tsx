@@ -1,27 +1,50 @@
 import { Auth, Button, IconLogOut } from "@supabase/ui";
 import type { CustomLayout } from "next";
-import { useCallback, useEffect, useState } from "react";
-import { client } from "src/lib/SupabaseClient";
+import { cloneElement, useCallback, useEffect, useState } from "react";
+import { addNewProfile, client, getProfile } from "src/lib/SupabaseClient";
 
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { LayoutErrorBoundary } from "./LayoutErrorBoundary";
 
 type Props = {
-  children: React.ReactNode;
+  children: React.ReactElement;
 };
 
 /**
  * @package
  */
 export const AuthLayout: CustomLayout = (props: Props) => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
   const { user } = Auth.useUser();
+
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [avatar, setAvatar] = useState<string>("");
+
   const { children } = props;
+
+  const fetchProfile = useCallback(async (uid: string) => {
+    const profile = await getProfile();
+    if (profile) {
+      setUsername(profile.username);
+      setAvatar(profile.avatar);
+    } else {
+      const isOk = await addNewProfile(uid);
+      if (!isOk) {
+        alert("プロフィールの新規登録に失敗しました。");
+      }
+    }
+  }, []);
 
   const handleLogout = useCallback(() => {
     client.auth.signOut();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile(user.id);
+    }
+  }, [user, fetchProfile]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -30,13 +53,20 @@ export const AuthLayout: CustomLayout = (props: Props) => {
   return (
     <div className="flex flex-col min-h-screen">
       <header>
-        <Header />
+        <Header avatar={avatar} />
       </header>
       <main className="flex-1 px-4">
         <LayoutErrorBoundary>
           {isMounted && user ? (
             <div>
-              <div> {children}</div>
+              <div>
+                {cloneElement(children, {
+                  uid: user.id,
+                  username: username,
+                  avatar: avatar,
+                  fetchProfile: fetchProfile,
+                })}
+              </div>
               <div className="flex justify-end my-4 mx-2">
                 <Button
                   size="medium"
