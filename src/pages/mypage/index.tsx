@@ -43,7 +43,11 @@ export const MyPage: VFC = () => {
     },
   ];
 
-  const Button = (props: any) => {
+  type ButtonProps = {
+    item: { url: string; title: JSX.Element };
+  };
+
+  const Button = (props: ButtonProps) => {
     const { item } = props;
     return (
       <>
