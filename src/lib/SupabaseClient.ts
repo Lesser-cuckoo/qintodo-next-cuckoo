@@ -28,7 +28,7 @@ export type ProfileType = {
   id: number;
   uid: string;
   username: string;
-  avatar: string;
+  hasavatar: boolean;
 };
 
 export const addTodo = async (
@@ -172,7 +172,7 @@ export const moveTodo = async (
 export const addNewProfile = async (uid: string) => {
   const { error } = await client
     .from<ProfileType>("profiles")
-    .insert([{ uid: uid, username: "ユーザー", avatar: "" }]);
+    .insert([{ uid: uid, username: "ユーザー" }]);
   if (error) {
     return false;
   }
@@ -194,15 +194,13 @@ export const getProfile = async () => {
 export const updateProfile = async (
   uid: string,
   username: string,
-  avatar: string,
-  isIconUpdate: boolean
+  hasAvatar: boolean
 ) => {
-  const avatarUrl = isIconUpdate ? await getAvatarUrl(uid) : "";
   const { error } = await client
     .from("profiles")
     .update({
       username: username,
-      avatar: avatarUrl != "" ? avatarUrl : avatar,
+      hasavatar: hasAvatar,
     })
     .eq("uid", uid);
   return error ? false : true;
@@ -215,13 +213,15 @@ export const uploadAvatar = async (uid: string, file: File) => {
   return error ? false : true;
 };
 
-const getAvatarUrl = async (uid: string) => {
+export const getAvatarUrl = async (uid: string) => {
   const { error, signedURL } = await client.storage
     .from("avatars")
     .createSignedUrl(`avatar_${uid}.jpg`, 600);
   if (!error) {
-    return signedURL;
-  } else {
+    if (signedURL) {
+      return signedURL;
+    }
     return "";
   }
+  return "";
 };
