@@ -1,5 +1,4 @@
 import { Auth } from "@supabase/ui";
-import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Avatar } from "src/component/Avatar";
 import {
@@ -8,9 +7,9 @@ import {
   uploadAvatar,
 } from "src/lib/SupabaseClient";
 
-export const Mypage = () => {
+export const Profile = () => {
   const { user } = Auth.useUser();
-  const router = useRouter();
+
   const [username, setUsername] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
   const [editName, setEditName] = useState<string>(username);
@@ -83,10 +82,6 @@ export const Mypage = () => {
     }
   }, [user, fetchProfile]);
 
-  const onClickRouter = () => {
-    router.push("/mypage/profile");
-  };
-
   return (
     <div className="text-center">
       <div className="text-2xl">プロフィール設定</div>
@@ -123,7 +118,6 @@ export const Mypage = () => {
         >
           変更
         </button>
-        <button onClick={onClickRouter}>移動</button>
       </div>
     </div>
   );
