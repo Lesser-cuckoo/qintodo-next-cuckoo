@@ -50,30 +50,45 @@ export const TaskInput = (props: Props) => {
 
   return (
     <>
-      <input
-        type="text"
-        value={text}
-        onChange={handleChangeText}
-        onKeyPress={async (e) => {
-          //同じ文言であれば編集しないようにする
-          if (e.key === "Enter" && !isSending && item.task !== text) {
-            e.currentTarget.blur();
-            setIsSending(true);
-            await handleEditTask();
-            setIsSending(false);
-          }
-        }}
-        onBlur={async () => {
-          //同じ文言であれば編集しないようにする
-          if (item.task !== text) {
-            setIsSending(true);
-            await handleEditTask();
-            setIsSending(false);
-          }
-        }}
-        className={`h-[1.5rem] flex-1 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 pl-2 caret-[#F43F5E] ${lineThrough} ${outlineColor} rounded-2xl`}
-        disabled={item.iscomplete}
-      />
+      <div className="absolute top-2 left-8">
+        <div
+          className="inline-block overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0"
+          // data-placeholder="文字を入力してください"
+        >
+          {text ? text : "文字を入力してください"}
+        </div>
+        <input
+          type="text"
+          value={text}
+          onChange={handleChangeText}
+          onKeyPress={async (e) => {
+            //同じ文言であれば編集しないようにする
+            if (e.key === "Enter" && !isSending && item.task !== text) {
+              e.currentTarget.blur();
+              setIsSending(true);
+              await handleEditTask();
+              setIsSending(false);
+            }
+          }}
+          onBlur={async () => {
+            //同じ文言であれば編集しないようにする
+            if (item.task !== text) {
+              setIsSending(true);
+              await handleEditTask();
+              setIsSending(false);
+            }
+          }}
+          className={`absolute top-0 left-0 p-1 w-full h-5 bg-white border-0 focus:ring-0 ${lineThrough} truncate caret-[#F43F5E] ${outlineColor} rounded-2xl`}
+          disabled={item.iscomplete}
+        />
+        {/* <input
+          type="text"
+          className="absolute top-0 left-0 p-1 w-full h-5 bg-white border-none focus:ring-0"
+          placeholder="文字を入力してください"
+          onChange={handleChange}
+          value={text}
+        /> */}
+      </div>
     </>
   );
 };
