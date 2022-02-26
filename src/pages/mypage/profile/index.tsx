@@ -1,5 +1,6 @@
 import { Auth } from "@supabase/ui";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { HiOutlineChevronRight } from "react-icons/hi";
 import { Avatar } from "src/component/Avatar";
 import {
   getProfile,
@@ -83,9 +84,15 @@ export const Profile = () => {
   }, [user, fetchProfile]);
 
   return (
-    <div className="text-center">
-      <div className="text-2xl">プロフィール設定</div>
-      <div className="my-4">
+    <div className="flex flex-col mx-auto">
+      <div className="flex gap-6">
+        <span>ホーム</span>
+        <HiOutlineChevronRight size={30} className="text-gray-300" />
+        <span>プロフィール</span>
+      </div>
+      <h2 className="text-2xl">プロフィール設定</h2>
+      <span className="text-gray-400">アイコン</span>
+      <div className="flex">
         <input
           className="hidden"
           type="file"
@@ -101,24 +108,32 @@ export const Profile = () => {
             onClick={handleClickChangeIcon}
           />
         </div>
+        <div>
+          <button
+            className="block py-2 px-4 text-xl text-white bg-blue-500 rounded-xl"
+            onClick={handleSave}
+          >
+            変更
+          </button>
+        </div>
       </div>
+      <span>名前</span>
       <div>
         <input
           type="text"
-          className="border border-black"
+          className="p-2 bg-gray-200 rounded-xl"
           placeholder="ユーザー名"
           value={editName}
           onChange={(e) => setEditName(e.target.value)}
         />
       </div>
-      <div className="mt-4">
-        <button
-          className="py-2 px-4 text-2xl bg-orange-200"
-          onClick={handleSave}
-        >
-          変更
-        </button>
-      </div>
+      <button
+        className="py-2 px-4 text-xl text-white bg-blue-500 rounded-xl"
+        onClick={handleSave}
+      >
+        保存する
+      </button>
+      <div className="mt-4"></div>
     </div>
   );
 };
