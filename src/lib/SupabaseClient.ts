@@ -113,6 +113,7 @@ export const deleteTodo = async (id: number) => {
     return data;
   }
 };
+
 export const editIsComplete = async (id: number, isComplete: boolean) => {
   const { error } = await client
     .from("todos")
@@ -129,8 +130,10 @@ export const editIsComplete = async (id: number, isComplete: boolean) => {
 export const moveTodo = async (
   todos: TodoType[],
   id: number,
-  targetIndex: number
+  targetIndex: number,
+  taskType: TaskType
 ) => {
+  const deadline = taskType == "other" ? null : getDate(taskType);
   if (targetIndex < 0 || todos.length < targetIndex) {
     return false;
   }
@@ -160,7 +163,7 @@ export const moveTodo = async (
   }
   const { error } = await client
     .from("todos")
-    .update({ sortkey: sortkey })
+    .update({ sortkey: sortkey, deadline: deadline })
     .eq("id", id);
   if (error) {
     return false;

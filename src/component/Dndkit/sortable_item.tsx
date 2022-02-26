@@ -56,7 +56,7 @@ export const SortableItem = (props: Props) => {
       {...attributes}
       className="group relative w-full h-10"
     >
-      <div className="absolute top-0 w-full h-10 bg-white" {...listeners}></div>
+      <div className="absolute top-0 w-full h-10" {...listeners}></div>
       <TaskWrap updateTodo={updateTodo} item={todoTask} day={taskType} />
     </div>
   );

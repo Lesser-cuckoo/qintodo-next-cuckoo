@@ -1,9 +1,10 @@
 import type {
   DragEndEvent,
   DragOverEvent,
-  // DragStartEvent,
+  DragStartEvent,
   Over,
 } from "@dnd-kit/core";
+// import { DragOverlay } from "@dnd-kit/core";
 import {
   closestCorners,
   DndContext,
@@ -15,8 +16,13 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import type { Dispatch, SetStateAction } from "react";
-// import { useState } from "react";
+import { useCallback } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
+import { getTodo } from "src/lib/SupabaseClient";
+import { moveTodo } from "src/lib/SupabaseClient";
 
 import { Container } from "./container";
 
@@ -40,7 +46,10 @@ export const Dndkit = (props: Props) => {
     todoTomorrow,
     updateTodo,
   } = props;
-  // const [activeId, setActiveId] = useState<string>("");
+  const [activeId, setActiveId] = useState<number>(-1);
+  const [sourceContainer, setSourceContainer] = useState<TaskType | null>(null);
+  const [targetContainer, setTargetContainer] = useState<TaskType | null>(null);
+  const [targetIndex, setTargetIndex] = useState<number>(-1);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -49,7 +58,7 @@ export const Dndkit = (props: Props) => {
     })
   );
 
-  const findContainer = (id: string) => {
+  const findContainer = (id: string): TaskType => {
     let filtered = todoToday.filter((todo) =>
       todo.id == Number(id) ? true : false
     );
@@ -65,12 +74,14 @@ export const Dndkit = (props: Props) => {
     return "other";
   };
 
-  //つかんだとき
-  // const handleDragStart = (event: DragStartEvent) => {
-  //   const { active } = event;
-  //   const { id } = active;
-  //   setActiveId(id);
-  // };
+  // つかんだとき;
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    const { id } = active;
+
+    const activeContainer = findContainer(id);
+    setSourceContainer(activeContainer);
+  };
 
   //動かして他の要素の上に移動した時
   const handleDragOver = (event: DragOverEvent) => {
@@ -144,7 +155,7 @@ export const Dndkit = (props: Props) => {
   };
 
   //要素を離したとき
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     const { id } = active;
     const { id: overId } = over as Over;
@@ -160,6 +171,9 @@ export const Dndkit = (props: Props) => {
       return;
     }
 
+    setActiveId(Number(id));
+    setTargetContainer(activeContainer);
+
     const items =
       activeContainer === "today"
         ? todoToday
@@ -169,6 +183,12 @@ export const Dndkit = (props: Props) => {
 
     const activeIndex = items.findIndex((item) => item.id === Number(id));
     const overIndex = items.findIndex((item) => item.id === Number(overId));
+
+    if (activeContainer === sourceContainer) {
+      setTargetIndex(activeIndex < overIndex ? overIndex + 1 : overIndex);
+    } else {
+      setTargetIndex(overIndex);
+    }
 
     if (activeIndex !== overIndex) {
       if (activeContainer === "today") {
@@ -181,11 +201,31 @@ export const Dndkit = (props: Props) => {
     }
   };
 
+  const handleMove = useCallback(async () => {
+    if (targetContainer) {
+      const todo = await getTodo(targetContainer);
+      const isOk = await moveTodo(todo, activeId, targetIndex, targetContainer);
+      if (!isOk) {
+        alert("更新に失敗しました。");
+      } else {
+        setActiveId(-1);
+        setTargetContainer(null);
+        setTargetIndex(-1);
+      }
+    }
+  }, [activeId, targetContainer, targetIndex]);
+
+  useEffect(() => {
+    if (activeId != -1 && targetContainer && targetIndex != -1) {
+      handleMove();
+    }
+  }, [activeId, targetContainer, targetIndex, handleMove]);
+
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCorners}
-      // onDragStart={handleDragStart}
+      onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
@@ -198,12 +238,7 @@ export const Dndkit = (props: Props) => {
         />
         <Container taskType="other" todo={todoOther} updateTodo={updateTodo} />
       </div>
-      {/* <DragOverlay>
-          {activeId ? (
-            <Item id={activeId} />
-          ) : // <div>aaaa</div>
-          null}
-        </DragOverlay> */}
+      {/* <DragOverlay>{activeId ? <TaskWrap /> : null}</DragOverlay> */}
     </DndContext>
   );
 };
