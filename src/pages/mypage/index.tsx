@@ -1,124 +1,92 @@
-import { Auth } from "@supabase/ui";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Avatar } from "src/component/Avatar";
-import {
-  getProfile,
-  updateProfile,
-  uploadAvatar,
-} from "src/lib/SupabaseClient";
+import { useRouter } from "next/router";
+import type { VFC } from "react";
+import { HiOutlineChevronRight } from "react-icons/hi";
+import { MyPageLayout } from "src/layout/MypageLayout";
 
-export const Mypage = () => {
-  const { user } = Auth.useUser();
+export const MyPage: VFC = () => {
+  const router = useRouter();
+  const handleClick = (URL: string) => {
+    router.push(`${URL}`);
+  };
 
-  const [username, setUsername] = useState<string>("");
-  const [avatar, setAvatar] = useState<string>("");
-  const [editName, setEditName] = useState<string>(username);
-  const [previewIcon, setPreviewIcon] = useState<string>(avatar);
-  const [previewIconFile, setPreviewIconFile] = useState<File | null>(null);
-
-  const iconInputRef = useRef<HTMLInputElement | null>(null);
-
-  const fetchProfile = useCallback(async () => {
-    const profile = await getProfile();
-    if (profile) {
-      setUsername(profile.username);
-      setEditName(profile.username);
-      setAvatar(profile.avatar);
-      setPreviewIcon(profile.avatar);
-    }
-  }, []);
-
-  const handleChangePreviewIcon = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!e.target.files?.length) {
-        return;
-      }
-      setPreviewIconFile(e.target.files[0]);
-      setPreviewIcon(URL.createObjectURL(e.target.files[0]));
-      e.currentTarget.value = "";
+  const List1 = [
+    {
+      url: "/mypage/profile",
+      title: <p>プロフィール設定</p>,
     },
-    []
-  );
+    {
+      url: "/",
+      title: <p>アカウント設定</p>,
+    },
+    {
+      url: "/",
+      title: (
+        <div className="flex justify-between w-full">
+          <p>テーマ</p>
+          <p>OSの設定に合わせる</p>
+        </div>
+      ),
+    },
+  ];
+  const List2 = [
+    {
+      url: "/",
+      title: <p>プライバシーポリシー</p>,
+    },
+    {
+      url: "/",
+      title: <p>利用規約</p>,
+    },
+    {
+      url: "/",
+      title: <p>オープンソースライセンス</p>,
+    },
+  ];
 
-  const handleClickChangeIcon = useCallback(() => {
-    if (!iconInputRef || !iconInputRef.current) {
-      return;
-    }
-    iconInputRef.current.click();
-  }, []);
+  type ButtonProps = {
+    item: { url: string; title: JSX.Element };
+  };
 
-  const handleSave = useCallback(async () => {
-    if (user) {
-      if (editName == "") {
-        alert("名前を入力してください。");
-        return;
-      }
-      let isIconChanged = false;
-      if (previewIconFile) {
-        const isOk = await uploadAvatar(user.id, previewIconFile);
-        if (!isOk) {
-          alert("アイコンのアップロードに失敗しました。");
-          return;
-        }
-        isIconChanged = true;
-      }
-      const isOkUpdate = await updateProfile(
-        user.id,
-        editName,
-        avatar,
-        isIconChanged
-      );
-      if (!isOkUpdate) {
-        alert("プロフィールの更新に失敗しました。");
-      } else {
-        fetchProfile();
-      }
-    }
-  }, [user, editName, previewIconFile, avatar, fetchProfile]);
-
-  useEffect(() => {
-    if (user) {
-      fetchProfile();
-    }
-  }, [user, fetchProfile]);
+  const Button = (props: ButtonProps) => {
+    const { item } = props;
+    return (
+      <>
+        <button
+          onClick={() => handleClick(item.url)}
+          className="flex justify-between items-center p-2 w-full font-bold hover:bg-slate-100 rounded-sm"
+        >
+          {item.title}
+          <HiOutlineChevronRight size={34} className="pl-2 text-gray-400" />
+        </button>
+      </>
+    );
+  };
 
   return (
-    <div className="text-center">
-      <div className="text-2xl">プロフィール設定</div>
-      <div className="my-4">
-        <input
-          className="hidden"
-          type="file"
-          accept="image/jpeg"
-          ref={iconInputRef}
-          onChange={handleChangePreviewIcon}
-        />
-        <div className="flex justify-center">
-          <Avatar
-            image={previewIcon}
-            size="large"
-            isRounded={false}
-            onClick={handleClickChangeIcon}
-          />
+    <>
+      <MyPageLayout title="アカウント" backbutton="home">
+        <div className="m-auto mt-5 w-full text-xl font-bold">
+          <div className="p-2 py-2 text-lg text-gray-400">設定</div>
+          {List1.map((item, index) => (
+            <Button item={item} key={index} />
+          ))}
+          <div className="p-2 py-2 text-lg text-gray-400">サポート</div>
+          {List2.map((item, index) => (
+            <Button item={item} key={index} />
+          ))}
+
+          <button
+            className="p-2 font-bold hover:bg-slate-100 rounded-sm"
+            onClick={() => handleClick("/")}
+          >
+            お問合せ
+          </button>
+          <div className="flex p-2">
+            <p>バージョン</p>
+            <p>1.0.0</p>
+          </div>
         </div>
-      </div>
-      <div>
-        <input
-          type="text"
-          className="border border-black"
-          placeholder="ユーザー名"
-          value={editName}
-          onChange={(e) => setEditName(e.target.value)}
-        />
-      </div>
-      <div className="mt-4">
-        <button
-          className="py-2 px-4 text-2xl bg-orange-200"
-          onClick={handleSave}
-        >
-          変更
-        </button>
-      </div>
-    </div>
+      </MyPageLayout>
+    </>
   );
 };
