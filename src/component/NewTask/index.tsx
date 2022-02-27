@@ -1,12 +1,21 @@
 import { Auth } from "@supabase/ui";
+import type { VFC } from "react";
 import { useCallback, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
 import { RadioButton2 } from "src/component/RadioButton/radiobutton";
 import { addTodo } from "src/lib/SupabaseClient";
+import type { BgColorProps, DayProps, OutLineProps } from "src/type/type";
 
-export const NewTask = (props: any) => {
-  const { user } = Auth.useUser();
+type Props = {
+  day: DayProps;
+  outlineColor: OutLineProps;
+  taskColor: BgColorProps;
+  updateTodo: () => Promise<void>;
+};
+
+export const NewTask: VFC<Props> = (props) => {
   const { day, outlineColor, taskColor, updateTodo } = props;
+  const { user } = Auth.useUser();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const inputstyle = "line-through text-[#C2C6D2]";
@@ -26,7 +35,7 @@ export const NewTask = (props: any) => {
   );
 
   const handleAddTask = useCallback(
-    async (day: "today" | "tomorrow" | "other", isComplete: boolean) => {
+    async (day: DayProps, isComplete: boolean) => {
       if (text && user) {
         const uid = user.id;
         const isSuccess = await addTodo(uid, text, day, isComplete);
