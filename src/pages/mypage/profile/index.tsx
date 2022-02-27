@@ -72,6 +72,7 @@ export const Profile = () => {
         alert("プロフィールの更新に失敗しました。");
       } else {
         fetchProfile();
+        alert("プロフィールを更新しました。");
       }
     }
   }, [user, editName, previewIconFile, avatar, fetchProfile]);
@@ -86,9 +87,13 @@ export const Profile = () => {
     <div className="container flex flex-col items-center">
       <div className="w-[500px]">
         <div className="flex gap-6 my-4 text-sm font-bold">
-          <span>ホーム</span>
+          <span className="hover:bg-[#F1F5F9] hover:cursor-pointer">
+            ホーム
+          </span>
           <HiOutlineChevronRight size={20} className="text-[#C2C6D2]" />
-          <span>プロフィール</span>
+          <span className="hover:bg-[#F1F5F9] hover:cursor-pointer">
+            プロフィール
+          </span>
         </div>
         <h2 className="mb-6 text-3xl font-black">プロフィール</h2>
         <span className="text-sm text-[#C2C6D2]">アイコン</span>
