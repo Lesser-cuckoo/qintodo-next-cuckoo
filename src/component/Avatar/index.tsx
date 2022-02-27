@@ -19,7 +19,7 @@ export const Avatar: VFC<Props> = (props) => {
     >
       <div
         className={`aspect-square bg-white rounded-full ${
-          size == "small" ? "w-10 h-10" : "w-32 h-32"
+          size == "small" ? "w-10 h-10" : "w-20 h-20"
         }`}
       >
         <Image

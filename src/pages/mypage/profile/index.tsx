@@ -10,7 +10,6 @@ import {
 
 export const Profile = () => {
   const { user } = Auth.useUser();
-
   const [username, setUsername] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
   const [editName, setEditName] = useState<string>(username);
@@ -84,56 +83,57 @@ export const Profile = () => {
   }, [user, fetchProfile]);
 
   return (
-    <div className="flex flex-col mx-auto">
-      <div className="flex gap-6">
-        <span>ホーム</span>
-        <HiOutlineChevronRight size={30} className="text-gray-300" />
-        <span>プロフィール</span>
-      </div>
-      <h2 className="text-2xl">プロフィール設定</h2>
-      <span className="text-gray-400">アイコン</span>
-      <div className="flex">
-        <input
-          className="hidden"
-          type="file"
-          accept="image/jpeg"
-          ref={iconInputRef}
-          onChange={handleChangePreviewIcon}
-        />
-        <div className="flex justify-center">
+    <div className="flex flex-col items-center">
+      <div>
+        <div className="flex gap-6 my-4 text-sm font-bold">
+          <span>ホーム</span>
+          <HiOutlineChevronRight size={20} className="text-gray-300" />
+          <span>プロフィール</span>
+        </div>
+        <h2 className="mb-6 text-3xl font-black">プロフィール</h2>
+        <span className="text-sm text-gray-400">アイコン</span>
+        <div className="flex items-center mt-2">
+          <input
+            className="hidden"
+            type="file"
+            accept="image/jpeg"
+            ref={iconInputRef}
+            onChange={handleChangePreviewIcon}
+          />
           <Avatar
             image={previewIcon}
             size="large"
             isRounded={false}
             onClick={handleClickChangeIcon}
           />
+          <div className="ml-4">
+            <button
+              className="block p-2 text-xs text-[#070417] bg-[#F1F5F9] rounded-2xl"
+              onClick={handleSave}
+            >
+              変更する
+            </button>
+          </div>
         </div>
-        <div>
+        <span className="text-xs text-[#C2C6D2]">名前</span>
+        <div className="grid gap-4">
+          <div className="max-w-md">
+            <input
+              type="text"
+              className="py-2 px-4 text-xs font-thin text-[#070417] bg-[#F1F5F9] rounded-3xl"
+              placeholder="ユーザー名"
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+            />
+          </div>
           <button
-            className="block py-2 px-4 text-xl text-white bg-blue-500 rounded-xl"
+            className={`py-3 text-xs font-bold text-white bg-[#3B82F6] rounded-3xl`}
             onClick={handleSave}
           >
-            変更
+            保存する
           </button>
         </div>
       </div>
-      <span>名前</span>
-      <div>
-        <input
-          type="text"
-          className="p-2 bg-gray-200 rounded-xl"
-          placeholder="ユーザー名"
-          value={editName}
-          onChange={(e) => setEditName(e.target.value)}
-        />
-      </div>
-      <button
-        className="py-2 px-4 text-xl text-white bg-blue-500 rounded-xl"
-        onClick={handleSave}
-      >
-        保存する
-      </button>
-      <div className="mt-4"></div>
     </div>
   );
 };
