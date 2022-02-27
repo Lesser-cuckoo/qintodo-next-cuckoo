@@ -83,51 +83,47 @@ export const Profile = () => {
   }, [user, fetchProfile]);
 
   return (
-    <div className="flex flex-col items-center">
-      <div>
+    <div className="container flex flex-col items-center">
+      <div className="w-[500px]">
         <div className="flex gap-6 my-4 text-sm font-bold">
           <span>ホーム</span>
-          <HiOutlineChevronRight size={20} className="text-gray-300" />
+          <HiOutlineChevronRight size={20} className="text-[#C2C6D2]" />
           <span>プロフィール</span>
         </div>
         <h2 className="mb-6 text-3xl font-black">プロフィール</h2>
-        <span className="text-sm text-gray-400">アイコン</span>
-        <div className="flex items-center mt-2">
-          <input
-            className="hidden"
-            type="file"
-            accept="image/jpeg"
-            ref={iconInputRef}
-            onChange={handleChangePreviewIcon}
-          />
-          <Avatar
-            image={previewIcon}
-            size="large"
-            isRounded={false}
-            onClick={handleClickChangeIcon}
-          />
+        <span className="text-sm text-[#C2C6D2]">アイコン</span>
+        <div className="flex items-center mt-2 mb-4">
+          <Avatar image={previewIcon} size="large" isRounded={false} />
           <div className="ml-4">
+            <input
+              className="hidden"
+              type="file"
+              accept="image/jpeg"
+              ref={iconInputRef}
+              onChange={handleChangePreviewIcon}
+            />
             <button
-              className="block p-2 text-xs text-[#070417] bg-[#F1F5F9] rounded-2xl"
-              onClick={handleSave}
+              className="block py-3 px-4 text-xs font-bold text-[#070417] bg-[#F1F5F9] rounded-2xl hover:opacity-70"
+              onClick={handleClickChangeIcon}
             >
               変更する
             </button>
           </div>
         </div>
         <span className="text-xs text-[#C2C6D2]">名前</span>
-        <div className="grid gap-4">
-          <div className="max-w-md">
+        <div className="grid gap-8">
+          <div className="mt-2 max-w-md">
             <input
               type="text"
-              className="py-2 px-4 text-xs font-thin text-[#070417] bg-[#F1F5F9] rounded-3xl"
+              size={66}
+              className="py-3 px-4 text-sm font-thin text-[#070417] bg-[#F1F5F9] rounded-3xl"
               placeholder="ユーザー名"
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
             />
           </div>
           <button
-            className={`py-3 text-xs font-bold text-white bg-[#3B82F6] rounded-3xl`}
+            className="py-4 text-sm font-bold text-white bg-[#3B82F6] rounded-3xl hover:opacity-70"
             onClick={handleSave}
           >
             保存する
