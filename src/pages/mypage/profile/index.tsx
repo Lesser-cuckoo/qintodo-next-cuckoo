@@ -1,4 +1,6 @@
 import { Auth } from "@supabase/ui";
+import type { NextPage } from "next";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { Avatar } from "src/component/Avatar";
@@ -8,7 +10,7 @@ import {
   uploadAvatar,
 } from "src/lib/SupabaseClient";
 
-export const Profile = () => {
+export const Profile: NextPage = () => {
   const { user } = Auth.useUser();
   const [username, setUsername] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
@@ -87,13 +89,13 @@ export const Profile = () => {
     <div className="container flex flex-col items-center">
       <div className="w-[500px]">
         <div className="flex gap-6 my-4 text-sm font-bold">
-          <span className="hover:bg-[#F1F5F9] hover:cursor-pointer">
-            ホーム
-          </span>
+          <Link href="/mypage">
+            <a>
+              <span className="hover:cursor-pointer">ホーム</span>
+            </a>
+          </Link>
           <HiOutlineChevronRight size={20} className="text-[#C2C6D2]" />
-          <span className="hover:bg-[#F1F5F9] hover:cursor-pointer">
-            プロフィール
-          </span>
+          <span>プロフィール</span>
         </div>
         <h2 className="mb-6 text-3xl font-black">プロフィール</h2>
         <span className="text-sm text-[#C2C6D2]">アイコン</span>
