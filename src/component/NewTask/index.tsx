@@ -1,27 +1,45 @@
 import { Auth } from "@supabase/ui";
-import type { VFC } from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
 import { RadioButton2 } from "src/component/RadioButton/radiobutton";
+import type { TaskType } from "src/lib/Datetime";
 import { addTodo } from "src/lib/SupabaseClient";
-import type { BgColorProps, DayProps, OutLineProps } from "src/type/type";
+import type { BgColorProps, OutLineProps } from "src/type/type";
 
 type Props = {
-  day: DayProps;
-  outlineColor: OutLineProps;
-  taskColor: BgColorProps;
+  day: TaskType;
   updateTodo: () => Promise<void>;
 };
 
-export const NewTask: VFC<Props> = (props) => {
-  const { day, outlineColor, taskColor, updateTodo } = props;
+export const NewTask = (props: Props) => {
   const { user } = Auth.useUser();
+  const { day, updateTodo } = props;
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const inputstyle = "line-through text-[#C2C6D2]";
   const lineThrough: string = isComplete ? inputstyle : "";
   const [text, setText] = useState<string>("");
   const [isAddTask, setAddTask] = useState<boolean>(false);
+
+  const outlineColor = useMemo<OutLineProps>(
+    () =>
+      day == "today"
+        ? "outline-today"
+        : day == "tomorrow"
+        ? "outline-tomorrow"
+        : "outline-other",
+    [day]
+  );
+
+  const taskColor = useMemo<BgColorProps>(
+    () =>
+      day == "today"
+        ? "checked:bg-today"
+        : day == "tomorrow"
+        ? "checked:bg-tomorrow"
+        : "checked:bg-other",
+    [day]
+  );
 
   const handleChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +53,7 @@ export const NewTask: VFC<Props> = (props) => {
   );
 
   const handleAddTask = useCallback(
-    async (day: DayProps, isComplete: boolean) => {
+    async (day: TaskType, isComplete: boolean) => {
       if (text && user) {
         const uid = user.id;
         const isSuccess = await addTodo(uid, text, day, isComplete);
