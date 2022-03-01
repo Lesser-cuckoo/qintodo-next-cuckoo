@@ -53,7 +53,7 @@ export const NewTask = (props: Props) => {
   );
 
   const handleAddTask = useCallback(
-    async (day: "today" | "tomorrow" | "other", isComplete: boolean) => {
+    async (day: TaskType, isComplete: boolean) => {
       if (text && user) {
         const uid = user.id;
         const isSuccess = await addTodo(uid, text, day, isComplete);
