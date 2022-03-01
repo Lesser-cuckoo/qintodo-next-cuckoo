@@ -21,7 +21,10 @@ export const RadioButton: VFC<Style> = (props) => {
 
   return (
     <>
-      <div onClick={handleJudgeCompleted} className="mr-2 h-[24px]">
+      <div
+        onClick={handleJudgeCompleted}
+        className="absolute top-2 left-0 mr-2 h-[24px]"
+      >
         <input
           type="radio"
           className={`${bgColor} radio border-gray-200 outline-none focus:outline-none checked:outline-none`}

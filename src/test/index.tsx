@@ -1,6 +1,5 @@
 import type { VFC } from "react";
 import { useState } from "react";
-import { Dndkit } from "src/component/dndkit";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { moveTodo } from "src/lib/SupabaseClient";
 
@@ -49,7 +48,6 @@ export const Test: VFC<Props> = (props) => {
             変更
           </button>
         </div>
-        <Dndkit />
       </div>
     </>
   );
