@@ -15,7 +15,7 @@ export const MyPage: VFC = () => {
       title: <p>プロフィール設定</p>,
     },
     {
-      url: "/",
+      url: "/mypage/connect",
       title: <p>アカウント設定</p>,
     },
     {
