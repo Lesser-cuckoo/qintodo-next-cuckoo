@@ -71,6 +71,18 @@ export const Dndkit = (props: Props) => {
     if (filtered.length == 1) {
       return "tomorrow";
     }
+    filtered = todoOther.filter((todo) =>
+      todo.id == Number(id) ? true : false
+    );
+    if (filtered.length == 1) {
+      return "other";
+    }
+    if (id == "today") {
+      return "today";
+    }
+    if (id == "tomorrow") {
+      return "tomorrow";
+    }
     return "other";
   };
 

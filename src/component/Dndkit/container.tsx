@@ -7,7 +7,7 @@ import { NewTask } from "src/component/NewTask";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 
-import { SortableItem } from "./sortable_item";
+import { SortableItem } from "./sortableItem";
 
 type Props = {
   taskType: TaskType;
