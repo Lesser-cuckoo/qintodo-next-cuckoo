@@ -1,15 +1,21 @@
 import { useRouter } from "next/router";
 import type { VFC } from "react";
+import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineChevronRight } from "react-icons/hi";
+import { client } from "src/lib/SupabaseClient";
 
 export const Connect: VFC = () => {
   const router = useRouter();
   const handleClick = (URL: string) => {
     router.push(`${URL}`);
   };
+
+  const handleLogout = useCallback(() => {
+    client.auth.signOut();
+  }, []);
 
   const List1 = [
     {
@@ -76,7 +82,7 @@ export const Connect: VFC = () => {
 
           <button
             className="p-2 mb-3 font-bold text-red-500 hover:bg-slate-100 rounded-sm"
-            onClick={() => handleClick("/")}
+            onClick={handleLogout}
           >
             ログアウト
           </button>
