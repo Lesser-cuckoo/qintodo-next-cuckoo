@@ -32,7 +32,7 @@ export const Header = () => {
   }, [user, fetchProfile]);
 
   return (
-    <div className="flex justify-around items-center p-5">
+    <div className="flex justify-around items-center p-5 dark:bg-[#353e49]">
       <Link href="/" passHref>
         <a>
           <Image

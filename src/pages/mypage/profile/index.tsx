@@ -113,7 +113,7 @@ export const Profile = () => {
       </div>
       <div className="mt-4">
         <button
-          className="py-2 px-4 text-2xl bg-orange-200"
+          className="py-2 px-4 text-2xl bg-orange-200 dark:bg-[#4F2306]"
           onClick={handleSave}
         >
           変更

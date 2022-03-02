@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const TaskInput = (props: Props) => {
-  const { item, outlineColor, setText, text, updateTodo } = props;
+  const { item, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
   // const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
@@ -71,7 +71,8 @@ export const TaskInput = (props: Props) => {
             setIsSending(false);
           }
         }}
-        className={`h-[1.5rem] flex-1 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 pl-2 caret-[#F43F5E] ${lineThrough} ${outlineColor} rounded-2xl`}
+        className={`h-[1.5rem] flex-1  truncate border-0 bg-white dark:bg-[#22272E] outline-none focus:ring-0 pl-2 caret-[#F43F5E] ${lineThrough} 
+        rounded-2xl`}
         disabled={item.iscomplete}
       />
     </>

@@ -52,7 +52,7 @@ export const TaskWrap: VFC<Props> = (props) => {
     async (day) => {
       if (text && user) {
         const uid = user.id;
-        const isSuccess = await addTodo(uid, text, day, false);
+        const isSuccess = await addTodo(uid, text, day);
         if (isSuccess) {
           updateTodo();
         } else {
@@ -65,7 +65,7 @@ export const TaskWrap: VFC<Props> = (props) => {
 
   return (
     <>
-      <li className="group flex justify-start py-2">
+      <li className="group flex justify-start py-2 ">
         <RadioButton
           handleEditIsComplete={handleEditIsComplete}
           centerColor={taskColor}
@@ -79,7 +79,7 @@ export const TaskWrap: VFC<Props> = (props) => {
           outlineColor={outlineColor}
         />
         <div className="invisible group-hover:visible">
-          <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
+          <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] dark:text-[#22272E] hover:cursor-pointer">
             <MdOutlineContentCopy
               onClick={async () => await handleCopyTask(day)}
             />
