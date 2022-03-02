@@ -1,22 +1,36 @@
 import type { VFC } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import { HiCheck } from "react-icons/hi";
 import { MyPageLayout } from "src/layout/MypageLayout";
 
 export const Theme: VFC = () => {
-  const [isTheme, setIsTheme] = useState<"media" | "dark" | "light">("media");
-  const handleDark = () => {
-    document.body.classList.add("dark");
-    setIsTheme("dark");
-  };
-  const handleLight = () => {
-    document.body.classList.remove("dark");
-    setIsTheme("light");
-  };
+  const [isTheme, setIsTheme] = useState<undefined | "dark" | "light">(
+    localStorage.theme
+  );
 
-  const handleMedia = () => {
-    setIsTheme("media");
-  };
+  const handleDark = useCallback(() => {
+    document.body.classList.add("dark");
+    localStorage.theme = "dark";
+    setIsTheme("dark");
+  }, []);
+  const handleLight = useCallback(() => {
+    document.body.classList.remove("dark");
+    localStorage.theme = "light";
+    setIsTheme("light");
+  }, []);
+
+  const handleMedia = useCallback(() => {
+    const isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    localStorage.removeItem("theme");
+    if (isLight) {
+      document.body.classList.remove("dark");
+    } else if (!isLight) {
+      document.body.classList.add("dark");
+    }
+    setIsTheme(undefined);
+  }, []);
+
   return (
     <>
       <MyPageLayout title="テーマ" backbutton="back">
@@ -26,7 +40,7 @@ export const Theme: VFC = () => {
             className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-[#202425] rounded-sm"
           >
             <p>OSの設定に合わせる</p>
-            {isTheme === "media" ? (
+            {isTheme === undefined ? (
               <div className="text-blue-500">
                 <HiCheck size={25} />
               </div>
