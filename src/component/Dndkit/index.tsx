@@ -220,12 +220,13 @@ export const Dndkit = (props: Props) => {
       if (!isOk) {
         alert("更新に失敗しました。");
       } else {
+        updateTodo();
         setActiveId(-1);
         setTargetContainer(null);
         setTargetIndex(-1);
       }
     }
-  }, [activeId, targetContainer, targetIndex]);
+  }, [activeId, targetContainer, targetIndex, updateTodo]);
 
   useEffect(() => {
     if (activeId != -1 && targetContainer && targetIndex != -1) {
