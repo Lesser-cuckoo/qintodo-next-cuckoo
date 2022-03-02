@@ -1,12 +1,10 @@
 import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { NewTask } from "src/component/NewTask";
-import { TaskWrap } from "src/component/TaskWrap";
+import { Dndkit } from "src/component/Dndkit";
 import { taskElement } from "src/constants/TaskElement";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
-import { Test } from "src/test";
 
 export const Index: VFC = () => {
   const [todoToday, setTodoToday] = useState<TodoType[]>([]);
@@ -46,12 +44,27 @@ export const Index: VFC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 my-8 mx-12">
+      <div className="grid grid-cols-3 gap-4 mx-12 mt-8">
         {mapTaskElement.map((task) => (
           <div className="col-span-1" key={task.id}>
             <div className={`text-xl font-bold ${task.color}`}>
               {task.header}
             </div>
+          </div>
+        ))}
+      </div>
+      <Dndkit
+        todoToday={todoToday}
+        setTodoToday={setTodoToday}
+        todoTomorrow={todoTomorrow}
+        setTodoTomorrow={setTodoTomorrow}
+        todoOther={todoOther}
+        setTodoOther={setTodoOther}
+        updateTodo={updateTodo}
+      />
+      {/* <div>
+        <div>
+          <div>
             <div className="mt-6">
               <ul>
                 {task.taskArray.map((item) => (
@@ -73,9 +86,8 @@ export const Index: VFC = () => {
               />
             </div>
           </div>
-        ))}
         <Test todoToday={todoToday} updateTodo={updateTodo} />
-      </div>
+      </div> */}
     </>
   );
 };
