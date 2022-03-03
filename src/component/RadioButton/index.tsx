@@ -29,7 +29,7 @@ export const RadioButton: VFC<Style> = (props) => {
       >
         <input
           type="radio"
-          className={`${bgColor} radio dark:boxshadow-radio-dark boxshadow-radio-light  border-gray-200  outline-none focus:outline-none checked:outline-none`}
+          className={`${bgColor} radio dark:checked:boxshadow-radio-dark checked:boxshadow-radio-light border-gray-200  outline-none focus:outline-none checked:outline-none`}
           readOnly
           checked={item.iscomplete}
         ></input>
