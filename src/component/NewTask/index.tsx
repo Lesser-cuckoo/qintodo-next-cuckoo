@@ -1,9 +1,9 @@
 import { Auth } from "@supabase/ui";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
 import type { TaskType } from "src/lib/Datetime";
 import { addTodo } from "src/lib/SupabaseClient";
-// import type { BgColorProps, OutLineProps } from "src/type/type";
+import type { CaretColorProps } from "src/type/type";
 
 type Props = {
   day: TaskType;
@@ -17,25 +17,15 @@ export const NewTask = (props: Props) => {
   const [text, setText] = useState<string>("");
   const [isAddTask, setAddTask] = useState<boolean>(false);
 
-  // const outlineColor = useMemo<OutLineProps>(
-  //   () =>
-  //     day == "today"
-  //       ? "outline-today"
-  //       : day == "tomorrow"
-  //       ? "outline-tomorrow"
-  //       : "outline-other",
-  //   [day]
-  // );
-
-  // const taskColor = useMemo<BgColorProps>(
-  //   () =>
-  //     day == "today"
-  //       ? "checked:bg-today"
-  //       : day == "tomorrow"
-  //       ? "checked:bg-tomorrow"
-  //       : "checked:bg-other",
-  //   [day]
-  // );
+  const caretColor = useMemo<CaretColorProps>(
+    () =>
+      day == "today"
+        ? "caret-today"
+        : day == "tomorrow"
+        ? "caret-tomorrow"
+        : "caret-other",
+    [day]
+  );
 
   const handleChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +90,7 @@ export const NewTask = (props: Props) => {
                 }
                 setAddTask(false);
               }}
-              className="flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0 caret-[#F43F5E]"
+              className={`flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0 caret-[#F43F5E] ${caretColor}`}
               autoFocus
             />
           </>

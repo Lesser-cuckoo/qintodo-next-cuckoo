@@ -3,18 +3,17 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { editTodo } from "src/lib/SupabaseClient";
-import type { OutLineProps } from "src/type/type";
 
 type Props = {
   item: TodoType;
   updateTodo: () => void;
-  outlineColor: OutLineProps;
   setText: Dispatch<SetStateAction<string>>;
   text: string;
+  caretColor: string;
 };
 
 export const TaskInput = (props: Props) => {
-  const { item, setText, text, updateTodo } = props;
+  const { caretColor, item, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
   // const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
@@ -78,16 +77,9 @@ export const TaskInput = (props: Props) => {
               setIsSending(false);
             }
           }}
-          className={`absolute top-0 left-0 p-1 w-full h-5 border-0  dark:bg-darkbg focus:ring-0 ${lineThrough} truncate caret-[#F43F5E]  rounded-2xl bg-white/0`}
+          className={`absolute top-0 left-0 p-1 w-full h-5 border-0  dark:bg-darkbg focus:ring-0 focus:outline-none ${lineThrough} truncate ${caretColor}  rounded-2xl bg-white/0`}
           disabled={item.iscomplete}
         />
-        {/* <input
-          type="text"
-          className="absolute top-0 left-0 p-1 w-full h-5 bg-white border-none focus:ring-0"
-          placeholder="文字を入力してください"
-          onChange={handleChange}
-          value={text}
-        /> */}
       </div>
     </>
   );
