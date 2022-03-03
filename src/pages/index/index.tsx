@@ -1,7 +1,7 @@
 import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Dndkit } from "src/component/Dndkit";
+import { Dndkit } from "src/component/dndkit";
 import { taskElement } from "src/constants/TaskElement";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
