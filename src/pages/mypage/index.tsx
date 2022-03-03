@@ -65,7 +65,7 @@ export const MyPage: VFC = () => {
   return (
     <>
       <MyPageLayout title="アカウント" backbutton="home">
-        <div className="m-auto mt-5 w-full text-xl font-bold">
+        <div className="m-auto mt-5 w-full text-base font-bold lg:text-xl">
           <div className="p-2 py-2 text-lg text-gray-400">設定</div>
           {List1.map((item, index) => (
             <Button item={item} key={index} />

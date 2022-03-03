@@ -55,8 +55,8 @@ export const Connect: VFC = () => {
 
   return (
     <>
-      <div className="m-auto mt-6 w-1/3">
-        <div className="m-auto mt-5 w-full text-xl font-bold">
+      <div className="m-auto mt-6 lg:w-1/3">
+        <div className="m-auto mt-5 w-full text-base font-bold lg:text-xl">
           <div className="flex items-center p-2 py-2 mb-1 h-10 text-base">
             <p
               className=" hover:underline cursor-pointer"
@@ -72,7 +72,9 @@ export const Connect: VFC = () => {
               アカウントの連携
             </p>
           </div>
-          <div className="p-2 py-2 mb-14 text-4xl">アカウント連携</div>
+          <div className="p-2 py-2 mb-14 text-3xl lg:text-4xl">
+            アカウント連携
+          </div>
           {List1.map((item, index) => (
             <Button item={item} key={index} />
           ))}
