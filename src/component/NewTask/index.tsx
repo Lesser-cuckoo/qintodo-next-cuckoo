@@ -77,7 +77,7 @@ export const NewTask = (props: Props) => {
               className={`flex justify-center w-[22px] h-[22px] rounded-full  ring-1 ring-gray-200 mr-2`}
             >
               <button
-                className={`outline-none w-full h-full rounded-full  dark:bg-[#22272E]`}
+                className={`outline-none w-full h-full rounded-full  dark:bg-darkbg`}
               />
             </div>
             <input
@@ -100,18 +100,18 @@ export const NewTask = (props: Props) => {
                 }
                 setAddTask(false);
               }}
-              className="flex-1 pl-2 h-[24px] truncate dark:bg-[#22272E] rounded-2xl border-0 outline-none focus:ring-0 caret-[#F43F5E]"
+              className="flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0 caret-[#F43F5E]"
               autoFocus
             />
           </>
         ) : (
           <>
             <div
-              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 ring-gray-300 bg-gray-300 ml-[2px]`}
+              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 dark:bg-gray-400 dark:ring-gray-400 ring-gray-300 bg-gray-300 ml-[1px]`}
             >
               <HiPlusSm
                 size={18}
-                className="text-[#ffffff] dark:text-[#22272E]"
+                className="text-[#ffffff] dark:text-darkbg "
               />
             </div>
             <button

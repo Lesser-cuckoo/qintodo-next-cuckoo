@@ -37,7 +37,7 @@ export const Theme: VFC = () => {
         <div className="flex flex-col m-auto mt-5 w-full text-xl font-bold ">
           <button
             onClick={handleMedia}
-            className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-[#202425] rounded-sm"
+            className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
           >
             <p>OSの設定に合わせる</p>
             {isTheme === undefined ? (
@@ -48,7 +48,7 @@ export const Theme: VFC = () => {
           </button>
           <button
             onClick={handleLight}
-            className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-[#202425] rounded-sm"
+            className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
           >
             ライト
             {isTheme === "light" ? (
@@ -59,7 +59,7 @@ export const Theme: VFC = () => {
           </button>
           <button
             onClick={handleDark}
-            className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-[#202425] rounded-sm"
+            className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
           >
             ダーク
             {isTheme === "dark" ? (

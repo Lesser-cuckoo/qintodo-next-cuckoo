@@ -45,7 +45,7 @@ export const Connect: VFC = () => {
             </IconContext.Provider>
             <p className="text-base">{item.title}</p>
           </div>
-          <button className=" px-7 text-base bg-gray-100 hover:bg-blue-500 rounded-full border-none btn btn-outline">
+          <button className="px-7 text-base bg-gray-100 hover:bg-blue-500 dark:bg-gray-400 dark:hover:bg-blue-400 rounded-full border-none btn btn-outline">
             解除する
           </button>
         </div>
@@ -81,14 +81,14 @@ export const Connect: VFC = () => {
           </div>
 
           <button
-            className="p-2 mb-3 font-bold text-red-500 hover:bg-slate-100 rounded-sm"
+            className="p-2 mb-3 font-bold text-red-500 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
             onClick={handleLogout}
           >
             ログアウト
           </button>
 
           <button
-            className="block p-2 font-bold text-red-500 hover:bg-slate-100 rounded-sm"
+            className="block p-2 font-bold text-red-500 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
             onClick={() => handleClick("/")}
           >
             アカウント削除

@@ -8,6 +8,8 @@ module.exports = {
         today: "#F43F5E",
         tomorrow: "#FB923C",
         other: "#FBBF24",
+        darkhover: "#202425",
+        darkbg: "#22272E",
       },
     },
   },

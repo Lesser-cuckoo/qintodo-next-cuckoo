@@ -78,7 +78,7 @@ export const TaskInput = (props: Props) => {
               setIsSending(false);
             }
           }}
-          className={`absolute top-0 left-0 p-1 w-full h-5 border-0  dark:bg-[#22272E] focus:ring-0 ${lineThrough} truncate caret-[#F43F5E]  rounded-2xl bg-white/0`}
+          className={`absolute top-0 left-0 p-1 w-full h-5 border-0  dark:bg-darkbg focus:ring-0 ${lineThrough} truncate caret-[#F43F5E]  rounded-2xl bg-white/0`}
           disabled={item.iscomplete}
         />
         {/* <input

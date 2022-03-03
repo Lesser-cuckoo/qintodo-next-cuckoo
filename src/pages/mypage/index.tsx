@@ -53,7 +53,7 @@ export const MyPage: VFC = () => {
       <>
         <button
           onClick={() => handleClick(item.url)}
-          className="flex justify-between items-center p-2 w-full font-bold hover:bg-slate-100 dark:hover:bg-[#202425] rounded-sm"
+          className="flex justify-between items-center p-2 w-full font-bold hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
         >
           {item.title}
           <HiOutlineChevronRight size={34} className="pl-2 text-gray-400" />
@@ -80,7 +80,7 @@ export const MyPage: VFC = () => {
           ))}
 
           <button
-            className="p-2 font-bold hover:bg-slate-100 dark:hover:bg-[#202425] rounded-sm"
+            className="p-2 font-bold hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
             onClick={() => handleClick("/")}
           >
             お問合せ
