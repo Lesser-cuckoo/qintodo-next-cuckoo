@@ -106,7 +106,7 @@ export const NewTask = (props: Props) => {
             </div>
             <button
               onClick={handleClickButton}
-              className="ml-3 h-5 leading-5 placeholder:text-[#C2C6D2] text-gray-400 border-0 focus:ring-0 caret-[#F43F5E]"
+              className="ml-3 h-5 leading-5 text-gray-400"
             >
               タスクを追加する
             </button>
