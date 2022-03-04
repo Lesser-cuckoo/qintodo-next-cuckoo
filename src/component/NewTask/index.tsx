@@ -90,7 +90,7 @@ export const NewTask = (props: Props) => {
                 }
                 setAddTask(false);
               }}
-              className={`flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0 caret-[#F43F5E] ${caretColor}`}
+              className={`flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0  ${caretColor}`}
               autoFocus
             />
           </>
