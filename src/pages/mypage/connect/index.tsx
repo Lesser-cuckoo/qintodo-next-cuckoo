@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import type { VFC } from "react";
+import { useState } from "react";
 import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { FaApple } from "react-icons/fa";
@@ -14,6 +15,9 @@ export const Connect: VFC = () => {
     router.push(`${URL}`);
   };
 
+  const [isOpenLogout, setIsOpenLogout] = useState(false);
+  const [isOpenAccount, setIsOpenAccount] = useState(false);
+
   const handleLogout = useCallback(() => {
     client.auth.signOut();
     router.replace("/");
@@ -21,14 +25,16 @@ export const Connect: VFC = () => {
 
   const handleModalActions = [
     {
-      id: "signOut-modal",
+      isOpen: isOpenLogout,
+      setIsOpen: setIsOpenLogout,
       title: "ログアウト",
       message: "ログアウトしてよろしいですか？",
-      onClick: () => handleLogout,
+      onClick: handleLogout,
       buttonChildren: "ログアウト",
     },
     {
-      id: "account-modal",
+      isOpen: isOpenAccount,
+      setIsOpen: setIsOpenAccount,
       title: "アカウントの削除",
       message: "アカウント完全に削除してよろしいですか？",
       onClick: () => alert("アカウントを削除しました"),
@@ -115,17 +121,21 @@ export const Connect: VFC = () => {
           </button> */}
 
           {handleModalActions.map((item) => (
-            <div key={item.id}>
-              <button className="p-2 mb-3 font-bold text-red-500 hover:bg-slate-100 rounded-sm modal-button">
-                <label htmlFor={item.id} className="modal-button">
-                  {item.buttonChildren}
-                </label>
+            <div key={item.title}>
+              <button
+                className="p-2 mb-3 font-bold text-red-500 hover:bg-slate-100 rounded-sm modal-button"
+                // eslint-disable-next-line react/jsx-handler-names
+                onClick={() => item.setIsOpen(true)}
+              >
+                {item.buttonChildren}
               </button>
               <AlertModal
-                id={item.id}
+                isOpen={item.isOpen}
+                setIsOpen={item.setIsOpen}
                 message={item.message}
                 title={item.title}
-                onClick={() => item.onClick}
+                // eslint-disable-next-line react/jsx-handler-names
+                onClick={item.onClick}
               />
             </div>
           ))}
