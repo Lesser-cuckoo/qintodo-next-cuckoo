@@ -104,22 +104,6 @@ export const Connect: VFC = () => {
           <div className="p-2 py-2 mt-14 mb-2 text-lg text-gray-400">
             アカウント操作
           </div>
-          {/* <button
-            className="p-2 mb-3 font-bold text-red-500 hover:bg-slate-100 rounded-sm modal-button"
-            // onClick={handleLogout}
-          >
-            <label htmlFor="my-modal" className="modal-button">
-              ログアウト
-            </label>
-          </button>
-
-          <button
-            className="block p-2 font-bold text-red-500 hover:bg-slate-100 rounded-sm"
-            onClick={() => handleClick("/")}
-          >
-            アカウント削除
-          </button> */}
-
           {handleModalActions.map((item) => (
             <div key={item.title}>
               <button
