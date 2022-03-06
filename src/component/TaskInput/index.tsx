@@ -18,7 +18,7 @@ export const TaskInput = (props: Props) => {
   // const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
 
-  const inputstyle = "line-through text-[#C2C6D2]";
+  const inputstyle = "line-through text-[#C2C6D2] dark:text-gray-400";
   const lineThrough: string = item.iscomplete ? inputstyle : "";
 
   const handleChangeText = useCallback(
