@@ -60,14 +60,14 @@ export const AlertModal: VFC<Props> = (props) => {
               <div className="mt-4">
                 <div className="flex gap-4 justify-center">
                   <button
-                    className="py-3 px-8 text-[#070417] bg-[#F1F5F9] rounded-full border-none hover:opacity-70 "
+                    className="z-10 py-3 px-8 text-[#070417] bg-[#F1F5F9] rounded-full border-none hover:opacity-70"
                     onClick={() => setIsOpen(false)}
                   >
                     キャンセル
                   </button>
                   <button
                     onClick={onClick}
-                    className=" py-3 px-12 text-white bg-[#EF4444] rounded-full hover:opacity-70"
+                    className="z-10 py-3 px-12 text-white bg-[#EF4444] rounded-full hover:opacity-70"
                   >
                     OK
                   </button>
