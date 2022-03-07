@@ -1,3 +1,4 @@
+import { Popover } from "@headlessui/react";
 import { Auth, IconSettings } from "@supabase/ui";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,25 +13,36 @@ import { addNewProfile, getProfile } from "src/lib/SupabaseClient";
  */
 export const Header = () => {
   const { user } = Auth.useUser();
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const [avatar, setAvatar] = useState<string>("");
   const [name, setName] = useState<string>("");
-  // const [isSetting, setIsSetting] = useState(false);
   const router = useRouter();
 
-  const fetchProfile = useCallback(async (uid: string) => {
-    const profile = await getProfile();
-    if (profile) {
-      setAvatar(profile.avatar);
-      setName(profile.username);
-    } else {
-      const isOk = await addNewProfile(uid);
-      if (!isOk) {
-        alert("プロフィールの新規登録に失敗しました。");
+  const fetchProfile = useCallback(
+    async (uid: string) => {
+      if (user) {
+        const profile = await getProfile();
+        if (profile) {
+          setAvatar(profile.avatar);
+          setName(profile.username);
+        } else {
+          const username = user.user_metadata.name
+            ? user.user_metadata.name
+            : "ユーザー";
+          const avatar_url = user.user_metadata.avatar_url
+            ? user.user_metadata.avatar_url
+            : "";
+          const isOk = await addNewProfile(uid, username, avatar_url);
+          if (!isOk) {
+            alert("プロフィールの新規登録に失敗しました。");
+          } else {
+            setAvatar(avatar_url);
+          }
+        }
       }
-    }
-  }, []);
+    },
+    [user]
+  );
 
   useEffect(() => {
     if (user) {
@@ -38,13 +50,8 @@ export const Header = () => {
     }
   }, [user, fetchProfile]);
 
-  const handleOpenMenu = () => {
-    setIsOpenMenu(!isOpenMenu);
-  };
-
   const handleSetting = () => {
     router.push("/mypage");
-    setIsOpenMenu(false);
   };
 
   return (
@@ -61,16 +68,35 @@ export const Header = () => {
             />
           </a>
         </Link>
-        {/* <Link href="/mypage" passHref> */}
-        <div className="relative w-80 text-center">
-          <button onClick={handleOpenMenu}>
+        <Popover className="relative">
+          <Popover.Button>
             <Avatar image={avatar} size="small" isRounded={true} />
-          </button>
-          {isOpenMenu && router.pathname.includes("/mypage") === true ? (
-            <div className="absolute shadow-xl card bg-base-100">
-              <div className="flex flex-col gap-4 p-5 w-80">
-                <div className="flex gap-2 items-center ">
-                  <button onClick={handleOpenMenu} className="max-w-fit">
+          </Popover.Button>
+
+          <Popover.Panel className="absolute z-10 shadow-xl ">
+            {router.pathname.includes("/mypage") === false ? (
+              <div className=" mt-2 shadow-stone-500">
+                <div className="flex flex-col py-3 w-80">
+                  <Popover.Button>
+                    <button
+                      onClick={handleSetting}
+                      className="flex gap-2 items-center py-2 px-3 w-full h-10 text-sm font-bold hover:bg-slate-100"
+                    >
+                      <IconSettings size={19} />
+                      <p>設定</p>
+                    </button>
+                  </Popover.Button>
+                  <button className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold text-red-400 hover:bg-slate-100">
+                    <HiOutlineLogout size={20} />
+                    <p>ログアウト</p>
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            {router.pathname.includes("/mypage") === true ? (
+              <div className="flex flex-col w-80">
+                <div className="flex gap-2 items-center py-2 px-4">
+                  <button className="max-w-fit">
                     <Avatar image={avatar} size="small" isRounded={true} />
                   </button>
                   <div className="text-sm text-left">
@@ -78,31 +104,14 @@ export const Header = () => {
                     <p>@ahsuidhais</p>
                   </div>
                 </div>
-                <button className="items-center text-xs font-bold text-red-400 card-actions">
+                <button className="flex gap-2 items-center py-2 px-4 h-10 text-sm font-bold text-red-400">
                   <HiOutlineLogout size={19} />
                   <p>ログアウト</p>
                 </button>
               </div>
-            </div>
-          ) : null}
-          {isOpenMenu && router.pathname.includes("/mypage") === false ? (
-            <div className="absolute mt-2 shadow-stone-500 drop-shadow-lg card bg-base-100">
-              <div className="flex flex-col py-3 w-80">
-                <button
-                  className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold hover:bg-slate-100"
-                  onClick={handleSetting}
-                >
-                  <IconSettings size={19} />
-                  <p>設定</p>
-                </button>
-                <button className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold text-red-400 hover:bg-slate-100">
-                  <HiOutlineLogout size={20} />
-                  <p>ログアウト</p>
-                </button>
-              </div>
-            </div>
-          ) : null}
-        </div>
+            ) : null}
+          </Popover.Panel>
+        </Popover>
       </div>
     </>
   );

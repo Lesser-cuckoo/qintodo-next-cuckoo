@@ -1,6 +1,6 @@
-import { Auth, Button, IconLogOut } from "@supabase/ui";
+import { Auth } from "@supabase/ui";
 import type { CustomLayout } from "next";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { client } from "src/lib/SupabaseClient";
 
 import { Footer } from "./Footer";
@@ -21,10 +21,6 @@ export const AuthLayout: CustomLayout = (props: Props) => {
 
   const { children } = props;
 
-  const handleLogout = useCallback(() => {
-    client.auth.signOut();
-  }, []);
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -37,21 +33,14 @@ export const AuthLayout: CustomLayout = (props: Props) => {
       <main className="flex-1 px-4">
         <LayoutErrorBoundary>
           {isMounted && user ? (
-            <div>
-              <div>{children}</div>
-              <div className="flex justify-end my-4 mx-2">
-                <Button
-                  size="medium"
-                  icon={<IconLogOut />}
-                  onClick={handleLogout}
-                >
-                  Sign out
-                </Button>
-              </div>
-            </div>
+            <div>{children}</div>
           ) : (
             <div>
-              <Auth supabaseClient={client} />
+              <Auth
+                supabaseClient={client}
+                providers={["google"]}
+                socialColors
+              />
             </div>
           )}
         </LayoutErrorBoundary>
