@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Avatar } from "src/component/Avatar";
-import { addNewProfile, getProfile } from "src/lib/SupabaseClient";
+import { addNewProfile, client, getProfile } from "src/lib/SupabaseClient";
 
 /**
  * @package
@@ -48,9 +48,13 @@ export const Header = () => {
     }
   }, [user, fetchProfile]);
 
-  const handleSetting = () => {
+  const handleSetting = useCallback(() => {
     router.push("/mypage");
-  };
+  }, [router]);
+
+  const handleLogout = useCallback(() => {
+    client.auth.signOut();
+  }, []);
 
   return (
     <>
@@ -83,10 +87,15 @@ export const Header = () => {
                   <p>設定</p>
                 </button>
               </Popover.Button>
-              <button className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold text-red-400 hover:bg-slate-100">
-                <HiOutlineLogout size={20} />
-                <p>ログアウト</p>
-              </button>
+              <Popover.Button>
+                <button
+                  className="flex gap-2 items-center py-2 px-3 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
+                  onClick={handleLogout}
+                >
+                  <HiOutlineLogout size={20} />
+                  <p>ログアウト</p>
+                </button>
+              </Popover.Button>
             </div>
           </Popover.Panel>
         </Popover>
