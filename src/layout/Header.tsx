@@ -1,6 +1,7 @@
-import { Auth } from "@supabase/ui";
+import { Auth, IconSettings } from "@supabase/ui";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Avatar } from "src/component/Avatar";
@@ -15,6 +16,8 @@ export const Header = () => {
 
   const [avatar, setAvatar] = useState<string>("");
   const [name, setName] = useState<string>("");
+  // const [isSetting, setIsSetting] = useState(false);
+  const router = useRouter();
 
   const fetchProfile = useCallback(async (uid: string) => {
     const profile = await getProfile();
@@ -39,6 +42,11 @@ export const Header = () => {
     setIsOpenMenu(!isOpenMenu);
   };
 
+  const handleSetting = () => {
+    router.push("/mypage");
+    setIsOpenMenu(false);
+  };
+
   return (
     <>
       <div className="flex justify-around items-center p-5 dark:bg-[#353e49]">
@@ -58,7 +66,7 @@ export const Header = () => {
           <button onClick={handleOpenMenu}>
             <Avatar image={avatar} size="small" isRounded={true} />
           </button>
-          {isOpenMenu ? (
+          {isOpenMenu && router.pathname.includes("/mypage") === true ? (
             <div className="absolute shadow-xl card bg-base-100">
               <div className="flex flex-col gap-4 p-5 w-80">
                 <div className="flex gap-2 items-center ">
@@ -72,6 +80,23 @@ export const Header = () => {
                 </div>
                 <button className="items-center text-xs font-bold text-red-400 card-actions">
                   <HiOutlineLogout size={19} />
+                  <p>ログアウト</p>
+                </button>
+              </div>
+            </div>
+          ) : null}
+          {isOpenMenu && router.pathname.includes("/mypage") === false ? (
+            <div className="absolute mt-2 shadow-stone-500 drop-shadow-lg card bg-base-100">
+              <div className="flex flex-col py-3 w-80">
+                <button
+                  className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold hover:bg-slate-100"
+                  onClick={handleSetting}
+                >
+                  <IconSettings size={19} />
+                  <p>設定</p>
+                </button>
+                <button className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold text-red-400 hover:bg-slate-100">
+                  <HiOutlineLogout size={20} />
                   <p>ログアウト</p>
                 </button>
               </div>
