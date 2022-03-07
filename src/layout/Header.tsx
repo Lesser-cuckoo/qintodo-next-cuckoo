@@ -15,7 +15,6 @@ export const Header = () => {
   const { user } = Auth.useUser();
 
   const [avatar, setAvatar] = useState<string>("");
-  const [name, setName] = useState<string>("");
   const router = useRouter();
 
   const fetchProfile = useCallback(
@@ -24,7 +23,6 @@ export const Header = () => {
         const profile = await getProfile();
         if (profile) {
           setAvatar(profile.avatar);
-          setName(profile.username);
         } else {
           const username = user.user_metadata.name
             ? user.user_metadata.name
@@ -68,48 +66,28 @@ export const Header = () => {
             />
           </a>
         </Link>
-        <Popover className="relative">
+        <Popover className="relative w-80 text-center">
           <Popover.Button>
             <Avatar image={avatar} size="small" isRounded={true} />
           </Popover.Button>
 
-          <Popover.Panel className="absolute z-10 shadow-xl ">
-            {router.pathname.includes("/mypage") === false ? (
-              <div className=" mt-2 shadow-stone-500">
-                <div className="flex flex-col py-3 w-80">
-                  <Popover.Button>
-                    <button
-                      onClick={handleSetting}
-                      className="flex gap-2 items-center py-2 px-3 w-full h-10 text-sm font-bold hover:bg-slate-100"
-                    >
-                      <IconSettings size={19} />
-                      <p>設定</p>
-                    </button>
-                  </Popover.Button>
-                  <button className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold text-red-400 hover:bg-slate-100">
-                    <HiOutlineLogout size={20} />
-                    <p>ログアウト</p>
-                  </button>
-                </div>
-              </div>
-            ) : null}
-            {router.pathname.includes("/mypage") === true ? (
-              <div className="flex flex-col w-80">
-                <div className="flex gap-2 items-center py-2 px-4">
-                  <button className="max-w-fit">
-                    <Avatar image={avatar} size="small" isRounded={true} />
-                  </button>
-                  <div className="text-sm text-left">
-                    <p>{name}</p>
-                    <p>@ahsuidhais</p>
-                  </div>
-                </div>
-                <button className="flex gap-2 items-center py-2 px-4 h-10 text-sm font-bold text-red-400">
-                  <HiOutlineLogout size={19} />
-                  <p>ログアウト</p>
+          <Popover.Panel className="absolute z-10 mt-2 bg-white rounded-3xl drop-shadow-xl">
+            {/* {router.pathname.includes("/mypage") === false ? ( */}
+            <div className="flex flex-col py-3 w-80">
+              <Popover.Button>
+                <button
+                  onClick={handleSetting}
+                  className="flex gap-2 items-center py-2 px-3 w-full h-10 text-sm font-bold hover:bg-slate-100"
+                >
+                  <IconSettings size={19} />
+                  <p>設定</p>
                 </button>
-              </div>
-            ) : null}
+              </Popover.Button>
+              <button className="flex gap-2 items-center py-2 px-3 h-10 text-sm font-bold text-red-400 hover:bg-slate-100">
+                <HiOutlineLogout size={20} />
+                <p>ログアウト</p>
+              </button>
+            </div>
           </Popover.Panel>
         </Popover>
       </div>
