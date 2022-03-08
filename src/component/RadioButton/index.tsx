@@ -13,7 +13,9 @@ type Style = {
 
 export const RadioButton: VFC<Style> = (props) => {
   const { centerColor, handleEditIsComplete, item } = props;
-  const bgColor: string = item.iscomplete ? centerColor : "bg-white";
+  const bgColor: string = item.iscomplete
+    ? centerColor
+    : "bg-white dark:bg-[#22272E]";
 
   const handleJudgeCompleted = useCallback(() => {
     handleEditIsComplete(item.id, !item.iscomplete);
@@ -21,10 +23,13 @@ export const RadioButton: VFC<Style> = (props) => {
 
   return (
     <>
-      <div onClick={handleJudgeCompleted} className="mr-2 h-[24px]">
+      <div
+        onClick={handleJudgeCompleted}
+        className="absolute top-2 left-0 mr-2 h-[24px]"
+      >
         <input
           type="radio"
-          className={`${bgColor} radio border-gray-200 outline-none focus:outline-none checked:outline-none`}
+          className={`${bgColor} radio dark:checked:boxshadow-radio-dark checked:boxshadow-radio-light border-gray-200  outline-none focus:outline-none checked:outline-none`}
           readOnly
           checked={item.iscomplete}
         ></input>

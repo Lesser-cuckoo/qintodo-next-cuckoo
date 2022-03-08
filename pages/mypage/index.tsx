@@ -1,8 +1,8 @@
 import type { CustomNextPage } from "next";
 import { FixedLayout } from "src/layout";
-import { Mypage } from "src/pages/mypage";
+import { MyPage } from "src/pages/mypage";
 
-const AboutPage: CustomNextPage = () => <Mypage />;
+const AboutPage: CustomNextPage = () => <MyPage />;
 
 AboutPage.getLayout = FixedLayout;
 

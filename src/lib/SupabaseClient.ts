@@ -34,8 +34,7 @@ export type ProfileType = {
 export const addTodo = async (
   uid: string,
   task: string,
-  taskType: TaskType,
-  isComplete: boolean
+  taskType: TaskType
 ) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
   const { error } = await client.from<TodoType>("todos").insert([
@@ -43,7 +42,7 @@ export const addTodo = async (
       uid: uid,
       task: task,
       deadline: deadline,
-      iscomplete: isComplete,
+      iscomplete: false,
     },
   ]);
   if (error) {
@@ -113,6 +112,7 @@ export const deleteTodo = async (id: number) => {
     return data;
   }
 };
+
 export const editIsComplete = async (id: number, isComplete: boolean) => {
   const { error } = await client
     .from("todos")
@@ -129,38 +129,42 @@ export const editIsComplete = async (id: number, isComplete: boolean) => {
 export const moveTodo = async (
   todos: TodoType[],
   id: number,
-  targetIndex: number
+  targetIndex: number,
+  taskType: TaskType
 ) => {
+  const deadline = taskType == "other" ? null : getDate(taskType);
   if (targetIndex < 0 || todos.length < targetIndex) {
     return false;
   }
-  let sortkey = 0;
-  if (targetIndex == 0) {
-    const first = todos[0];
-    sortkey = first.sortkey ? first.sortkey : first.id;
-    if (Number.isInteger(sortkey)) {
-      sortkey -= 0.5;
+  let sortkey = null;
+  if (todos.length != 0) {
+    if (targetIndex == 0) {
+      const first = todos[0];
+      sortkey = first.sortkey ? first.sortkey : first.id;
+      if (Number.isInteger(sortkey)) {
+        sortkey -= 0.5;
+      } else {
+        sortkey = (sortkey + Math.floor(sortkey)) / 2;
+      }
+    } else if (targetIndex == todos.length) {
+      const last = todos.slice(-1)[0];
+      sortkey = last.sortkey ? last.sortkey : last.id;
+      if (Number.isInteger(sortkey)) {
+        sortkey += 0.5;
+      } else {
+        sortkey = (sortkey + Math.ceil(sortkey)) / 2;
+      }
     } else {
-      sortkey = (sortkey + Math.floor(sortkey)) / 2;
+      const a = todos[targetIndex - 1];
+      const sortkeyA = a.sortkey ? a.sortkey : a.id;
+      const b = todos[targetIndex];
+      const sortkeyB = b.sortkey ? b.sortkey : b.id;
+      sortkey = (sortkeyA + sortkeyB) / 2;
     }
-  } else if (targetIndex == todos.length) {
-    const last = todos.slice(-1)[0];
-    sortkey = last.sortkey ? last.sortkey : last.id;
-    if (Number.isInteger(sortkey)) {
-      sortkey += 0.5;
-    } else {
-      sortkey = (sortkey + Math.ceil(sortkey)) / 2;
-    }
-  } else {
-    const a = todos[targetIndex - 1];
-    const sortkeyA = a.sortkey ? a.sortkey : a.id;
-    const b = todos[targetIndex];
-    const sortkeyB = b.sortkey ? b.sortkey : b.id;
-    sortkey = (sortkeyA + sortkeyB) / 2;
   }
   const { error } = await client
     .from("todos")
-    .update({ sortkey: sortkey })
+    .update({ sortkey: sortkey, deadline: deadline })
     .eq("id", id);
   if (error) {
     return false;
@@ -169,10 +173,14 @@ export const moveTodo = async (
   }
 };
 
-export const addNewProfile = async (uid: string) => {
+export const addNewProfile = async (
+  uid: string,
+  username: string,
+  avatar: string
+) => {
   const { error } = await client
     .from<ProfileType>("profiles")
-    .insert([{ uid: uid, username: "ユーザー", avatar: "" }]);
+    .insert([{ uid: uid, username: username, avatar: avatar }]);
   if (error) {
     return false;
   }

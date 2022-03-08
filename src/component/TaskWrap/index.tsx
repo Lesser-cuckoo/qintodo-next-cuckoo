@@ -1,5 +1,6 @@
 import { Auth } from "@supabase/ui";
 import type { VFC } from "react";
+import { useMemo } from "react";
 import { useCallback, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
@@ -7,20 +8,38 @@ import { RadioButton } from "src/component/RadioButton";
 import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
-import type { DayProps, OutLineProps } from "src/type/type";
+import type { BgColorProps, CaretColorProps, DayProps } from "src/type/type";
 
 type Props = {
   day: DayProps;
-  outlineColor: OutLineProps;
   item: TodoType;
-  taskColor: string;
   updateTodo: () => Promise<void>;
 };
 
 export const TaskWrap: VFC<Props> = (props) => {
-  const { day, item, outlineColor, taskColor, updateTodo } = props;
+  const { day, item, updateTodo } = props;
   const { user } = Auth.useUser();
   const [text, setText] = useState<string>(item.task);
+
+  const caretColor = useMemo<CaretColorProps>(
+    () =>
+      day == "today"
+        ? "caret-today"
+        : day == "tomorrow"
+        ? "caret-tomorrow"
+        : "caret-other",
+    [day]
+  );
+
+  const taskColor = useMemo<BgColorProps>(
+    () =>
+      day == "today"
+        ? "checked:bg-today"
+        : day == "tomorrow"
+        ? "checked:bg-tomorrow"
+        : "checked:bg-other",
+    [day]
+  );
 
   const handleEditIsComplete = useCallback(
     async (itemId: number, itemiscomplete: boolean) => {
@@ -52,7 +71,7 @@ export const TaskWrap: VFC<Props> = (props) => {
     async (day) => {
       if (text && user) {
         const uid = user.id;
-        const isSuccess = await addTodo(uid, text, day, false);
+        const isSuccess = await addTodo(uid, text, day);
         if (isSuccess) {
           updateTodo();
         } else {
@@ -65,7 +84,7 @@ export const TaskWrap: VFC<Props> = (props) => {
 
   return (
     <>
-      <li className="group flex justify-start py-2">
+      <li className="flex justify-between py-2">
         <RadioButton
           handleEditIsComplete={handleEditIsComplete}
           centerColor={taskColor}
@@ -76,10 +95,10 @@ export const TaskWrap: VFC<Props> = (props) => {
           text={text}
           setText={setText}
           updateTodo={updateTodo}
-          outlineColor={outlineColor}
+          caretColor={caretColor}
         />
-        <div className="invisible group-hover:visible">
-          <div className="flex invisible group-hover:visible gap-2 items-center mr-6 text-[#C2C6D2] hover:cursor-pointer">
+        <div className="absolute top-2 right-2 invisible group-hover:visible">
+          <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] hover:cursor-pointer">
             <MdOutlineContentCopy
               onClick={async () => await handleCopyTask(day)}
             />
