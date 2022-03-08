@@ -76,19 +76,23 @@ export const Header = () => {
           </Popover.Button>
 
           <Popover.Panel className="flex overflow-hidden absolute right-0 z-10 flex-col py-3 mt-2 w-40 bg-white rounded-3xl drop-shadow-xl sm:w-80">
-            <Popover.Button
-              onClick={handleSetting}
-              className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold hover:bg-slate-100"
-            >
-              <IconSettings size={19} />
-              <p>設定</p>
+            <Popover.Button>
+              <div
+                onClick={handleSetting}
+                className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold hover:bg-slate-100"
+              >
+                <IconSettings size={19} />
+                <p>設定</p>
+              </div>
             </Popover.Button>
-            <Popover.Button
-              className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
-              onClick={handleLogout}
-            >
-              <HiOutlineLogout size={20} />
-              <p>ログアウト</p>
+            <Popover.Button>
+              <div
+                className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
+                onClick={handleLogout}
+              >
+                <HiOutlineLogout size={20} />
+                <p>ログアウト</p>
+              </div>
             </Popover.Button>
           </Popover.Panel>
         </Popover>
