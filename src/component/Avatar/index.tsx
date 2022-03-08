@@ -22,14 +22,25 @@ export const Avatar: VFC<Props> = (props) => {
           size == "small" ? "w-10 h-10" : "w-24 h-24"
         }`}
       >
-        <Image
-          className="rounded-full cursor-pointer"
-          src={image ? image : "/avatar.svg"}
-          width={size == "small" ? 40 : 128}
-          height={size == "small" ? 40 : 128}
-          alt="avatar"
-          onClick={onClick}
-        />
+        {image.includes("googleusercontent") ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="rounded-full"
+            src={image}
+            alt="avatar"
+            width={size == "small" ? 40 : 128}
+            height={size == "small" ? 40 : 128}
+          />
+        ) : (
+          <Image
+            className="rounded-full cursor-pointer"
+            src={image ? image : "/avatar.svg"}
+            width={size == "small" ? 40 : 128}
+            height={size == "small" ? 40 : 128}
+            alt="avatar"
+            onClick={onClick}
+          />
+        )}
       </div>
     </div>
   );

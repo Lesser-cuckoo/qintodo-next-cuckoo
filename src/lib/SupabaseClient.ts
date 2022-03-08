@@ -173,10 +173,14 @@ export const moveTodo = async (
   }
 };
 
-export const addNewProfile = async (uid: string) => {
+export const addNewProfile = async (
+  uid: string,
+  username: string,
+  avatar: string
+) => {
   const { error } = await client
     .from<ProfileType>("profiles")
-    .insert([{ uid: uid, username: "ユーザー", avatar: "" }]);
+    .insert([{ uid: uid, username: username, avatar: avatar }]);
   if (error) {
     return false;
   }

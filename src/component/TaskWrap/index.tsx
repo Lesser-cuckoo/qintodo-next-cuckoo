@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { RadioButton } from "src/component/RadioButton";
-import { TaskInput } from "src/component/TaskInput";
+import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
 import type { BgColorProps, CaretColorProps, DayProps } from "src/type/type";

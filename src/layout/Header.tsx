@@ -13,17 +13,30 @@ export const Header = () => {
 
   const [avatar, setAvatar] = useState<string>("");
 
-  const fetchProfile = useCallback(async (uid: string) => {
-    const profile = await getProfile();
-    if (profile) {
-      setAvatar(profile.avatar);
-    } else {
-      const isOk = await addNewProfile(uid);
-      if (!isOk) {
-        alert("プロフィールの新規登録に失敗しました。");
+  const fetchProfile = useCallback(
+    async (uid: string) => {
+      if (user) {
+        const profile = await getProfile();
+        if (profile) {
+          setAvatar(profile.avatar);
+        } else {
+          const username = user.user_metadata.name
+            ? user.user_metadata.name
+            : "ユーザー";
+          const avatar_url = user.user_metadata.avatar_url
+            ? user.user_metadata.avatar_url
+            : "";
+          const isOk = await addNewProfile(uid, username, avatar_url);
+          if (!isOk) {
+            alert("プロフィールの新規登録に失敗しました。");
+          } else {
+            setAvatar(avatar_url);
+          }
+        }
       }
-    }
-  }, []);
+    },
+    [user]
+  );
 
   useEffect(() => {
     if (user) {
