@@ -70,33 +70,26 @@ export const Header = () => {
             />
           </a>
         </Link>
-        <Popover className="relative w-80 text-center">
+        <Popover className="relative text-center sm:w-80">
           <Popover.Button>
             <Avatar image={avatar} size="small" isRounded={true} />
           </Popover.Button>
 
-          <Popover.Panel className="absolute z-10 mt-2 bg-white rounded-3xl drop-shadow-xl">
-            {/* {router.pathname.includes("/mypage") === false ? ( */}
-            <div className="flex flex-col py-3 w-80">
-              <Popover.Button>
-                <button
-                  onClick={handleSetting}
-                  className="flex gap-2 items-center py-2 px-3 w-full h-10 text-sm font-bold hover:bg-slate-100"
-                >
-                  <IconSettings size={19} />
-                  <p>設定</p>
-                </button>
-              </Popover.Button>
-              <Popover.Button>
-                <button
-                  className="flex gap-2 items-center py-2 px-3 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
-                  onClick={handleLogout}
-                >
-                  <HiOutlineLogout size={20} />
-                  <p>ログアウト</p>
-                </button>
-              </Popover.Button>
-            </div>
+          <Popover.Panel className="flex overflow-hidden absolute right-0 z-10 flex-col py-3 mt-2 w-40 bg-white rounded-3xl drop-shadow-xl sm:w-80">
+            <Popover.Button
+              onClick={handleSetting}
+              className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold hover:bg-slate-100"
+            >
+              <IconSettings size={19} />
+              <p>設定</p>
+            </Popover.Button>
+            <Popover.Button
+              className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
+              onClick={handleLogout}
+            >
+              <HiOutlineLogout size={20} />
+              <p>ログアウト</p>
+            </Popover.Button>
           </Popover.Panel>
         </Popover>
       </div>

@@ -241,7 +241,7 @@ export const Dndkit = (props: Props) => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-3 gap-4 mx-12 mt-8">
+      <div className="grid grid-cols-3 gap-4 mx-12 mt-4">
         <Container taskType="today" todo={todoToday} updateTodo={updateTodo} />
         <Container
           taskType="tomorrow"
