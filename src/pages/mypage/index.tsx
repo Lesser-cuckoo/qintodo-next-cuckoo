@@ -18,7 +18,7 @@ export const MyPage: VFC = () => {
       title: <p>アカウント設定</p>,
     },
     {
-      url: "/",
+      url: "/mypage/theme",
       title: (
         <div className="flex justify-between w-full">
           <p>テーマ</p>
@@ -52,7 +52,7 @@ export const MyPage: VFC = () => {
       <>
         <button
           onClick={() => handleClick(item.url)}
-          className="flex justify-between items-center p-3 w-full font-bold hover:bg-slate-100 rounded-sm"
+          className="flex justify-between items-center p-2 w-full font-bold hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
         >
           {item.title}
           <HiOutlineChevronRight size={34} className="pl-2 text-gray-400" />
