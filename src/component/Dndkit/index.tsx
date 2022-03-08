@@ -19,12 +19,11 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Container } from "src/component/Dndkit/Container";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
 import { moveTodo } from "src/lib/SupabaseClient";
-
-import { Container } from "./container";
 
 type Props = {
   todoToday: TodoType[];
