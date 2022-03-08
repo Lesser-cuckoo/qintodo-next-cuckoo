@@ -3,11 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Avatar } from "src/component/Avatar";
-import {
-  addNewProfile,
-  getAvatarUrl,
-  getProfile,
-} from "src/lib/SupabaseClient";
+import { addNewProfile, getProfile } from "src/lib/SupabaseClient";
 
 /**
  * @package
@@ -17,25 +13,17 @@ export const Header = () => {
 
   const [avatar, setAvatar] = useState<string>("");
 
-  const fetchProfile = useCallback(
-    async (uid: string) => {
-      if (user) {
-        const profile = await getProfile();
-        if (profile) {
-          if (profile.hasavatar) {
-            const url = await getAvatarUrl(user.id);
-            setAvatar(url);
-          }
-        } else {
-          const isOk = await addNewProfile(uid);
-          if (!isOk) {
-            alert("プロフィールの新規登録に失敗しました。");
-          }
-        }
+  const fetchProfile = useCallback(async (uid: string) => {
+    const profile = await getProfile();
+    if (profile) {
+      setAvatar(profile.avatar);
+    } else {
+      const isOk = await addNewProfile(uid);
+      if (!isOk) {
+        alert("プロフィールの新規登録に失敗しました。");
       }
-    },
-    [user]
-  );
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {

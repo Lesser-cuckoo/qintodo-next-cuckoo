@@ -2,7 +2,6 @@ import { Auth } from "@supabase/ui";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Avatar } from "src/component/Avatar";
 import {
-  getAvatarUrl,
   getProfile,
   updateProfile,
   uploadAvatar,
@@ -20,19 +19,14 @@ export const Mypage = () => {
   const iconInputRef = useRef<HTMLInputElement | null>(null);
 
   const fetchProfile = useCallback(async () => {
-    if (user) {
-      const profile = await getProfile();
-      if (profile) {
-        setUsername(profile.username);
-        setEditName(profile.username);
-        if (profile.hasavatar) {
-          const url = await getAvatarUrl(user.id);
-          setAvatar(url);
-          setPreviewIcon(url);
-        }
-      }
+    const profile = await getProfile();
+    if (profile) {
+      setUsername(profile.username);
+      setEditName(profile.username);
+      setAvatar(profile.avatar);
+      setPreviewIcon(profile.avatar);
     }
-  }, [user]);
+  }, []);
 
   const handleChangePreviewIcon = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,24 +53,28 @@ export const Mypage = () => {
         alert("名前を入力してください。");
         return;
       }
-      const profile = await getProfile();
-      let hasIcon = profile ? profile.hasavatar : false;
+      let isIconChanged = false;
       if (previewIconFile) {
         const isOk = await uploadAvatar(user.id, previewIconFile);
         if (!isOk) {
           alert("アイコンのアップロードに失敗しました。");
           return;
         }
-        hasIcon = true;
+        isIconChanged = true;
       }
-      const isOkUpdate = await updateProfile(user.id, editName, hasIcon);
+      const isOkUpdate = await updateProfile(
+        user.id,
+        editName,
+        avatar,
+        isIconChanged
+      );
       if (!isOkUpdate) {
         alert("プロフィールの更新に失敗しました。");
       } else {
         fetchProfile();
       }
     }
-  }, [user, editName, previewIconFile, fetchProfile]);
+  }, [user, editName, previewIconFile, avatar, fetchProfile]);
 
   useEffect(() => {
     if (user) {
