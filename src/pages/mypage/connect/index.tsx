@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { useState } from "react";
@@ -21,6 +22,7 @@ export const Connect: VFC = () => {
   const handleLogout = useCallback(() => {
     client.auth.signOut();
     router.replace("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleModalActions = [
