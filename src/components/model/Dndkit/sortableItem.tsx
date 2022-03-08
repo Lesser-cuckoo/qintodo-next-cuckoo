@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 // import { useState } from "react";
-import { TaskWrap } from "src/component/TaskWrap";
+import { TaskWrap } from "src/components/model/TaskWrap";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 

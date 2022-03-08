@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
-import { Avatar } from "src/component/Avatar";
+import { Avatar } from "src/components/ui/Avatar";
 import { addNewProfile, client, getProfile } from "src/lib/SupabaseClient";
 
 /**

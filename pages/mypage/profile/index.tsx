@@ -1,6 +1,6 @@
 import type { CustomNextPage } from "next";
+import { Profile } from "src/components/page/mypage/profile";
 import { FixedLayout } from "src/layout";
-import { Profile } from "src/pages/mypage/profile";
 
 const ProfilePage: CustomNextPage = () => <Profile />;
 

@@ -3,7 +3,7 @@
  */
 
 import { render, screen } from "@testing-library/react";
-import { Profile } from "src/pages/mypage/profile";
+import { Profile } from "src/components/page/mypage/profile";
 
 describe("Profile", () => {
   it("renders a heading", () => {

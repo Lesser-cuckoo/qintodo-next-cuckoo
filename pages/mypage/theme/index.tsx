@@ -1,6 +1,6 @@
 import type { CustomNextPage } from "next";
+import { Theme } from "src/components/page/mypage/theme";
 import { FixedLayout } from "src/layout";
-import { Theme } from "src/pages/mypage/theme";
 
 const ThemePage: CustomNextPage = () => <Theme />;
 
