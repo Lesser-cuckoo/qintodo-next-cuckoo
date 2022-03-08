@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
-import { MyPageLayout } from "src/layout/MypageLayout";
 
 export const MyPage: VFC = () => {
   const router = useRouter();
@@ -64,33 +63,27 @@ export const MyPage: VFC = () => {
 
   return (
     <>
-      <MyPageLayout title="アカウント" backbutton="home">
-        <div className="m-auto mt-5 w-full text-xl font-bold">
-          <div className="p-2 py-2 text-lg text-gray-400 dark:text-[#606060]">
-            設定
-          </div>
-          {List1.map((item, index) => (
-            <Button item={item} key={index} />
-          ))}
-          <div className="p-2 py-2 text-lg text-gray-400 dark:text-[#606060]">
-            サポート
-          </div>
-          {List2.map((item, index) => (
-            <Button item={item} key={index} />
-          ))}
+      <div className="m-auto mt-5 w-1/3 text-xl font-bold">
+        <div className="p-3 text-lg text-gray-400">設定</div>
+        {List1.map((item, index) => (
+          <Button item={item} key={index} />
+        ))}
+        <div className="p-3 mt-7 text-lg text-gray-400">サポート</div>
+        {List2.map((item, index) => (
+          <Button item={item} key={index} />
+        ))}
 
-          <button
-            className="p-2 font-bold hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
-            onClick={() => handleClick("/")}
-          >
-            お問合せ
-          </button>
-          <div className="flex p-2">
-            <p>バージョン</p>
-            <p>1.0.0</p>
-          </div>
+        <button
+          className="p-3 font-bold hover:bg-slate-100 rounded-sm"
+          onClick={() => handleClick("/")}
+        >
+          お問合せ
+        </button>
+        <div className="flex justify-between p-3">
+          <p>バージョン</p>
+          <p>1.0.0</p>
         </div>
-      </MyPageLayout>
+      </div>
     </>
   );
 };
