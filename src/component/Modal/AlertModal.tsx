@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/migration-from-tailwind-2 */
 import { Dialog, Transition } from "@headlessui/react";
 import type { Dispatch, SetStateAction, VFC } from "react";
 import { Fragment } from "react";
