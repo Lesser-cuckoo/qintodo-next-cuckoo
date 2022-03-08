@@ -19,7 +19,7 @@ export const MyPage: VFC = () => {
       title: <p>アカウント設定</p>,
     },
     {
-      url: "/",
+      url: "/mypage/theme",
       title: (
         <div className="flex justify-between w-full">
           <p>テーマ</p>
@@ -53,7 +53,7 @@ export const MyPage: VFC = () => {
       <>
         <button
           onClick={() => handleClick(item.url)}
-          className="flex justify-between items-center p-2 w-full font-bold hover:bg-slate-100 rounded-sm"
+          className="flex justify-between items-center p-2 w-full font-bold hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
         >
           {item.title}
           <HiOutlineChevronRight size={34} className="pl-2 text-gray-400" />
@@ -65,18 +65,22 @@ export const MyPage: VFC = () => {
   return (
     <>
       <MyPageLayout title="アカウント" backbutton="home">
-        <div className="m-auto mt-5 w-full text-xl font-bold">
-          <div className="p-2 py-2 text-lg text-gray-400">設定</div>
+        <div className="m-auto mt-5 w-full text-base font-bold lg:text-xl">
+          <div className="p-2 py-2 text-lg text-gray-400 dark:text-[#606060]">
+            設定
+          </div>
           {List1.map((item, index) => (
             <Button item={item} key={index} />
           ))}
-          <div className="p-2 py-2 text-lg text-gray-400">サポート</div>
+          <div className="p-2 py-2 text-lg text-gray-400 dark:text-[#606060]">
+            サポート
+          </div>
           {List2.map((item, index) => (
             <Button item={item} key={index} />
           ))}
 
           <button
-            className="p-2 font-bold hover:bg-slate-100 rounded-sm"
+            className="p-2 font-bold hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"
             onClick={() => handleClick("/")}
           >
             お問合せ

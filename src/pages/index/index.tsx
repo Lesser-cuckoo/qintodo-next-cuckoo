@@ -1,7 +1,7 @@
 import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Dndkit } from "src/component/Dndkit";
+import { Dndkit } from "src/component/dndkit";
 import { taskElement } from "src/constants/TaskElement";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
@@ -44,15 +44,6 @@ export const Index: VFC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 mx-12 mt-8">
-        {mapTaskElement.map((task) => (
-          <div className="col-span-1" key={task.id}>
-            <div className={`text-xl font-bold ${task.color}`}>
-              {task.header}
-            </div>
-          </div>
-        ))}
-      </div>
       <Dndkit
         todoToday={todoToday}
         setTodoToday={setTodoToday}
@@ -61,6 +52,7 @@ export const Index: VFC = () => {
         todoOther={todoOther}
         setTodoOther={setTodoOther}
         updateTodo={updateTodo}
+        mapTaskElement={mapTaskElement}
       />
       {/* <div>
         <div>

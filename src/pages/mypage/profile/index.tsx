@@ -110,7 +110,7 @@ export const Profile: NextPage = () => {
               onChange={handleChangePreviewIcon}
             />
             <button
-              className="block py-3 px-4 text-xs font-bold text-[#070417] bg-[#F1F5F9] rounded-2xl hover:opacity-70"
+              className="block py-3 px-4 text-xs font-bold text-[#070417] bg-[#F1F5F9] dark:bg-gray-300 rounded-2xl hover:opacity-70"
               onClick={handleClickChangeIcon}
             >
               変更する
@@ -123,14 +123,14 @@ export const Profile: NextPage = () => {
             <input
               type="text"
               size={66}
-              className="py-3 px-4 text-sm font-thin text-[#070417] bg-[#F1F5F9] rounded-3xl"
+              className="py-3 px-4 text-sm font-thin text-[#070417] bg-[#F1F5F9] dark:bg-gray-300 rounded-3xl"
               placeholder="ユーザー名"
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
             />
           </div>
           <button
-            className="py-4 text-sm font-bold text-white bg-[#3B82F6] rounded-3xl hover:opacity-70"
+            className="py-4 text-sm font-bold text-white bg-[#3B82F6] dark:bg-blue-400 rounded-3xl hover:opacity-70"
             onClick={handleSave}
           >
             保存する
