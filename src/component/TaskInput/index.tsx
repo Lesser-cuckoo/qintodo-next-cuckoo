@@ -50,10 +50,7 @@ export const TaskInput = (props: Props) => {
   return (
     <>
       <div className="absolute top-2 left-8">
-        <div
-          className="inline-block overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0"
-          // data-placeholder="文字を入力してください"
-        >
+        <div className="inline-block overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0">
           {text ? text : "文字を入力してください"}
         </div>
         <input
