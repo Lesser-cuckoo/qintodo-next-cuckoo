@@ -16,7 +16,6 @@ type Props = {
  */
 export const AuthLayout: CustomLayout = (props: Props) => {
   const { user } = Auth.useUser();
-
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   const { children } = props;
