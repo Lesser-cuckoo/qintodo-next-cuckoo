@@ -20,7 +20,7 @@ export const Header = () => {
   const fetchProfile = useCallback(
     async (uid: string) => {
       if (user) {
-        const profile = await getProfile();
+        const profile = await getProfile(user.id);
         if (profile) {
           setAvatar(profile.avatar);
         } else {
@@ -70,32 +70,36 @@ export const Header = () => {
             />
           </a>
         </Link>
-        <Popover className="relative text-center sm:w-80">
-          <Popover.Button>
-            <Avatar image={avatar} size="small" isRounded={true} />
-          </Popover.Button>
+        {user ? (
+          <Popover className="relative text-center sm:w-80">
+            <Popover.Button>
+              <Avatar image={avatar} size="small" isRounded={true} />
+            </Popover.Button>
 
-          <Popover.Panel className="flex overflow-hidden absolute right-0 z-10 flex-col py-3 mt-2 w-40 bg-white rounded-3xl drop-shadow-xl sm:w-80">
-            <Popover.Button>
-              <div
-                onClick={handleSetting}
-                className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold hover:bg-slate-100"
-              >
-                <IconSettings size={19} />
-                <p>設定</p>
-              </div>
-            </Popover.Button>
-            <Popover.Button>
-              <div
-                className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
-                onClick={handleLogout}
-              >
-                <HiOutlineLogout size={20} />
-                <p>ログアウト</p>
-              </div>
-            </Popover.Button>
-          </Popover.Panel>
-        </Popover>
+            <Popover.Panel className="flex overflow-hidden absolute right-0 z-10 flex-col py-3 mt-2 w-40 bg-white rounded-3xl drop-shadow-xl sm:w-80">
+              <Popover.Button>
+                <div
+                  onClick={handleSetting}
+                  className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold hover:bg-slate-100"
+                >
+                  <IconSettings size={19} />
+                  <p>設定</p>
+                </div>
+              </Popover.Button>
+              <Popover.Button>
+                <div
+                  className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold text-red-400 hover:bg-slate-100"
+                  onClick={handleLogout}
+                >
+                  <HiOutlineLogout size={20} />
+                  <p>ログアウト</p>
+                </div>
+              </Popover.Button>
+            </Popover.Panel>
+          </Popover>
+        ) : (
+          <div className="w-10 h-10"></div>
+        )}
       </div>
     </>
   );

@@ -187,7 +187,7 @@ export const addNewProfile = async (
   return true;
 };
 
-export const getProfile = async () => {
+export const getProfile = async (uid: string) => {
   const { data, error } = await client
     .from<ProfileType>("profiles")
     .select("*")
@@ -196,21 +196,22 @@ export const getProfile = async () => {
   if (error || !data) {
     return null;
   }
+  if (data.avatar == "storage") {
+    data.avatar = await getAvatarUrl(uid);
+  }
   return data;
 };
 
 export const updateProfile = async (
   uid: string,
   username: string,
-  avatar: string,
-  isIconUpdate: boolean
+  avatar: string
 ) => {
-  const avatarUrl = isIconUpdate ? await getAvatarUrl(uid) : "";
   const { error } = await client
     .from("profiles")
     .update({
       username: username,
-      avatar: avatarUrl != "" ? avatarUrl : avatar,
+      avatar: avatar,
     })
     .eq("uid", uid);
   return error ? false : true;
@@ -226,10 +227,9 @@ export const uploadAvatar = async (uid: string, file: File) => {
 const getAvatarUrl = async (uid: string) => {
   const { error, signedURL } = await client.storage
     .from("avatars")
-    .createSignedUrl(`avatar_${uid}.jpg`, 600);
-  if (!error) {
+    .createSignedUrl(`avatar_${uid}.jpg`, 3600);
+  if (!error && signedURL) {
     return signedURL;
-  } else {
-    return "";
   }
+  return "";
 };
