@@ -1,3 +1,6 @@
+import type { Dispatch, SetStateAction } from "react";
+import type { TodoType } from "src/lib/SupabaseClient";
+
 export type CaretColorProps = "caret-today" | "caret-tomorrow" | "caret-other";
 
 export type DayProps = "today" | "tomorrow" | "other";
@@ -16,3 +19,14 @@ export type TaskElement = {
   caretColor: CaretColorProps;
   day: DayProps;
 };
+
+export type MapTaskElement = {
+  taskArray: TodoType[];
+  setState: Dispatch<SetStateAction<TodoType[]>>;
+  id: number;
+  header: HeaderProps;
+  color: ColorProps;
+  bgColor: BgColorProps;
+  caretColor: CaretColorProps;
+  day: DayProps;
+}[];

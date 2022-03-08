@@ -23,6 +23,7 @@ import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
 import { moveTodo } from "src/lib/SupabaseClient";
+import type { MapTaskElement } from "src/type/type";
 
 import { Container } from "./container";
 
@@ -34,10 +35,12 @@ type Props = {
   todoOther: TodoType[];
   setTodoOther: Dispatch<SetStateAction<TodoType[]>>;
   updateTodo: () => Promise<void>;
+  mapTaskElement: MapTaskElement;
 };
 
 export const Dndkit = (props: Props) => {
   const {
+    mapTaskElement,
     setTodoOther,
     setTodoToday,
     setTodoTomorrow,
@@ -242,14 +245,37 @@ export const Dndkit = (props: Props) => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-3 gap-4 mx-12 mt-8">
-        <Container taskType="today" todo={todoToday} updateTodo={updateTodo} />
-        <Container
-          taskType="tomorrow"
-          todo={todoTomorrow}
-          updateTodo={updateTodo}
-        />
-        <Container taskType="other" todo={todoOther} updateTodo={updateTodo} />
+      <div className="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-3 sm:mx-12">
+        <div className="mb-10">
+          <div className={`mb-2 text-xl font-bold ${mapTaskElement[0].color}`}>
+            {mapTaskElement[0].header}
+          </div>
+          <Container
+            taskType="today"
+            todo={todoToday}
+            updateTodo={updateTodo}
+          />
+        </div>
+        <div className="mb-10">
+          <div className={`mb-2 text-xl font-bold ${mapTaskElement[1].color}`}>
+            {mapTaskElement[1].header}
+          </div>
+          <Container
+            taskType="tomorrow"
+            todo={todoTomorrow}
+            updateTodo={updateTodo}
+          />
+        </div>
+        <div className="mb-10">
+          <div className={`mb-2 text-xl font-bold ${mapTaskElement[2].color}`}>
+            {mapTaskElement[2].header}
+          </div>
+          <Container
+            taskType="other"
+            todo={todoOther}
+            updateTodo={updateTodo}
+          />
+        </div>
       </div>
       {/* <DragOverlay>{activeId ? <TaskWrap /> : null}</DragOverlay> */}
     </DndContext>

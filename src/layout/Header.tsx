@@ -45,9 +45,10 @@ export const Header = () => {
   }, [user, fetchProfile]);
 
   return (
-    <div className="flex justify-around items-center p-5 dark:bg-[#353e49]">
+    <div className="grid grid-cols-3 items-center p-5 text-center dark:bg-[#353e49] lg:flex lg:justify-around">
+      <div className="lg:hidden"></div>
       <Link href="/" passHref>
-        <a>
+        <a className="">
           <Image
             className="cursor-pointer"
             src="/qintodo_logo.svg"
@@ -58,7 +59,7 @@ export const Header = () => {
         </a>
       </Link>
       <Link href="/mypage" passHref>
-        <a>
+        <a className="block justify-self-end md:mr-5 lg:mr-0">
           <Avatar image={avatar} size="small" isRounded={true} />
         </a>
       </Link>

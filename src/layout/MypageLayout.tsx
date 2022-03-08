@@ -21,7 +21,7 @@ export const MyPageLayout = (props: Props) => {
 
   return (
     <>
-      <div className="m-auto mt-6 w-1/3">
+      <div className="m-auto mt-6 w-full sm:px-12 lg:w-1/3">
         <div className="flex relative m-auto text-center">
           {backbutton === "home" && (
             <button className="absolute" onClick={handleBackHome}>
