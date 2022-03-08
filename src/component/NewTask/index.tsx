@@ -1,10 +1,9 @@
 import { Auth } from "@supabase/ui";
 import { useCallback, useMemo, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
-import { RadioButton2 } from "src/component/RadioButton/radiobutton";
 import type { TaskType } from "src/lib/Datetime";
 import { addTodo } from "src/lib/SupabaseClient";
-import type { BgColorProps, OutLineProps } from "src/type/type";
+import type { CaretColorProps } from "src/type/type";
 
 type Props = {
   day: TaskType;
@@ -14,30 +13,17 @@ type Props = {
 export const NewTask = (props: Props) => {
   const { user } = Auth.useUser();
   const { day, updateTodo } = props;
-  const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
-  const inputstyle = "line-through text-[#C2C6D2]";
-  const lineThrough: string = isComplete ? inputstyle : "";
   const [text, setText] = useState<string>("");
   const [isAddTask, setAddTask] = useState<boolean>(false);
 
-  const outlineColor = useMemo<OutLineProps>(
+  const caretColor = useMemo<CaretColorProps>(
     () =>
       day == "today"
-        ? "outline-today"
+        ? "caret-today"
         : day == "tomorrow"
-        ? "outline-tomorrow"
-        : "outline-other",
-    [day]
-  );
-
-  const taskColor = useMemo<BgColorProps>(
-    () =>
-      day == "today"
-        ? "checked:bg-today"
-        : day == "tomorrow"
-        ? "checked:bg-tomorrow"
-        : "checked:bg-other",
+        ? "caret-tomorrow"
+        : "caret-other",
     [day]
   );
 
@@ -53,10 +39,10 @@ export const NewTask = (props: Props) => {
   );
 
   const handleAddTask = useCallback(
-    async (day: "today" | "tomorrow" | "other", isComplete: boolean) => {
+    async (day: "today" | "tomorrow" | "other") => {
       if (text && user) {
         const uid = user.id;
-        const isSuccess = await addTodo(uid, text, day, isComplete);
+        const isSuccess = await addTodo(uid, text, day);
         if (isSuccess) {
           updateTodo();
           setText("");
@@ -77,11 +63,13 @@ export const NewTask = (props: Props) => {
       <div className="flex justify-start items-center py-2 px-[0.14rem] mr-16">
         {isAddTask ? (
           <>
-            <RadioButton2
-              centerColor={taskColor}
-              setIsCompleted={setIsComplete}
-              isCompleted={isComplete}
-            />
+            <div
+              className={`flex justify-center w-[22px] h-[22px] rounded-full  ring-1 ring-gray-200 mr-2`}
+            >
+              <button
+                className={`outline-none w-full h-full rounded-full  dark:bg-darkbg`}
+              />
+            </div>
             <input
               type="text"
               value={text}
@@ -89,7 +77,7 @@ export const NewTask = (props: Props) => {
               onKeyPress={async (e) => {
                 if (e.key === "Enter" && !isSending) {
                   setIsSending(true);
-                  await handleAddTask(day, isComplete);
+                  await handleAddTask(day);
                   setIsSending(false);
                 }
               }}
@@ -97,22 +85,24 @@ export const NewTask = (props: Props) => {
                 //同じ文言であれば編集しないようにする
                 if (!isSending) {
                   setIsSending(true);
-                  await handleAddTask(day, isComplete);
+                  await handleAddTask(day);
                   setIsSending(false);
                 }
                 setAddTask(false);
               }}
-              className={`h-[24px] flex-1 pl-2 placeholder:text-[#C2C6D2] truncate border-0 focus:ring-0 caret-[#F43F5E] ${outlineColor} ${lineThrough} rounded-2xl`}
+              className={`flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0  ${caretColor}`}
               autoFocus
-              disabled={isComplete}
             />
           </>
         ) : (
           <>
             <div
-              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 ring-gray-300 bg-gray-300 mr-1`}
+              className={`flex justify-center  w-[18px] h-[18px] rounded-full ring-2 dark:bg-gray-400 dark:ring-gray-400 ring-gray-300 bg-gray-300 ml-[1px]`}
             >
-              <HiPlusSm size={18} className="text-[#ffffff]" />
+              <HiPlusSm
+                size={18}
+                className="text-[#ffffff] dark:text-darkbg "
+              />
             </div>
             <button
               onClick={handleClickButton}

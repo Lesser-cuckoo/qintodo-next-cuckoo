@@ -8,6 +8,8 @@ module.exports = {
         today: "#F43F5E",
         tomorrow: "#FB923C",
         other: "#FBBF24",
+        darkhover: "#2D333B",
+        darkbg: "#22272E",
       },
     },
   },
@@ -16,4 +18,5 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("@tailwindcss/line-clamp"),
   ],
+  darkMode: "class",
 };

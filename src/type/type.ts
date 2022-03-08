@@ -1,10 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { TodoType } from "src/lib/SupabaseClient";
 
-export type OutLineProps =
-  | "outline-today"
-  | "outline-tomorrow"
-  | "outline-other";
+export type CaretColorProps = "caret-today" | "caret-tomorrow" | "caret-other";
 
 export type DayProps = "today" | "tomorrow" | "other";
 export type HeaderProps = "今日する" | "明日する" | "今度する";
@@ -19,7 +16,7 @@ export type TaskElement = {
   header: HeaderProps;
   color: ColorProps;
   bgColor: BgColorProps;
-  outlineColor: OutLineProps;
+  caretColor: CaretColorProps;
   day: DayProps;
 };
 
@@ -30,6 +27,6 @@ export type MapTaskElement = {
   header: HeaderProps;
   color: ColorProps;
   bgColor: BgColorProps;
-  outlineColor: OutLineProps;
+  caretColor: CaretColorProps;
   day: DayProps;
 }[];

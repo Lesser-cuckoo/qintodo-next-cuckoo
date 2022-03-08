@@ -5,10 +5,10 @@ import { useCallback, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { RadioButton } from "src/component/RadioButton";
-import { TaskInput } from "src/component/TaskInput";
+import { TaskInput } from "src/component/taskInput";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
-import type { BgColorProps, DayProps, OutLineProps } from "src/type/type";
+import type { BgColorProps, CaretColorProps, DayProps } from "src/type/type";
 
 type Props = {
   day: DayProps;
@@ -21,13 +21,13 @@ export const TaskWrap: VFC<Props> = (props) => {
   const { user } = Auth.useUser();
   const [text, setText] = useState<string>(item.task);
 
-  const outlineColor = useMemo<OutLineProps>(
+  const caretColor = useMemo<CaretColorProps>(
     () =>
       day == "today"
-        ? "outline-today"
+        ? "caret-today"
         : day == "tomorrow"
-        ? "outline-tomorrow"
-        : "outline-other",
+        ? "caret-tomorrow"
+        : "caret-other",
     [day]
   );
 
@@ -71,7 +71,7 @@ export const TaskWrap: VFC<Props> = (props) => {
     async (day) => {
       if (text && user) {
         const uid = user.id;
-        const isSuccess = await addTodo(uid, text, day, false);
+        const isSuccess = await addTodo(uid, text, day);
         if (isSuccess) {
           updateTodo();
         } else {
@@ -95,10 +95,10 @@ export const TaskWrap: VFC<Props> = (props) => {
           text={text}
           setText={setText}
           updateTodo={updateTodo}
-          outlineColor={outlineColor}
+          caretColor={caretColor}
         />
         <div className="absolute top-2 right-2 invisible group-hover:visible">
-          <div className="flex invisible group-hover:visible gap-2 items-center text-[#C2C6D2] hover:cursor-pointer">
+          <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] hover:cursor-pointer">
             <MdOutlineContentCopy
               onClick={async () => await handleCopyTask(day)}
             />
