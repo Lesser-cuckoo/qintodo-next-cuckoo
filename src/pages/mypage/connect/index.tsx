@@ -38,7 +38,7 @@ export const Connect: VFC = () => {
       isOpen: isOpenAccount,
       setIsOpen: setIsOpenAccount,
       title: "アカウントの削除",
-      message: "アカウント完全に削除してよろしいですか？",
+      message: "アカウントを完全に削除してよろしいですか？",
       onClick: () => alert("アカウントを削除しました"),
       buttonChildren: "アカウントの削除",
     },
@@ -72,7 +72,7 @@ export const Connect: VFC = () => {
             </IconContext.Provider>
             <p className="text-base">{item.title}</p>
           </div>
-          <button className="px-7 text-base bg-gray-100 hover:bg-blue-500 rounded-full border-none btn btn-outline">
+          <button className="px-7 text-base bg-gray-100 hover:bg-blue-500 dark:bg-gray-400 dark:hover:bg-blue-400 rounded-full border-none btn btn-outline">
             解除する
           </button>
         </div>
@@ -106,10 +106,11 @@ export const Connect: VFC = () => {
           <div className="p-2 py-2 mt-14 mb-2 text-lg text-gray-400">
             アカウント操作
           </div>
+
           {handleModalActions.map((item) => (
             <div key={item.title}>
               <button
-                className="p-2 mb-3 font-bold text-red-500 hover:bg-slate-100 rounded-sm modal-button"
+                className="p-2 mb-3 font-bold text-red-500 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm modal-button"
                 // eslint-disable-next-line react/jsx-handler-names
                 onClick={() => item.setIsOpen(true)}
               >

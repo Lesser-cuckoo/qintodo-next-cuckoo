@@ -34,8 +34,7 @@ export type ProfileType = {
 export const addTodo = async (
   uid: string,
   task: string,
-  taskType: TaskType,
-  isComplete: boolean
+  taskType: TaskType
 ) => {
   const deadline = taskType == "other" ? null : getDate(taskType);
   const { error } = await client.from<TodoType>("todos").insert([
@@ -43,7 +42,7 @@ export const addTodo = async (
       uid: uid,
       task: task,
       deadline: deadline,
-      iscomplete: isComplete,
+      iscomplete: false,
     },
   ]);
   if (error) {
