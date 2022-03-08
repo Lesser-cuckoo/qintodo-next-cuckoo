@@ -244,7 +244,7 @@ export const Dndkit = (props: Props) => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-1 gap-4 mx-12 mt-8 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-3 sm:mx-12">
         <div className="mb-10">
           <div className={`mb-2 text-xl font-bold ${mapTaskElement[0].color}`}>
             {mapTaskElement[0].header}
