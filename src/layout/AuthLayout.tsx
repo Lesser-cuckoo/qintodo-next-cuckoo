@@ -24,7 +24,7 @@ export const AuthLayout: CustomLayout = (props: Props) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 px-4">
+      <main className="flex-1">
         <LayoutErrorBoundary>
           {isMounted && user ? (
             <div>{children}</div>
