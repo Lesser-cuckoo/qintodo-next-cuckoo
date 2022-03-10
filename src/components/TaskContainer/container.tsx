@@ -3,7 +3,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { NewTask } from "src/component/NewTask";
+import { NewTask } from "src/components/TaskContainer/NewTask";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 

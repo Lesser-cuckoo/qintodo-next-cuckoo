@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
-import { Avatar } from "src/component/Avatar";
+import { Avatar } from "src/components/ui/Avatar";
 import {
   getProfile,
   updateProfile,

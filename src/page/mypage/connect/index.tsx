@@ -7,7 +7,7 @@ import { IconContext } from "react-icons";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineChevronRight } from "react-icons/hi";
-import { AlertModal } from "src/component/Modal/AlertModal";
+import { AlertModal } from "src/components/ui/Modal/AlertModal";
 import { client } from "src/lib/SupabaseClient";
 
 export const Connect: VFC = () => {

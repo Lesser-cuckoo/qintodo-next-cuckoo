@@ -3,19 +3,19 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { editTodo } from "src/lib/SupabaseClient";
+import type { CaretColorProps } from "src/type/type";
 
 type Props = {
   item: TodoType;
   updateTodo: () => void;
   setText: Dispatch<SetStateAction<string>>;
   text: string;
-  caretColor: string;
+  caretColor: CaretColorProps;
 };
 
 export const TaskInput = (props: Props) => {
   const { caretColor, item, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
-  // const [text, setText] = useState<string>(item.task);
   const [isSending, setIsSending] = useState<boolean>(false);
 
   const inputstyle = "line-through text-[#C2C6D2] dark:text-gray-400";
