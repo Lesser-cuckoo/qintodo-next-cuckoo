@@ -18,7 +18,7 @@ export const MyPage: VFC = () => {
       title: <p>アカウント設定</p>,
     },
     {
-      url: "/mypage/theme",
+      url: "/mypage/bgconfig",
       title: (
         <div className="flex justify-between w-full">
           <p>テーマ</p>

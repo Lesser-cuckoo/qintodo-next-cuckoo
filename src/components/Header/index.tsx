@@ -5,12 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
-import { Avatar } from "src/component/Avatar";
+import { Avatar } from "src/components/ui/Avatar";
 import { addNewProfile, client, getProfile } from "src/lib/SupabaseClient";
 
-/**
- * @package
- */
 export const Header = () => {
   const { user } = Auth.useUser();
 
@@ -57,7 +54,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <>
+    <header>
       <div className="flex justify-around items-center p-5 dark:bg-[#353e49]">
         <Link href="/" passHref>
           <a>
@@ -101,6 +98,6 @@ export const Header = () => {
           <div className="w-10 h-10"></div>
         )}
       </div>
-    </>
+    </header>
   );
 };
