@@ -8,9 +8,6 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { Avatar } from "src/components/ui/Avatar";
 import { addNewProfile, client, getProfile } from "src/lib/SupabaseClient";
 
-/**
- * @package
- */
 export const Header = () => {
   const { user } = Auth.useUser();
 
@@ -57,7 +54,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <>
+    <header>
       <div className="flex justify-around items-center p-5 dark:bg-[#353e49]">
         <Link href="/" passHref>
           <a>
@@ -97,6 +94,6 @@ export const Header = () => {
           </Popover.Panel>
         </Popover>
       </div>
-    </>
+    </header>
   );
 };
