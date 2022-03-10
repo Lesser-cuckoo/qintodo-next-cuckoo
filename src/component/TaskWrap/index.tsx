@@ -98,7 +98,7 @@ export const TaskWrap: VFC<Props> = (props) => {
           caretColor={caretColor}
         />
         <div className="absolute top-2 right-2 invisible group-hover:visible">
-          <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] hover:cursor-pointer">
+          <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] dark:text-white hover:cursor-pointer">
             <MdOutlineContentCopy
               onClick={async () => await handleCopyTask(day)}
             />
