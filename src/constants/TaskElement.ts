@@ -6,7 +6,7 @@ export const taskElement: TaskElement[] = [
     header: "今日する",
     color: "text-today",
     bgColor: "checked:bg-today",
-    outlineColor: "outline-today",
+    caretColor: "caret-today",
     day: "today",
   },
   {
@@ -14,7 +14,7 @@ export const taskElement: TaskElement[] = [
     header: "明日する",
     color: "text-tomorrow",
     bgColor: "checked:bg-tomorrow",
-    outlineColor: "outline-tomorrow",
+    caretColor: "caret-tomorrow",
     day: "tomorrow",
   },
   {
@@ -22,7 +22,7 @@ export const taskElement: TaskElement[] = [
     header: "今度する",
     color: "text-other",
     bgColor: "checked:bg-other",
-    outlineColor: "outline-other",
+    caretColor: "caret-other",
     day: "other",
   },
 ];

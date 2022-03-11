@@ -3,8 +3,6 @@ import type { CustomLayout } from "next";
 import { useEffect, useState } from "react";
 import { client } from "src/lib/SupabaseClient";
 
-import { Footer } from "./Footer";
-import { Header } from "./Header";
 import { LayoutErrorBoundary } from "./LayoutErrorBoundary";
 
 type Props = {
@@ -26,9 +24,6 @@ export const AuthLayout: CustomLayout = (props: Props) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header>
-        <Header />
-      </header>
       <main className="flex-1 px-4">
         <LayoutErrorBoundary>
           {isMounted && user ? (
@@ -44,9 +39,6 @@ export const AuthLayout: CustomLayout = (props: Props) => {
           )}
         </LayoutErrorBoundary>
       </main>
-      <footer>
-        <Footer />
-      </footer>
     </div>
   );
 };
