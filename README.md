@@ -61,9 +61,7 @@ yarn start // localhost:3000で立ち上がる
 
 プロジェクト作成後、以下の SQL snippet を実行
 
-### todos
-
-#### Table
+### Table
 
 ```sql
 drop table if exists todos;
@@ -103,7 +101,7 @@ create table profiles (
   id bigint generated always as identity primary key,
   uid uuid references auth.users not null,
   username text,
-  avatar text
+  hasavatar boolean default false
 );
 
 alter table profiles enable row level security;
@@ -125,7 +123,7 @@ create policy "Individuals can delete their own profiles."
   using (auth.uid() = uid);
 ```
 
-#### Storage
+### Storage
 
 ```sql
 -- Set up Storage

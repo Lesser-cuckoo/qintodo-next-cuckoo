@@ -21,14 +21,16 @@ export const Profile: NextPage = () => {
   const iconInputRef = useRef<HTMLInputElement | null>(null);
 
   const fetchProfile = useCallback(async () => {
-    const profile = await getProfile();
-    if (profile) {
-      setUsername(profile.username);
-      setEditName(profile.username);
-      setAvatar(profile.avatar);
-      setPreviewIcon(profile.avatar);
+    if (user) {
+      const profile = await getProfile(user.id);
+      if (profile) {
+        setUsername(profile.username);
+        setEditName(profile.username);
+        setAvatar(profile.avatar);
+        setPreviewIcon(profile.avatar);
+      }
     }
-  }, []);
+  }, [user]);
 
   const handleChangePreviewIcon = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,8 +69,7 @@ export const Profile: NextPage = () => {
       const isOkUpdate = await updateProfile(
         user.id,
         editName,
-        avatar,
-        isIconChanged
+        isIconChanged ? "storage" : avatar
       );
       if (!isOkUpdate) {
         alert("プロフィールの更新に失敗しました。");

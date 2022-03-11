@@ -46,16 +46,18 @@ export const Index: VFC = () => {
   return (
     <>
       <Header />
-      <Dndkit
-        todoToday={todoToday}
-        setTodoToday={setTodoToday}
-        todoTomorrow={todoTomorrow}
-        setTodoTomorrow={setTodoTomorrow}
-        todoOther={todoOther}
-        setTodoOther={setTodoOther}
-        updateTodo={updateTodo}
-        mapTaskElement={mapTaskElement}
-      />
+      <div className="px-4">
+        <Dndkit
+          todoToday={todoToday}
+          setTodoToday={setTodoToday}
+          todoTomorrow={todoTomorrow}
+          setTodoTomorrow={setTodoTomorrow}
+          todoOther={todoOther}
+          setTodoOther={setTodoOther}
+          updateTodo={updateTodo}
+          mapTaskElement={mapTaskElement}
+        />
+      </div>
     </>
   );
 };
