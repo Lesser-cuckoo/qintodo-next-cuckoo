@@ -17,7 +17,7 @@ export const AlertModal: VFC<Props> = (props) => {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="overflow-y-auto fixed inset-0 z-10 bg-gray-500 bg-opacity-75 transition-opacity"
+        className="overflow-y-auto fixed inset-0 z-10 bg-gray-500/75 transition-opacity"
         onClose={() => setIsOpen(false)}
       >
         <div className="px-4 min-h-screen text-center">
