@@ -2,6 +2,7 @@ import type { VFC } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 import { HiCheck } from "react-icons/hi";
+import { MyPageHeader } from "src/components/MyPageHeader";
 
 export const Theme: VFC = () => {
   const [isTheme, setIsTheme] = useState<undefined | "dark" | "light">(
@@ -32,7 +33,8 @@ export const Theme: VFC = () => {
 
   return (
     <>
-      <div className="flex flex-col m-auto mt-5 w-full text-xl font-bold ">
+      <MyPageHeader name="テーマ" />
+      <div className="flex flex-col m-auto mt-5 w-2/3 max-w-2xl text-xl font-bold">
         <button
           onClick={handleMedia}
           className="flex justify-between p-4 font-bold text-left hover:bg-slate-100 dark:hover:bg-darkhover rounded-sm"

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { HiOutlineChevronRight } from "react-icons/hi";
+import { MyPageHeader } from "src/components/MyPageHeader";
 
 export const MyPage: VFC = () => {
   const router = useRouter();
@@ -63,7 +64,8 @@ export const MyPage: VFC = () => {
 
   return (
     <>
-      <div className="m-auto mt-5 w-1/3 text-xl font-bold">
+      <MyPageHeader name="アカウント" isClose />
+      <div className="m-auto mt-5 w-2/3 max-w-2xl text-xl font-bold">
         <div className="p-3 text-lg text-gray-400">設定</div>
         {List1.map((item, index) => (
           <Button item={item} key={index} />

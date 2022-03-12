@@ -6,15 +6,12 @@ import { useCallback } from "react";
 import { IconContext } from "react-icons";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { HiOutlineChevronRight } from "react-icons/hi";
+import { MyPageHeader } from "src/components/MyPageHeader";
 import { AlertModal } from "src/components/ui/Modal/AlertModal";
 import { client } from "src/lib/SupabaseClient";
 
 export const Connect: VFC = () => {
   const router = useRouter();
-  const handleClick = (URL: string) => {
-    router.push(`${URL}`);
-  };
 
   const [isOpenLogout, setIsOpenLogout] = useState(false);
   const [isOpenAccount, setIsOpenAccount] = useState(false);
@@ -82,24 +79,10 @@ export const Connect: VFC = () => {
 
   return (
     <>
-      <div className="m-auto mt-6 lg:w-1/3">
+      <MyPageHeader name="アカウント" />
+      <div className="m-auto mt-6 w-2/3 max-w-2xl ">
         <div className="m-auto mt-5 w-full text-base font-bold lg:text-xl">
-          <div className="flex items-center p-2 py-2 mb-1 h-10 text-base">
-            <p
-              className=" hover:underline cursor-pointer"
-              onClick={() => handleClick("/")}
-            >
-              ホーム
-            </p>
-            <HiOutlineChevronRight size={22} className=" mx-5 text-gray-400" />
-            <p
-              className=" hover:underline cursor-pointer"
-              onClick={() => handleClick("/mypage/connect")}
-            >
-              アカウントの連携
-            </p>
-          </div>
-          <div className="p-2 py-2 mb-14 text-3xl lg:text-4xl">
+          <div className="p-2 py-2 mt-14 mb-2 text-lg text-gray-400">
             アカウント連携
           </div>
           {ButtonList.map((item, index) => (
