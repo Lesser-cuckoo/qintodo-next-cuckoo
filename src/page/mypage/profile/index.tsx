@@ -1,8 +1,7 @@
 import { Auth } from "@supabase/ui";
 import type { NextPage } from "next";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { HiOutlineChevronRight } from "react-icons/hi";
+import { MyPageHeader } from "src/components/MyPageHeader";
 import { Avatar } from "src/components/ui/Avatar";
 import {
   getProfile,
@@ -87,57 +86,50 @@ export const Profile: NextPage = () => {
   }, [user, fetchProfile]);
 
   return (
-    <div className="container flex flex-col items-center">
-      <div className="w-[500px]">
-        <div className="flex gap-6 my-4 text-sm font-bold">
-          <Link href="/mypage">
-            <a>
-              <span className="hover:cursor-pointer">ホーム</span>
-            </a>
-          </Link>
-          <HiOutlineChevronRight size={20} className="text-[#C2C6D2]" />
-          <span>プロフィール</span>
-        </div>
-        <h2 className="mb-6 text-3xl font-black">プロフィール</h2>
-        <span className="text-sm text-[#C2C6D2]">アイコン</span>
-        <div className="flex items-center mt-2 mb-4">
-          <Avatar image={previewIcon} size="large" isRounded={false} />
-          <div className="ml-4">
-            <input
-              className="hidden"
-              type="file"
-              accept="image/jpeg"
-              ref={iconInputRef}
-              onChange={handleChangePreviewIcon}
-            />
+    <>
+      <MyPageHeader name="プロフィール" />
+      <div className=" flex flex-col items-center">
+        <div className="m-auto w-2/3 max-w-2xl">
+          <span className="text-sm text-[#C2C6D2]">アイコン</span>
+          <div className="flex items-center mt-2 mb-4">
+            <Avatar image={previewIcon} size="large" isRounded={false} />
+            <div className="ml-4">
+              <input
+                className="hidden"
+                type="file"
+                accept="image/jpeg"
+                ref={iconInputRef}
+                onChange={handleChangePreviewIcon}
+              />
+              <button
+                className="block py-3 px-4 text-xs font-bold text-[#070417] bg-[#F1F5F9] dark:bg-gray-300 rounded-2xl hover:opacity-70"
+                onClick={handleClickChangeIcon}
+              >
+                変更する
+              </button>
+            </div>
+          </div>
+          <span className="text-xs text-[#C2C6D2]">名前</span>
+          <div className="grid gap-8 ">
+            <div className="mt-2 w-full">
+              <input
+                type="text"
+                size={66}
+                className="py-3 px-4 w-full text-sm font-thin text-[#070417] bg-[#F1F5F9] dark:bg-gray-300 rounded-3xl"
+                placeholder="ユーザー名"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+              />
+            </div>
             <button
-              className="block py-3 px-4 text-xs font-bold text-[#070417] bg-[#F1F5F9] dark:bg-gray-300 rounded-2xl hover:opacity-70"
-              onClick={handleClickChangeIcon}
+              className="py-4 w-full text-sm font-bold text-white bg-[#3B82F6] dark:bg-blue-400 rounded-3xl hover:opacity-70"
+              onClick={handleSave}
             >
-              変更する
+              保存する
             </button>
           </div>
         </div>
-        <span className="text-xs text-[#C2C6D2]">名前</span>
-        <div className="grid gap-8">
-          <div className="mt-2 max-w-md">
-            <input
-              type="text"
-              size={66}
-              className="py-3 px-4 text-sm font-thin text-[#070417] bg-[#F1F5F9] dark:bg-gray-300 rounded-3xl"
-              placeholder="ユーザー名"
-              value={editName}
-              onChange={(e) => setEditName(e.target.value)}
-            />
-          </div>
-          <button
-            className="py-4 text-sm font-bold text-white bg-[#3B82F6] dark:bg-blue-400 rounded-3xl hover:opacity-70"
-            onClick={handleSave}
-          >
-            保存する
-          </button>
-        </div>
       </div>
-    </div>
+    </>
   );
 };

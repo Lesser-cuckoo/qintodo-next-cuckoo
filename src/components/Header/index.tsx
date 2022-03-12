@@ -77,7 +77,7 @@ export const Header = () => {
               <Popover.Button>
                 <div
                   onClick={handleSetting}
-                  className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold hover:bg-slate-100"
+                  className="flex gap-2 items-center py-2 px-5 w-full h-10 text-sm font-bold dark:text-slate-800 hover:bg-slate-100"
                 >
                   <IconSettings size={19} />
                   <p>設定</p>
