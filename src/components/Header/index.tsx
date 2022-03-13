@@ -7,10 +7,11 @@ import { useCallback, useEffect, useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Avatar } from "src/components/ui/Avatar";
 import { addNewProfile, client, getProfile } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
 
 export const Header = () => {
   const { user } = Auth.useUser();
-
+  const { errorToast } = useToast();
   const [avatar, setAvatar] = useState<string>("");
   const router = useRouter();
 
@@ -29,7 +30,7 @@ export const Header = () => {
             : "";
           const isOk = await addNewProfile(uid, username, avatar_url);
           if (!isOk) {
-            alert("プロフィールの新規登録に失敗しました。");
+            errorToast("プロフィールの新規登録に失敗しました。");
           } else {
             setAvatar(avatar_url);
           }
