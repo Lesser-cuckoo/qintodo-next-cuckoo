@@ -53,7 +53,7 @@ export const NewTask = (props: Props) => {
         }
       }
     },
-    [text, user, updateTodo]
+    [text, user, updateTodo, errorToast]
   );
 
   const handleClickButton = () => {

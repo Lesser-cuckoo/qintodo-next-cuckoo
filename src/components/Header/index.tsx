@@ -37,7 +37,7 @@ export const Header = () => {
         }
       }
     },
-    [user]
+    [errorToast, user]
   );
 
   useEffect(() => {
