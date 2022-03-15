@@ -28,7 +28,7 @@ export const MyPageHeader = (props: Props) => {
           <MdOutlineArrowBackIosNew size={24} />
         )}
       </button>
-      <div className="m-auto text-2xl font-bold text-center">{name}</div>
+      <div className="m-auto text-xl font-bold text-center">{name}</div>
     </header>
   );
 };

@@ -30,11 +30,11 @@ export const MyPage: VFC = () => {
   ];
   const List2 = [
     {
-      url: "/",
+      url: "/mypage/policy",
       title: <p>プライバシーポリシー</p>,
     },
     {
-      url: "/",
+      url: "/mypage/teamsofservice",
       title: <p>利用規約</p>,
     },
     {
