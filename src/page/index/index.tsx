@@ -2,7 +2,7 @@ import type { VFC } from "react";
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { Header } from "src/components/Header";
-import { Dndkit } from "src/components/TaskContainer";
+import { TaskContainers } from "src/components/TaskContainers";
 import { taskElement } from "src/constants/TaskElement";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
@@ -47,7 +47,7 @@ export const Index: VFC = () => {
     <>
       <Header />
       <div className="px-4">
-        <Dndkit
+        <TaskContainers
           todoToday={todoToday}
           setTodoToday={setTodoToday}
           todoTomorrow={todoTomorrow}

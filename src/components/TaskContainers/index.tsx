@@ -38,7 +38,7 @@ type Props = {
   mapTaskElement: MapTaskElement;
 };
 
-export const Dndkit = (props: Props) => {
+export const TaskContainers = (props: Props) => {
   const {
     mapTaskElement,
     setTodoOther,

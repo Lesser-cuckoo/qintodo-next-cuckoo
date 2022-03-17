@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useCallback, useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
-import { TaskInput } from "src/components/TaskContainer/TaskInput";
+import { TaskInput } from "src/components/TaskContainers/TaskWrap/TaskInput";
 import { RadioButton } from "src/components/ui/RadioButton";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
