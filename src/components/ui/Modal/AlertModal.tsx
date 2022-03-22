@@ -49,12 +49,17 @@ export const AlertModal: VFC<Props> = (props) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block overflow-hidden p-6 my-8 w-full max-w-md text-left align-middle bg-white rounded-2xl shadow-xl transition-all">
-              <Dialog.Title as="h3" className="text-2xl font-bold text-center">
+            <div className="inline-block overflow-hidden p-6 my-8 w-full max-w-md text-left align-middle bg-white dark:bg-gray-700 rounded-2xl shadow-xl transition-all">
+              <Dialog.Title
+                as="h3"
+                className="text-2xl font-bold text-center text-[#070417] dark:text-white"
+              >
                 {title}
               </Dialog.Title>
               <div className="mt-2">
-                <p className="py-4 font-thin text-center">{message}</p>
+                <p className="py-4 font-thin text-center text-[#070417] dark:text-white">
+                  {message}
+                </p>
               </div>
 
               <div className="mt-4">

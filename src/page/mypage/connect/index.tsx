@@ -69,7 +69,7 @@ export const Connect: VFC = () => {
             </IconContext.Provider>
             <p className="text-base">{item.title}</p>
           </div>
-          <button className="px-7 text-base bg-gray-100 hover:bg-blue-500 dark:bg-gray-400 dark:hover:bg-blue-400 rounded-full border-none btn btn-outline">
+          <button className="px-7 text-[#070417] hover:text-white bg-gray-100 hover:bg-blue-500 dark:bg-gray-400 dark:hover:bg-blue-400 rounded-full border-none btn btn-outline">
             解除する
           </button>
         </div>
