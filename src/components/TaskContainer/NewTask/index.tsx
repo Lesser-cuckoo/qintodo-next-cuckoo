@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import { HiPlusSm } from "react-icons/hi";
 import type { TaskType } from "src/lib/Datetime";
 import { addTodo } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
 import type { CaretColorProps } from "src/type/type";
 
 type Props = {
@@ -16,6 +17,7 @@ export const NewTask = (props: Props) => {
   const [isSending, setIsSending] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [isAddTask, setAddTask] = useState<boolean>(false);
+  const { errorToast } = useToast();
 
   const caretColor = useMemo<CaretColorProps>(
     () =>
@@ -47,11 +49,11 @@ export const NewTask = (props: Props) => {
           updateTodo();
           setText("");
         } else {
-          alert("タスクの追加に失敗しました");
+          errorToast("タスクの追加に失敗しました");
         }
       }
     },
-    [text, user, updateTodo]
+    [text, user, updateTodo, errorToast]
   );
 
   const handleClickButton = () => {

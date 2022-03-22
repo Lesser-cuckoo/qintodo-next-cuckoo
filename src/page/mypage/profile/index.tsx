@@ -8,6 +8,7 @@ import {
   updateProfile,
   uploadAvatar,
 } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
 
 export const Profile: NextPage = () => {
   const { user } = Auth.useUser();
@@ -16,6 +17,7 @@ export const Profile: NextPage = () => {
   const [editName, setEditName] = useState<string>(username);
   const [previewIcon, setPreviewIcon] = useState<string>(avatar);
   const [previewIconFile, setPreviewIconFile] = useState<File | null>(null);
+  const { errorToast, successToast } = useToast();
 
   const iconInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -53,14 +55,14 @@ export const Profile: NextPage = () => {
   const handleSave = useCallback(async () => {
     if (user) {
       if (editName == "") {
-        alert("名前を入力してください。");
+        errorToast("名前を入力してください。");
         return;
       }
       let isIconChanged = false;
       if (previewIconFile) {
         const isOk = await uploadAvatar(user.id, previewIconFile);
         if (!isOk) {
-          alert("アイコンのアップロードに失敗しました。");
+          errorToast("アイコンのアップロードに失敗しました。");
           return;
         }
         isIconChanged = true;
@@ -71,13 +73,21 @@ export const Profile: NextPage = () => {
         isIconChanged ? "storage" : avatar
       );
       if (!isOkUpdate) {
-        alert("プロフィールの更新に失敗しました。");
+        errorToast("プロフィールの更新に失敗しました。");
       } else {
         fetchProfile();
-        alert("プロフィールを更新しました。");
+        successToast("プロフィールを更新しました。");
       }
     }
-  }, [user, editName, previewIconFile, avatar, fetchProfile]);
+  }, [
+    user,
+    editName,
+    previewIconFile,
+    avatar,
+    errorToast,
+    fetchProfile,
+    successToast,
+  ]);
 
   useEffect(() => {
     if (user) {
