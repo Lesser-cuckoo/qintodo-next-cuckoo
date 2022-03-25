@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import toast from "react-hot-toast";
 import type { TaskType } from "src/lib/Datetime";
 import { getDate, getDateEnd } from "src/lib/Datetime";
 
@@ -106,7 +107,7 @@ export const deleteTodo = async (id: number) => {
     .eq("id", id);
 
   if (error) {
-    alert("削除に失敗しました");
+    toast.error("削除に失敗しました");
     return;
   } else {
     return data;
