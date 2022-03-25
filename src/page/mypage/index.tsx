@@ -9,6 +9,16 @@ export const MyPage: VFC = () => {
     router.push(`${URL}`);
   };
 
+  const themeText = () => {
+    if (localStorage.theme === "dark") {
+      return "ダーク";
+    } else if (localStorage.theme === "light") {
+      return "ライト";
+    } else {
+      return "OSの設定に合わせる";
+    }
+  };
+
   const List1 = [
     {
       url: "/mypage/profile",
@@ -23,7 +33,7 @@ export const MyPage: VFC = () => {
       title: (
         <div className="flex justify-between w-full">
           <p>テーマ</p>
-          <p>OSの設定に合わせる</p>
+          <p>{themeText()}</p>
         </div>
       ),
     },
