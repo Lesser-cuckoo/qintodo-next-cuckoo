@@ -18,8 +18,8 @@ export const TaskInput = (props: Props) => {
   const { user } = Auth.useUser();
   const [isSending, setIsSending] = useState<boolean>(false);
 
-  const inputstyle = "line-through text-[#C2C6D2] dark:text-gray-400";
-  const lineThrough: string = item.iscomplete ? inputstyle : "";
+  const inputStyle = "line-through text-[#C2C6D2] dark:text-gray-400";
+  const lineThrough: string = item.iscomplete ? inputStyle : "";
 
   const handleChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
