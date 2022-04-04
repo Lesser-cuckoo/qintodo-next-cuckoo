@@ -1,7 +1,7 @@
 import { Auth } from "@supabase/ui";
 import type { VFC } from "react";
 import { useMemo } from "react";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { CgTrash } from "react-icons/cg";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { TaskInput } from "src/components/TaskContainers/TaskWrap/TaskInput";
@@ -14,12 +14,14 @@ type Props = {
   day: DayProps;
   item: TodoType;
   updateTodo: () => Promise<void>;
+  text: any;
+  setText: any;
 };
 
 export const TaskWrap: VFC<Props> = (props) => {
-  const { day, item, updateTodo } = props;
+  const { day, item, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
-  const [text, setText] = useState<string>(item.task);
+  // const [text, setText] = useState<string>(item.task);
 
   const caretColor = useMemo<CaretColorProps>(
     () =>
@@ -84,7 +86,7 @@ export const TaskWrap: VFC<Props> = (props) => {
 
   return (
     <>
-      <li className="flex justify-between py-2">
+      <li className="flex justify-between items-center">
         <RadioButton
           handleEditIsComplete={handleEditIsComplete}
           centerColor={taskColor}
@@ -97,7 +99,7 @@ export const TaskWrap: VFC<Props> = (props) => {
           updateTodo={updateTodo}
           caretColor={caretColor}
         />
-        <div className="absolute top-2 right-2 invisible group-hover:visible">
+        <div className="absolute top-3 right-2 invisible group-hover:visible">
           <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] hover:cursor-pointer">
             <MdOutlineContentCopy
               onClick={async () => await handleCopyTask(day)}
