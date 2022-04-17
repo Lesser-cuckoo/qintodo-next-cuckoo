@@ -1,7 +1,8 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useState } from "react";
 // import { useState } from "react";
-import { TaskWrap } from "src/components/TaskContainer/TaskWrap";
+import { TaskWrap } from "src/components/TaskContainers/TaskWrap";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 
@@ -13,6 +14,7 @@ type Props = {
 
 export const SortableItem = (props: Props) => {
   const { taskType, todoTask, updateTodo } = props;
+  const [text, setText] = useState<string>(todoTask.task);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: String(todoTask.id) });
@@ -27,10 +29,23 @@ export const SortableItem = (props: Props) => {
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className="group relative w-full h-10"
+      className="group relative w-full"
     >
-      <div className="absolute top-0 w-full h-10" {...listeners}></div>
-      <TaskWrap updateTodo={updateTodo} item={todoTask} day={taskType} />
+      <div className="absolute top-0 w-full" {...listeners}>
+        <div
+          className="box-border overflow-hidden my-3 ml-10 w-3/5 text-sm text-blue-800/0 whitespace-pre-wrap break-words"
+          // aria-hidden="true"
+        >
+          {text}
+        </div>
+      </div>
+      <TaskWrap
+        updateTodo={updateTodo}
+        item={todoTask}
+        day={taskType}
+        setText={setText}
+        text={text}
+      />
     </div>
   );
 };

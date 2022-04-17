@@ -24,7 +24,7 @@ export const TaskInput = (props: Props) => {
   const lineThrough: string = item.iscomplete ? inputstyle : "";
 
   const handleChangeText = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: any) => {
       if (e.target.value.length < 100) {
         setText(e.target.value);
       } else {
@@ -51,17 +51,25 @@ export const TaskInput = (props: Props) => {
 
   return (
     <>
-      <div className="absolute top-2 left-8">
+      <div className="absolute top-3 left-10 mb-3 w-3/5 text-sm">
         <div
-          className="inline-block overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0"
-          // data-placeholder="文字を入力してください"
+          className={`box-border overflow-hidden ${caretColor} ${lineThrough}  min-h-min text-yellow-100/0 whitespace-pre-wrap break-words`}
         >
-          {text ? text : "文字を入力してください"}
+          {text}
         </div>
-        <input
-          type="text"
+        <textarea
+          // id="FlexTextarea"
           value={text}
+          className={`box-border block ${caretColor} ${lineThrough}  overflow-hidden absolute top-0 w-full h-full bg-transparent outline-none resize-none`}
           onChange={handleChangeText}
+          onBlur={async () => {
+            //同じ文言であれば編集しないようにする
+            if (item.task !== text) {
+              setIsSending(true);
+              await handleEditTask();
+              setIsSending(false);
+            }
+          }}
           onKeyPress={async (e) => {
             //同じ文言であれば編集しないようにする
             if (e.key === "Enter" && !isSending && item.task !== text) {
@@ -71,17 +79,10 @@ export const TaskInput = (props: Props) => {
               setIsSending(false);
             }
           }}
-          onBlur={async () => {
-            //同じ文言であれば編集しないようにする
-            if (item.task !== text) {
-              setIsSending(true);
-              await handleEditTask();
-              setIsSending(false);
-            }
-          }}
-          className={`absolute top-0 left-0 p-1 w-full h-5 border-0  dark:bg-darkbg focus:ring-0 focus:outline-none ${lineThrough} truncate ${caretColor}  rounded-2xl bg-white/0`}
-          disabled={item.iscomplete}
         />
+      </div>
+      <div className="box-border overflow-hidden my-3 ml-10 w-3/5 min-h-min text-sm text-yellow-600/0 whitespace-pre-wrap break-words">
+        {text}
       </div>
     </>
   );

@@ -29,16 +29,13 @@ export const NewTask = (props: Props) => {
     [day]
   );
 
-  const handleChangeText = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.value.length < 100) {
-        setText(e.target.value);
-      } else {
-        alert("100文字以内で入力してください");
-      }
-    },
-    []
-  );
+  const handleChangeText = useCallback((e: any) => {
+    if (e.target.value.length < 100) {
+      setText(e.target.value);
+    } else {
+      alert("100文字以内で入力してください");
+    }
+  }, []);
 
   const handleAddTask = useCallback(
     async (day: "today" | "tomorrow" | "other") => {
@@ -62,7 +59,7 @@ export const NewTask = (props: Props) => {
 
   return (
     <>
-      <div className="flex justify-start items-center py-2 px-[0.14rem] mr-16">
+      <div className="flex justify-start py-2 px-[0.14rem] mr-16">
         {isAddTask ? (
           <>
             <div
@@ -72,29 +69,36 @@ export const NewTask = (props: Props) => {
                 className={`outline-none w-full h-full rounded-full  dark:bg-darkbg`}
               />
             </div>
-            <input
-              type="text"
-              value={text}
-              onChange={handleChangeText}
-              onKeyPress={async (e) => {
-                if (e.key === "Enter" && !isSending) {
-                  setIsSending(true);
-                  await handleAddTask(day);
-                  setIsSending(false);
-                }
-              }}
-              onBlur={async () => {
-                //同じ文言であれば編集しないようにする
-                if (!isSending) {
-                  setIsSending(true);
-                  await handleAddTask(day);
-                  setIsSending(false);
-                }
-                setAddTask(false);
-              }}
-              className={`flex-1 pl-2 h-[24px] truncate dark:bg-darkbg rounded-2xl border-0 outline-none focus:ring-0  ${caretColor}`}
-              autoFocus
-            />
+            <div className="relative mb-3 ml-2 w-3/4 text-sm">
+              <div
+                className={`box-border overflow-hidden ${caretColor} text-yellow-100/0 whitespace-pre-wrap break-words`}
+              >
+                {text}
+              </div>
+              <textarea
+                // id="FlexTextarea"
+                value={text}
+                className={`box-border block ${caretColor} min-h-8  h-full overflow-hidden text-sm absolute top-0 w-full bg-transparent outline-none resize-none`}
+                onChange={handleChangeText}
+                onBlur={async () => {
+                  //同じ文言であれば編集しないようにする
+                  if (!isSending) {
+                    setIsSending(true);
+                    await handleAddTask(day);
+                    setIsSending(false);
+                  }
+                  setAddTask(false);
+                }}
+                onKeyPress={async (e) => {
+                  if (e.key === "Enter" && !isSending) {
+                    setIsSending(true);
+                    await handleAddTask(day);
+                    setIsSending(false);
+                  }
+                }}
+                autoFocus
+              />
+            </div>
           </>
         ) : (
           <>
