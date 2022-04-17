@@ -8,6 +8,7 @@ import { TaskInput } from "src/components/TaskContainers/TaskWrap/TaskInput";
 import { RadioButton } from "src/components/ui/RadioButton";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { addTodo, deleteTodo, editIsComplete } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
 import type { BgColorProps, CaretColorProps, DayProps } from "src/type/type";
 
 type Props = {
@@ -21,7 +22,7 @@ type Props = {
 export const TaskWrap: VFC<Props> = (props) => {
   const { day, item, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
-  // const [text, setText] = useState<string>(item.task);
+  const { errorToast } = useToast();
 
   const caretColor = useMemo<CaretColorProps>(
     () =>
@@ -50,12 +51,12 @@ export const TaskWrap: VFC<Props> = (props) => {
         if (isSuccess) {
           updateTodo();
         } else {
-          alert("isComplete処理に失敗しました。");
+          errorToast("isComplete処理に失敗しました。");
         }
       } else {
       }
     },
-    [user, updateTodo]
+    [user, updateTodo, errorToast]
   );
 
   const handleDelete = async (id: number) => {
@@ -64,7 +65,7 @@ export const TaskWrap: VFC<Props> = (props) => {
       if (isSuccess) {
         updateTodo();
       } else {
-        alert("タスクの削除に失敗しました");
+        errorToast("タスクの削除に失敗しました");
       }
     }
   };
@@ -77,11 +78,11 @@ export const TaskWrap: VFC<Props> = (props) => {
         if (isSuccess) {
           updateTodo();
         } else {
-          alert("タスクの追加に失敗しました");
+          errorToast("タスクの追加に失敗しました");
         }
       }
     },
-    [text, user, updateTodo]
+    [text, user, updateTodo, errorToast]
   );
 
   return (

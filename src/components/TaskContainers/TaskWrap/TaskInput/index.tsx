@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { editTodo } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
 import type { CaretColorProps } from "src/type/type";
 
 type Props = {
@@ -17,6 +18,7 @@ export const TaskInput = (props: Props) => {
   const { caretColor, item, setText, text, updateTodo } = props;
   const { user } = Auth.useUser();
   const [isSending, setIsSending] = useState<boolean>(false);
+  const { errorToast } = useToast();
 
   const inputstyle = "line-through text-[#C2C6D2] dark:text-gray-400";
   const lineThrough: string = item.iscomplete ? inputstyle : "";
@@ -40,12 +42,12 @@ export const TaskInput = (props: Props) => {
         updateTodo();
         setText(text);
       } else {
-        alert("タスクの変更に失敗しました");
+        errorToast("タスクの変更に失敗しました");
       }
     } else {
       setText(item.task);
     }
-  }, [text, user, item.id, item.task, updateTodo, setText]);
+  }, [text, user, item.id, item.task, updateTodo, setText, errorToast]);
 
   return (
     <>

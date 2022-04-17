@@ -23,6 +23,7 @@ import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
 import { moveTodo } from "src/lib/SupabaseClient";
+import { useToast } from "src/lib/ToastHooks";
 import type { MapTaskElement } from "src/type/type";
 
 import { Container } from "./container";
@@ -53,6 +54,7 @@ export const TaskContainers = (props: Props) => {
   const [sourceContainer, setSourceContainer] = useState<TaskType | null>(null);
   const [targetContainer, setTargetContainer] = useState<TaskType | null>(null);
   const [targetIndex, setTargetIndex] = useState<number>(-1);
+  const { errorToast } = useToast();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -221,7 +223,7 @@ export const TaskContainers = (props: Props) => {
       const todo = await getTodo(targetContainer);
       const isOk = await moveTodo(todo, activeId, targetIndex, targetContainer);
       if (!isOk) {
-        alert("更新に失敗しました。");
+        errorToast("更新に失敗しました。");
       } else {
         updateTodo();
         setActiveId(-1);
@@ -229,7 +231,7 @@ export const TaskContainers = (props: Props) => {
         setTargetIndex(-1);
       }
     }
-  }, [activeId, targetContainer, targetIndex, updateTodo]);
+  }, [activeId, errorToast, targetContainer, targetIndex, updateTodo]);
 
   useEffect(() => {
     if (activeId != -1 && targetContainer && targetIndex != -1) {
