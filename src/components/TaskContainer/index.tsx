@@ -19,14 +19,13 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Container } from "src/components/TaskContainer/container";
 import type { TaskType } from "src/lib/Datetime";
 import type { TodoType } from "src/lib/SupabaseClient";
 import { getTodo } from "src/lib/SupabaseClient";
 import { moveTodo } from "src/lib/SupabaseClient";
 import { useToast } from "src/lib/ToastHooks";
 import type { MapTaskElement } from "src/type/type";
-
-import { Container } from "./container";
 
 type Props = {
   todoToday: TodoType[];

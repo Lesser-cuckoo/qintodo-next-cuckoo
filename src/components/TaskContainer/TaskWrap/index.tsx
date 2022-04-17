@@ -86,28 +86,26 @@ export const TaskWrap: VFC<Props> = (props) => {
 
   return (
     <>
-      <li className="flex justify-between py-2">
-        <RadioButton
-          handleEditIsComplete={handleEditIsComplete}
-          centerColor={taskColor}
-          item={item}
-        />
-        <TaskInput
-          item={item}
-          text={text}
-          setText={setText}
-          updateTodo={updateTodo}
-          caretColor={caretColor}
-        />
-        <div className="absolute top-2 right-2 invisible group-hover:visible">
-          <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] hover:cursor-pointer">
-            <MdOutlineContentCopy
-              onClick={async () => await handleCopyTask(day)}
-            />
-            <CgTrash onClick={async () => await handleDelete(item.id)} />
-          </div>
+      <RadioButton
+        handleEditIsComplete={handleEditIsComplete}
+        centerColor={taskColor}
+        item={item}
+      />
+      <TaskInput
+        item={item}
+        text={text}
+        setText={setText}
+        updateTodo={updateTodo}
+        caretColor={caretColor}
+      />
+      <div className="absolute top-2 right-2 invisible group-hover:visible">
+        <div className="flex invisible group-hover:visible gap-2 items-center text-[#696b70] dark:text-white hover:cursor-pointer">
+          <MdOutlineContentCopy
+            onClick={async () => await handleCopyTask(day)}
+          />
+          <CgTrash onClick={async () => await handleDelete(item.id)} />
         </div>
-      </li>
+      </div>
     </>
   );
 };
