@@ -3,13 +3,12 @@
  */
 
 import { render, screen } from "@testing-library/react";
+import { Profile } from "src/page/mypage/profile";
 
-import { About } from "./";
-
-describe("About", () => {
+describe("Profile", () => {
   it("renders a heading", () => {
-    render(<About />);
-    const heading = screen.getByRole("heading", { name: /About/i });
+    render(<Profile />);
+    const heading = screen.getByRole("heading", { name: /profile/i });
     expect(heading).toBeInTheDocument();
   });
 });

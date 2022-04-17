@@ -1,18 +1,44 @@
 import "../src/style/index.css";
 
+import { Auth } from "@supabase/ui";
 import type { CustomAppPage } from "next/app";
 import Head from "next/head";
-import { memo } from "react";
+import { memo, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { AuthLayout } from "src/layout";
+import { client } from "src/lib/SupabaseClient";
 
 const App: CustomAppPage = ({ Component, pageProps }) => {
-  const getLayout = Component.getLayout || ((page) => page);
+  useEffect(() => {
+    if (localStorage.theme === "dark") {
+      document.body.classList.add("dark");
+    } else if (localStorage.theme === "light") {
+      document.body.classList.remove("dark");
+    } else {
+      const isLight = window.matchMedia(
+        "(prefers-color-scheme: light)"
+      ).matches;
+      if (isLight) {
+        document.body.classList.remove("dark");
+      } else if (!isLight) {
+        document.body.classList.add("dark");
+      }
+    }
+  }, []);
 
   return (
     <>
       <Head>
-        <title>nexst</title>
+        <title>QinTodo</title>
       </Head>
-      {getLayout(<Component {...pageProps} />)}
+      <div className="text-slate-800 dark:text-[#C2C6D2] bg-white dark:bg-darkbg">
+        <Auth.UserContextProvider supabaseClient={client}>
+          <AuthLayout>
+            <Toaster />
+            <Component {...pageProps} />
+          </AuthLayout>
+        </Auth.UserContextProvider>
+      </div>
     </>
   );
 };

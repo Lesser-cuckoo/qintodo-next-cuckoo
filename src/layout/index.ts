@@ -1,2 +1,1 @@
-export { FixedLayout } from "./FixedLayout";
-export { FluidLayout } from "./FluidLayout";
+export { AuthLayout } from "./AuthLayout";
