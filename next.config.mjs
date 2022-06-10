@@ -19,6 +19,7 @@ const nextConfig = {
   images: {
     domains: [DOMAIN],
   },
+  
 };
 
 export default nextConfig;

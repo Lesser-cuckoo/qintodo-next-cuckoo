@@ -49,7 +49,7 @@ export const TaskInput = (props: Props) => {
 
   return (
     <>
-      <div className="absolute top-2 left-8">
+      <div className="absolute top-2 left-8 w-24">
         <div className=" overflow-hidden p-1 px-1 h-0 whitespace-nowrap opacity-0">
           {text ? text : "文字を入力してください"}
         </div>
@@ -74,7 +74,7 @@ export const TaskInput = (props: Props) => {
               setIsSending(false);
             }
           }}
-          className={`absolute top-0 left-0 p-1 h-5 border-0 dark:bg-darkbg focus:ring-0 focus:outline-none ${lineThrough} truncate ${caretColor}  rounded-2xl bg-white/0`}
+          className={`absolute whitespace-normal top-0 left-0 p-1 h-5 border-0 dark:bg-darkbg focus:ring-0 focus:outline-none ${lineThrough} ${caretColor} bg-white/0`}
           disabled={item.iscomplete}
         />
       </div>
